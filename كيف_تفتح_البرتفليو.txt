@@ -1,0 +1,44 @@
+═══════════════════════════════════════════════════════
+   كيفية فتح البرتفليو على Chrome
+═══════════════════════════════════════════════════════
+
+الطريقة الأسهل:
+
+1. افتح Terminal (Terminal.app على Mac)
+
+2. اكتب الأوامر التالية بالترتيب:
+
+   cd /Users/ahmedehabmohammed/Desktop/myportofilo
+   
+   flutter config --enable-web
+   
+   flutter clean
+   
+   flutter pub get
+   
+   flutter build web
+   
+   cd build/web
+   
+   python3 -m http.server 8000
+
+3. بعد ظهور "Serving HTTP on 0.0.0.0 port 8000"
+
+4. افتح Chrome واكتب في شريط العنوان:
+   http://localhost:8000
+
+═══════════════════════════════════════════════════════
+
+أو استخدم السكريبت:
+
+   ./open_portfolio.sh
+
+═══════════════════════════════════════════════════════
+
+إذا لم يعمل Python، جرب:
+
+   cd build/web
+   npx http-server -p 8000
+
+═══════════════════════════════════════════════════════
+

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Ahmed's Portfolio - Mid-Level Flutter Engineer">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="myportofilo">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <title>Ahmed's Portfolio</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="preload" href="flutter_build_config.js" as="script">
+  <link rel="preload" href="flutter.js" as="script">
+  <link rel="preload" href="main.dart.js" as="script">
+</head>
+<body>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (regs) {
+        regs.forEach(function (r) { r.unregister(); });
+      });
+    }
+  </script>
+  <script src="flutter_build_config.js"></script>
+  <script src="flutter.js"></script>
+  <script>
+    _flutter.loader.load({ config: { renderer: 'canvaskit' } });
+  </script>
+</body>
+</html>

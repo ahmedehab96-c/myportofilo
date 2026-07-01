@@ -1,0 +1,85 @@
+{
+  "@@locale": "en",
+  "appTitle": "Ahmed's Portfolio",
+  "navNavigation": "Navigation",
+  "navAbout": "About",
+  "navEducation": "Education",
+  "navSkills": "Skills",
+  "navProjects": "Projects",
+  "navContact": "Contact",
+  "navAI": "AI Assistant",
+  "navAIShort": "AI",
+  "languageToggle": "عربي",
+  "heroTagline": "Crafting beautiful & functional mobile experiences\nwith a focus on clean architecture and great UX.",
+  "yearsExp": "Years Exp.",
+  "statProjects": "Projects",
+  "statTechnologies": "Technologies",
+  "viewProjects": "View Projects",
+  "contactMe": "Contact Me",
+  "aboutMe": "About Me",
+  "educationTitle": "Education & Certifications",
+  "skillsTitle": "Skills & Expertise",
+  "skillsSubtitle": "Technologies and tools I specialize in:",
+  "featuredProjects": "Featured Projects",
+  "featuredProjectsSubtitle": "Selected apps and platforms I designed and built.",
+  "privateRepo": "Private repo",
+  "openSource": "Open source",
+  "viewProject": "View project",
+  "getInTouch": "Get in Touch",
+  "getInTouchSubtitle": "Open to work — feel free to reach out anytime.",
+  "phone": "Phone",
+  "email": "Email",
+  "downloadCv": "Download CV",
+  "chatWithAI": "Chat with AI Assistant",
+  "builtWith": "Built with Flutter & ❤️",
+  "couldNotOpenLink": "Could not open link",
+  "errorGeneric": "Error: {message}",
+  "@errorGeneric": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  },
+  "techStack": "Tech Stack",
+  "viewReadmeGitHub": "View README on GitHub",
+  "about": "About",
+  "topics": "Topics",
+  "features": "Features",
+  "overview": "Overview",
+  "screenshotSoon": "Screenshot coming soon",
+  "viewFull": "View full",
+  "pageOf": "{current} of {total}",
+  "@pageOf": {
+    "placeholders": {
+      "current": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "privateRepoNotice": "Source code is hosted in a private GitHub repository. Contact Ahmed for access.",
+  "couldNotOpenGithub": "Could not open GitHub",
+  "privateRepoLabel": "Private Repo",
+  "sourceCode": "Source Code",
+  "code": "Code",
+  "privateOnGithub": "Private on GitHub",
+  "viewOnGithub": "View on GitHub",
+  "aiAssistant": "AI Assistant",
+  "suggestedQuestions": "Suggested questions ({count})",
+  "@suggestedQuestions": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "welcomeMessage": "Hello! I am Ahmed Ehab's portfolio AI assistant.\n\nData version: {version}\n\nI know everything on this site: About, 5 featured projects, 6 skill areas, education, contact, and more.\n\nTap a suggested question below, or ask: \"What can you help me with?\"",
+  "@welcomeMessage": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+  "typeMessage": "Type your message here...",
+  "somethingWentWrong": "Sorry, something went wrong. Please try again.",
+  "emptyQuestion": "Type your question and I will help you right away.",
+  "year": "Year",
+  "description": "Description",
+  "accreditedBy": "Accredited by",
+  "date": "Date",
+  "roleTag": "Mid-Level Flutter Engineer"
+}

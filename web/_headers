@@ -1,0 +1,11 @@
+/*
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/*.wasm
+  Content-Type: application/wasm
+
+/canvaskit/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
