@@ -22,13 +22,9 @@ open -a Simulator 2>/dev/null
 echo "⏳ انتظار 5 ثوانٍ..."
 sleep 5
 
-# تنظيف
-echo "🧹 تنظيف المشروع..."
-flutter clean > /dev/null 2>&1
-
-# تحديث الحزم
-echo "📥 تحديث الحزم..."
-flutter pub get > /dev/null 2>&1
+# تحديث الحزم + توليد الترجمة
+echo "📥 تحديث الحزم وتوليد الترجمة..."
+./prepare_project.sh
 
 # التحقق من الأجهزة
 echo ""

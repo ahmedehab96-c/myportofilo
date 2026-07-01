@@ -3,7 +3,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'data/portfolio_content.dart';
 import 'core/locale_scope.dart';
-import 'l10n/app_localizations.dart';
+import 'package:myportofilo/gen/l10n/app_localizations.dart';
 import 'services/portfolio_assistant_service.dart';
 
 class AIChatScreen extends StatefulWidget {

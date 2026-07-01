@@ -17,13 +17,9 @@ sleep 1
 echo "📦 تفعيل دعم الويب..."
 flutter config --enable-web
 
-# تنظيف
-echo "🧹 تنظيف المشروع..."
-flutter clean
-
-# تحديث الحزم
-echo "📥 تحديث الحزم..."
-flutter pub get
+# تحديث الحزم + توليد الترجمة
+echo "📥 تحديث الحزم وتوليد الترجمة..."
+./prepare_project.sh
 
 # بناء التطبيق مع عرض المخرجات
 echo ""

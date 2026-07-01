@@ -2,11 +2,8 @@
 set -e
 cd "$(dirname "$0")"
 
-echo "==> Installing dependencies"
-flutter pub get
-
-echo "==> Generating localizations"
-flutter gen-l10n
+echo "==> Installing dependencies + l10n"
+./prepare_project.sh
 
 echo "==> Building web (no service worker)"
 flutter build web --release --pwa-strategy=none --no-wasm-dry-run "$@"

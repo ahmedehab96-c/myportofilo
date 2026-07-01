@@ -15,11 +15,8 @@ fi
 echo "📦 تفعيل دعم الويب..."
 flutter config --enable-web
 
-echo "🧹 تنظيف المشروع..."
-flutter clean > /dev/null 2>&1
-
-echo "📥 تحديث الحزم..."
-flutter pub get
+echo "📥 تحديث الحزم وتوليد الترجمة..."
+./prepare_project.sh
 
 echo ""
 echo "🌐 بناء التطبيق للويب..."

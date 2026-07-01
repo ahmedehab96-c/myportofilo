@@ -16,13 +16,9 @@ fi
 echo "📦 تفعيل دعم الويب..."
 flutter config --enable-web
 
-# تنظيف المشروع
-echo "🧹 تنظيف المشروع..."
-flutter clean > /dev/null 2>&1
-
-# تحديث الحزم
-echo "📥 تحديث الحزم..."
-flutter pub get
+# تحديث الحزم + توليد ملفات الترجمة (مطلوب قبل كل تشغيل)
+echo "📥 تحديث الحزم وتوليد الترجمة..."
+./prepare_project.sh
 
 # التحقق من Chrome
 if ! command -v google-chrome &> /dev/null && ! command -v chromium &> /dev/null && ! command -v chromium-browser &> /dev/null; then
