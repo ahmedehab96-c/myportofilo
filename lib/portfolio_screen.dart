@@ -15,7 +15,7 @@ import 'data/portfolio_content.dart';
 import 'data/portfolio_profile_content.dart';
 import 'services/portfolio_knowledge.dart';
 import 'core/locale_scope.dart';
-import 'package:myportofilo/gen/l10n/app_localizations.dart';
+import 'generated/l10n/app_localizations.dart';
 
 class PortfolioScreen extends StatefulWidget {
   const PortfolioScreen({super.key});

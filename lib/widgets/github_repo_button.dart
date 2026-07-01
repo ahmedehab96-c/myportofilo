@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:myportofilo/gen/l10n/app_localizations.dart';
+import '../generated/l10n/app_localizations.dart';
 
 /// GitHub action: opens public repo or shows private-repo notice.
 class GithubRepoButton extends StatelessWidget {

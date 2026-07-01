@@ -5,7 +5,7 @@ import 'package:animate_do/animate_do.dart';
 
 import 'core/locale_scope.dart';
 import 'data/portfolio_content.dart';
-import 'package:myportofilo/gen/l10n/app_localizations.dart';
+import 'generated/l10n/app_localizations.dart';
 import 'widgets/zoomable_image.dart';
 import 'widgets/github_repo_button.dart';
 
