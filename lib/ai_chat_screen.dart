@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'data/portfolio_content.dart';
-import 'core/locale_scope.dart';
-import 'generated/l10n/app_localizations.dart';
+import 'ui_strings.dart';
 import 'services/portfolio_assistant_service.dart';
 
 class AIChatScreen extends StatefulWidget {
@@ -35,9 +34,8 @@ class _AIChatScreenState extends State<AIChatScreen> {
   }
 
   void _addWelcomeMessage() {
-    final l10n = AppLocalizations.of(context);
     _messages.add(ChatMessage(
-      text: l10n.welcomeMessage(PortfolioContent.assistantDataVersion),
+      text: UiStrings.welcomeMessage(PortfolioContent.assistantDataVersion),
       isUser: false,
       timestamp: DateTime.now(),
     ));
@@ -67,8 +65,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
     _scrollToBottom();
 
     try {
-      final locale = LocaleScope.of(context).locale;
-      final response = await PortfolioAssistantService.reply(text, locale: locale);
+      final response = await PortfolioAssistantService.reply(text);
       if (!mounted) return;
       setState(() {
         _messages.add(ChatMessage(
@@ -80,10 +77,9 @@ class _AIChatScreenState extends State<AIChatScreen> {
       });
     } catch (_) {
       if (!mounted) return;
-      final l10n = AppLocalizations.of(context);
       setState(() {
         _messages.add(ChatMessage(
-          text: l10n.somethingWentWrong,
+          text: UiStrings.somethingWentWrong,
           isUser: false,
           timestamp: DateTime.now(),
         ));
@@ -108,7 +104,6 @@ class _AIChatScreenState extends State<AIChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -116,7 +111,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
             const FaIcon(FontAwesomeIcons.robot, color: Color(0xFF0099FF)),
             const SizedBox(width: 12),
             Text(
-              l10n.aiAssistant,
+              UiStrings.aiAssistant,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -164,10 +159,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
   }
 
   Widget _buildSuggestionChips() {
-    final locale = LocaleScope.of(context).locale;
-    final l10n = AppLocalizations.of(context);
-    final questions =
-        PortfolioAssistantService.suggestedQuestionsFor(locale);
+    final questions = PortfolioAssistantService.suggestedQuestions;
 
     return Container(
       constraints: const BoxConstraints(maxHeight: 168),
@@ -177,7 +169,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            l10n.suggestedQuestions(questions.length),
+            UiStrings.suggestedQuestions(questions.length),
             style: TextStyle(
               color: Colors.white.withValues(alpha: 0.7),
               fontSize: 12,
@@ -344,7 +336,6 @@ class _AIChatScreenState extends State<AIChatScreen> {
   }
 
   Widget _buildInputField() {
-    final l10n = AppLocalizations.of(context);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -373,7 +364,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
                 child: TextField(
                   controller: _messageController,
                   decoration: InputDecoration(
-                    hintText: l10n.typeMessage,
+                    hintText: UiStrings.typeMessage,
                     hintStyle: const TextStyle(color: Colors.white60),
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(

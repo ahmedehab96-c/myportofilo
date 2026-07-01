@@ -3,9 +3,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:animate_do/animate_do.dart';
 
-import 'core/locale_scope.dart';
+import 'ui_strings.dart';
 import 'data/portfolio_content.dart';
-import 'generated/l10n/app_localizations.dart';
 import 'widgets/zoomable_image.dart';
 import 'widgets/github_repo_button.dart';
 
@@ -58,8 +57,6 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
     'flutter_screenutil': Color(0xFF78909C),
   };
 
-  AppLocalizations get l10n => AppLocalizations.of(context);
-
   @override
   void initState() {
     super.initState();
@@ -87,34 +84,33 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
       } else {
         if (!ctx.mounted) return;
         messenger.showSnackBar(
-          SnackBar(content: Text(l10n.couldNotOpenLink)),
+          SnackBar(content: Text(UiStrings.couldNotOpenLink)),
         );
       }
     } catch (e) {
       if (!ctx.mounted) return;
       messenger.showSnackBar(
-        SnackBar(content: Text(l10n.errorGeneric(e.toString()))),
+        SnackBar(content: Text(UiStrings.errorGeneric(e.toString()))),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final locale = LocaleScope.of(context).locale;
     final isWide = MediaQuery.of(context).size.width >= 960;
 
     return Scaffold(
       backgroundColor: _ghBg,
-      appBar: _buildAppBar(context, locale),
+      appBar: _buildAppBar(context),
       body: SingleChildScrollView(
         child: isWide
-            ? _buildWideLayout(context, locale)
-            : _buildNarrowLayout(context, locale),
+            ? _buildWideLayout(context)
+            : _buildNarrowLayout(context),
       ),
     );
   }
 
-  AppBar _buildAppBar(BuildContext context, Locale locale) {
+  AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: _ghSurface,
       elevation: 0,
@@ -138,38 +134,38 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
     );
   }
 
-  Widget _buildWideLayout(BuildContext context, Locale locale) {
+  Widget _buildWideLayout(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(flex: 7, child: _buildProjectPanel(context, locale)),
+          Expanded(flex: 7, child: _buildProjectPanel(context)),
           const SizedBox(width: 24),
-          SizedBox(width: 280, child: _buildSidebar(context, locale)),
+          SizedBox(width: 280, child: _buildSidebar(context)),
         ],
       ),
     );
   }
 
-  Widget _buildNarrowLayout(BuildContext context, Locale locale) {
+  Widget _buildNarrowLayout(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSidebar(context, locale),
+          _buildSidebar(context),
           const SizedBox(height: 20),
-          _buildProjectPanel(context, locale),
+          _buildProjectPanel(context),
         ],
       ),
     );
   }
 
-  Widget _buildProjectPanel(BuildContext context, Locale locale) {
+  Widget _buildProjectPanel(BuildContext context) {
     final project = widget.project;
-    final readme = project.localizedReadme(locale).trim();
-    final features = project.localizedFeatures(locale);
+    final readme = project.readmeEn.trim();
+    final features = project.featuresEn;
 
     return FadeInUp(
       duration: const Duration(milliseconds: 500),
@@ -203,7 +199,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 const SizedBox(height: 28),
               ],
               Text(
-                l10n.overview,
+                UiStrings.overview,
                 style: const TextStyle(
                   color: _ghText,
                   fontSize: 20,
@@ -225,7 +221,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
               ),
               const SizedBox(height: 24),
               Text(
-                l10n.features,
+                UiStrings.features,
                 style: const TextStyle(
                   color: _ghText,
                   fontSize: 20,
@@ -260,7 +256,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
               ),
               const SizedBox(height: 24),
               Text(
-                l10n.techStack,
+                UiStrings.techStack,
                 style: const TextStyle(
                   color: _ghText,
                   fontSize: 20,
@@ -283,7 +279,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                   onPressed: () => _launch(context, project.githubUrl!),
                   icon: const FaIcon(FontAwesomeIcons.github, size: 14),
                   label: Text(
-                    l10n.viewReadmeGitHub,
+                    UiStrings.viewReadmeGitHub,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -378,7 +374,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
             ),
             const SizedBox(width: 8),
             Text(
-              l10n.pageOf(_currentPage + 1, widget.project.screenshots.length),
+              UiStrings.pageOf(_currentPage + 1, widget.project.screenshots.length),
               style: const TextStyle(color: _ghMuted, fontSize: 12),
             ),
           ],
@@ -433,7 +429,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                         const Icon(Icons.image_outlined,
                             color: _ghMuted, size: 48),
                         const SizedBox(height: 8),
-                        Text(l10n.screenshotSoon,
+                        Text(UiStrings.screenshotSoon,
                             style: const TextStyle(
                                 color: _ghMuted, fontSize: 14)),
                       ],
@@ -455,7 +451,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                   children: [
                     const Icon(Icons.zoom_in, color: Colors.white70, size: 14),
                     const SizedBox(width: 4),
-                    Text(l10n.viewFull,
+                    Text(UiStrings.viewFull,
                         style: const TextStyle(
                             color: Colors.white70, fontSize: 12)),
                   ],
@@ -499,7 +495,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
     );
   }
 
-  Widget _buildSidebar(BuildContext context, Locale locale) {
+  Widget _buildSidebar(BuildContext context) {
     final project = widget.project;
 
     return FadeInRight(
@@ -519,7 +515,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  l10n.about,
+                  UiStrings.about,
                   style: const TextStyle(
                     color: _ghText,
                     fontSize: 15,
@@ -528,7 +524,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  project.localizedCardDescription(locale).trim(),
+                  project.cardDescription.trim(),
                   style: const TextStyle(
                     color: _ghMuted,
                     fontSize: 13,
@@ -539,7 +535,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 const Divider(color: _ghBorder, height: 1),
                 const SizedBox(height: 16),
                 Text(
-                  l10n.topics,
+                  UiStrings.topics,
                   style: const TextStyle(
                     color: _ghText,
                     fontSize: 13,

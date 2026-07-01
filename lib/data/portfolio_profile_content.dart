@@ -22,14 +22,11 @@ class ProfileEducationEntry {
   final List<(String, String)> detailsAr;
   final Color color;
 
-  String title(Locale locale) =>
-      PortfolioProfileContent.isArabic(locale) ? titleAr : titleEn;
+  String title(Locale locale) => titleEn;
 
-  String subtitle(Locale locale) =>
-      PortfolioProfileContent.isArabic(locale) ? subtitleAr : subtitleEn;
+  String subtitle(Locale locale) => subtitleEn;
 
-  List<(String, String)> details(Locale locale) =>
-      PortfolioProfileContent.isArabic(locale) ? detailsAr : detailsEn;
+  List<(String, String)> details(Locale locale) => detailsEn;
 }
 
 class ProfileSkillCategory {
@@ -49,53 +46,34 @@ class ProfileSkillCategory {
   final List<String> skillsEn;
   final List<String> skillsAr;
 
-  String category(Locale locale) =>
-      PortfolioProfileContent.isArabic(locale) ? categoryAr : categoryEn;
+  String category(Locale locale) => categoryEn;
 
-  List<String> skills(Locale locale) =>
-      PortfolioProfileContent.isArabic(locale) ? skillsAr : skillsEn;
+  List<String> skills(Locale locale) => skillsEn;
 }
 
 /// Bilingual profile content for About, Education, and Skills sections.
 class PortfolioProfileContent {
   PortfolioProfileContent._();
 
-  static bool isArabic(Locale locale) => locale.languageCode == 'ar';
+  static bool isArabic(Locale locale) => false;
 
-  static String role(Locale locale) =>
-      isArabic(locale) ? 'مهندس Flutter متوسط' : PortfolioKnowledge.role;
+  static String role(Locale locale) => PortfolioKnowledge.role;
 
-  static String tagline(Locale locale) => isArabic(locale)
-      ? 'أصمم تجارب موبايل جميلة وعملية مع تركيز على تجربة المستخدم والكود النظيف'
-      : PortfolioKnowledge.tagline;
+  static String tagline(Locale locale) => PortfolioKnowledge.tagline;
 
-  static String aboutParagraph1(Locale locale) => isArabic(locale)
-      ? 'أنا مهندس Flutter متوسط الخبرة مع أكثر من 3 سنوات في بناء تطبيقات متجاوبة وغنية بالميزات. أستمتع بحل المشكلات وتصميم واجهات سهلة الاستخدام تعمل بسلاسة على مختلف المنصات.'
-      : PortfolioKnowledge.aboutParagraph1;
+  static String aboutParagraph1(Locale locale) => PortfolioKnowledge.aboutParagraph1;
 
-  static String aboutParagraph2(Locale locale) => isArabic(locale)
-      ? 'أركز على كتابة كود نظيف وفعّال وقابل للصيانة مع تقديم تجارب مستخدم مميزة. أطور مهاراتي باستمرار بمساعدة أدوات الذكاء الاصطناعي مثل Cursor وClaude لتسريع التطوير واستكشاف أنماط جديدة.'
-      : PortfolioKnowledge.aboutParagraph2;
+  static String aboutParagraph2(Locale locale) => PortfolioKnowledge.aboutParagraph2;
 
-  static List<String> aboutHighlights(Locale locale) => isArabic(locale)
-      ? [
-          'Flutter',
-          'Dart',
-          'Firebase',
-          'GetX',
-          'REST API',
-          'معمارية نظيفة',
-          'UI/UX',
-        ]
-      : [
-          'Flutter',
-          'Dart',
-          'Firebase',
-          'GetX',
-          'REST API',
-          'Clean Architecture',
-          'UI/UX',
-        ];
+  static List<String> aboutHighlights(Locale locale) => const [
+        'Flutter',
+        'Dart',
+        'Firebase',
+        'GetX',
+        'REST API',
+        'Clean Architecture',
+        'UI/UX',
+      ];
 
   static List<ProfileEducationEntry> educationEntries(Locale locale) => const [
       ProfileEducationEntry(

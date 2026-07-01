@@ -5,15 +5,7 @@
       "name": "myportofilo (Chrome)",
       "request": "launch",
       "type": "dart",
-      "preLaunchTask": "Flutter: prepare (pub get + gen-l10n)",
       "deviceId": "chrome"
-    },
-    {
-      "name": "myportofilo (profile mode)",
-      "request": "launch",
-      "type": "dart",
-      "preLaunchTask": "Flutter: prepare (pub get + gen-l10n)",
-      "flutterMode": "profile"
     }
   ]
 }

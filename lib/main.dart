@@ -2,12 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'core/locale_controller.dart';
-import 'core/locale_scope.dart';
-import 'generated/l10n/app_localizations.dart';
 import 'portfolio_screen.dart';
 
 Future<void> main() async {
@@ -16,35 +12,26 @@ Future<void> main() async {
     FlutterError.onError = (details) {
       FlutterError.presentError(details);
       if (kIsWeb) {
-        // Surfaces framework errors in the browser console on web deploys.
         debugPrint(details.exceptionAsString());
       }
     };
-    final localeController = await LocaleController.load();
-    runApp(MyPortfolioApp(localeController: localeController));
+    runApp(const MyPortfolioApp());
   }, (error, stack) {
     debugPrint('Portfolio startup failed: $error\n$stack');
   });
 }
 
 class MyPortfolioApp extends StatelessWidget {
-  const MyPortfolioApp({super.key, required this.localeController});
+  const MyPortfolioApp({super.key});
 
-  final LocaleController localeController;
-
-  ThemeData _themeFor(Locale locale) {
+  ThemeData get _theme {
     final darkText = ThemeData.dark().textTheme;
-    // Avoid runtime font CDN fetches on web (can block first paint on Netlify).
     final baseFont = kIsWeb
         ? darkText.apply(
-            fontFamily: locale.languageCode == 'ar' ? 'Tahoma' : 'system-ui',
-            fontFamilyFallback: locale.languageCode == 'ar'
-                ? const ['Arial', 'sans-serif']
-                : const ['Segoe UI', 'Roboto', 'sans-serif'],
+            fontFamily: 'system-ui',
+            fontFamilyFallback: const ['Segoe UI', 'Roboto', 'sans-serif'],
           )
-        : locale.languageCode == 'ar'
-            ? GoogleFonts.cairoTextTheme(darkText)
-            : GoogleFonts.poppinsTextTheme(darkText);
+        : GoogleFonts.poppinsTextTheme(darkText);
 
     return ThemeData(
       useMaterial3: true,
@@ -66,7 +53,7 @@ class MyPortfolioApp extends StatelessWidget {
           color: const Color(0xFF0099FF),
           fontSize: 48,
           fontWeight: FontWeight.w800,
-          letterSpacing: locale.languageCode == 'ar' ? 0 : 1.5,
+          letterSpacing: 1.5,
         ),
         bodyLarge: baseFont.bodyLarge?.copyWith(
           color: Colors.white,
@@ -109,44 +96,11 @@ class MyPortfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LocaleScope(
-      controller: localeController,
-      child: ListenableBuilder(
-        listenable: localeController,
-        builder: (context, _) {
-          final locale = localeController.locale;
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Ahmed\'s Portfolio',
-            locale: locale,
-            supportedLocales: AppLocalizations.supportedLocales,
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            theme: _themeFor(locale),
-            localeResolutionCallback: (deviceLocale, supportedLocales) {
-              for (final supported in supportedLocales) {
-                if (supported.languageCode == locale.languageCode) {
-                  return supported;
-                }
-              }
-              return const Locale('en');
-            },
-            builder: (context, child) {
-              return Directionality(
-                textDirection: localeController.isArabic
-                    ? TextDirection.rtl
-                    : TextDirection.ltr,
-                child: child ?? const SizedBox.shrink(),
-              );
-            },
-            home: const PortfolioScreen(),
-          );
-        },
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: "Ahmed's Portfolio",
+      theme: _theme,
+      home: const PortfolioScreen(),
     );
   }
 }

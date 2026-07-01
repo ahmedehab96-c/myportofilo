@@ -2,7 +2,7 @@
 set -e
 cd "$(dirname "$0")"
 
-echo "==> Installing dependencies + l10n"
+echo "==> Installing dependencies"
 ./prepare_project.sh
 
 echo "==> Building web (no service worker)"

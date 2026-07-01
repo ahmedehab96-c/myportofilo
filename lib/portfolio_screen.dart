@@ -14,8 +14,7 @@ import 'widgets/portfolio_background.dart';
 import 'data/portfolio_content.dart';
 import 'data/portfolio_profile_content.dart';
 import 'services/portfolio_knowledge.dart';
-import 'core/locale_scope.dart';
-import 'generated/l10n/app_localizations.dart';
+import 'ui_strings.dart';
 
 class PortfolioScreen extends StatefulWidget {
   const PortfolioScreen({super.key});
@@ -26,9 +25,6 @@ class PortfolioScreen extends StatefulWidget {
 
 class _PortfolioScreenState extends State<PortfolioScreen>
     with TickerProviderStateMixin {
-  AppLocalizations get l10n => AppLocalizations.of(context);
-  Locale get appLocale => LocaleScope.of(context).locale;
-
   late AnimationController _controller;
   final Map<int, bool> hoveredItems = {};
   String displayedName = "";
@@ -153,33 +149,12 @@ class _PortfolioScreenState extends State<PortfolioScreen>
     );
   }
 
-  Widget _buildLanguageToggle({bool compact = false}) {
-    final controller = LocaleScope.of(context);
-    return TextButton(
-      onPressed: controller.toggle,
-      style: TextButton.styleFrom(
-        foregroundColor: const Color(0xFF0099FF),
-        padding: EdgeInsets.symmetric(
-          horizontal: compact ? 10 : 14,
-          vertical: compact ? 6 : 8,
-        ),
-      ),
-      child: Text(
-        l10n.languageToggle,
-        style: TextStyle(
-          fontWeight: FontWeight.w700,
-          fontSize: compact ? 13 : 14,
-        ),
-      ),
-    );
-  }
-
   String _contactLabel(String key) {
     switch (key) {
       case 'Phone':
-        return l10n.phone;
+        return UiStrings.phone;
       case 'Email':
-        return l10n.email;
+        return UiStrings.email;
       case 'GitHub':
         return 'GitHub';
       case 'LinkedIn':
@@ -198,7 +173,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
         foregroundColor: Colors.white,
         icon: const FaIcon(FontAwesomeIcons.robot, size: 20),
         label: Text(
-          l10n.navAI,
+          UiStrings.navAI,
           style: const TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
@@ -212,40 +187,40 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                     DrawerHeader(
                       decoration: const BoxDecoration(color: Colors.blueAccent),
                       child: Text(
-                        l10n.navNavigation,
+                        UiStrings.navNavigation,
                         style: const TextStyle(color: Colors.white, fontSize: 24),
                       ),
                     ),
                     ListTile(
-                      title: Text(l10n.navAbout),
+                      title: Text(UiStrings.navAbout),
                       onTap: () {
                         Navigator.pop(context);
                         _scrollToKey(aboutKey);
                       },
                     ),
                     ListTile(
-                      title: Text(l10n.navEducation),
+                      title: Text(UiStrings.navEducation),
                       onTap: () {
                         Navigator.pop(context);
                         _scrollToKey(educationKey);
                       },
                     ),
                     ListTile(
-                      title: Text(l10n.navSkills),
+                      title: Text(UiStrings.navSkills),
                       onTap: () {
                         Navigator.pop(context);
                         _scrollToKey(skillsKey);
                       },
                     ),
                     ListTile(
-                      title: Text(l10n.navProjects),
+                      title: Text(UiStrings.navProjects),
                       onTap: () {
                         Navigator.pop(context);
                         _scrollToKey(projectsKey);
                       },
                     ),
                     ListTile(
-                      title: Text(l10n.navContact),
+                      title: Text(UiStrings.navContact),
                       onTap: () {
                         Navigator.pop(context);
                         _scrollToKey(contactKey);
@@ -258,18 +233,10 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                         color: Color(0xFF0099FF),
                         size: 20,
                       ),
-                      title: Text(l10n.navAI),
+                      title: Text(UiStrings.navAI),
                       onTap: () {
                         Navigator.pop(context);
                         _openAssistant();
-                      },
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.language, color: Color(0xFF0099FF)),
-                      title: Text(l10n.languageToggle),
-                      onTap: () {
-                        LocaleScope.of(context).toggle();
-                        Navigator.pop(context);
                       },
                     ),
                   ],
@@ -481,7 +448,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                 const FaIcon(FontAwesomeIcons.flutter, color: Colors.white, size: 16),
                 const SizedBox(width: 8),
                 Text(
-                  PortfolioProfileContent.role(appLocale),
+                  PortfolioProfileContent.role(const Locale('en')),
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
@@ -518,7 +485,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
           duration: const Duration(milliseconds: 1000),
           delay: const Duration(milliseconds: 400),
           child: Text(
-            l10n.heroTagline,
+            UiStrings.heroTagline,
             style: TextStyle(
               color: Colors.white60,
               fontWeight: FontWeight.w400,
@@ -545,11 +512,11 @@ class _PortfolioScreenState extends State<PortfolioScreen>
               mainAxisSize: isDesktop ? MainAxisSize.min : MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildStatItem(PortfolioKnowledge.yearsOfExperience, l10n.yearsExp),
+                _buildStatItem(PortfolioKnowledge.yearsOfExperience, UiStrings.yearsExp),
                 Container(width: 1, height: 40, color: Colors.white12),
-                _buildStatItem("10+", l10n.statProjects),
+                _buildStatItem("10+", UiStrings.statProjects),
                 Container(width: 1, height: 40, color: Colors.white12),
-                _buildStatItem("6+", l10n.statTechnologies),
+                _buildStatItem("6+", UiStrings.statTechnologies),
               ],
             ),
           ),
@@ -582,7 +549,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                   onPressed: () => _scrollToKey(projectsKey),
                   icon: const FaIcon(FontAwesomeIcons.briefcase, size: 18),
                   label: Text(
-                    l10n.viewProjects,
+                    UiStrings.viewProjects,
                     style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                   ),
                   style: ElevatedButton.styleFrom(
@@ -599,7 +566,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                 onPressed: () => _scrollToKey(contactKey),
                 icon: const FaIcon(FontAwesomeIcons.envelope, size: 16),
                 label: Text(
-                  l10n.contactMe,
+                  UiStrings.contactMe,
                   style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
                 style: OutlinedButton.styleFrom(
@@ -685,7 +652,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildSectionTitle(l10n.aboutMe),
+                _buildSectionTitle(UiStrings.aboutMe),
                 const SizedBox(height: 24),
                 Container(
                   padding: const EdgeInsets.all(24),
@@ -708,7 +675,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        PortfolioProfileContent.aboutParagraph1(appLocale),
+                        PortfolioProfileContent.aboutParagraph1(const Locale('en')),
                         style: TextStyle(
                           fontSize: isSmall ? 15 : 17,
                           color: Colors.white70,
@@ -717,7 +684,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        PortfolioProfileContent.aboutParagraph2(appLocale),
+                        PortfolioProfileContent.aboutParagraph2(const Locale('en')),
                         style: TextStyle(
                           fontSize: isSmall ? 15 : 17,
                           color: Colors.white70,
@@ -728,7 +695,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                       Wrap(
                         spacing: 10,
                         runSpacing: 10,
-                        children: PortfolioProfileContent.aboutHighlights(appLocale)
+                        children: PortfolioProfileContent.aboutHighlights(const Locale('en'))
                             .map((tag) => Container(
                           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
                           decoration: BoxDecoration(
@@ -761,7 +728,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   }
 
   Widget _buildEducation() {
-    final entries = PortfolioProfileContent.educationEntries(appLocale);
+    final entries = PortfolioProfileContent.educationEntries(const Locale('en'));
     final icons = [
       FontAwesomeIcons.graduationCap,
       FontAwesomeIcons.flutter,
@@ -777,7 +744,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSectionTitle(l10n.educationTitle),
+              _buildSectionTitle(UiStrings.educationTitle),
               const SizedBox(height: 24),
               ...List.generate(entries.length, (index) {
                 final entry = entries[index];
@@ -795,10 +762,10 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                       child: _buildEducationCard(
                         icon: icon,
                         iconColor: entry.color,
-                        title: entry.title(appLocale),
-                        subtitle: entry.subtitle(appLocale),
+                        title: entry.title(const Locale('en')),
+                        subtitle: entry.subtitle(const Locale('en')),
                         details: entry
-                            .details(appLocale)
+                            .details(const Locale('en'))
                             .map((d) => (d.$1, d.$2, entry.color))
                             .toList(),
                       ),
@@ -913,7 +880,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (label != l10n.description)
+                      if (label != UiStrings.description)
                         Text(
                           label,
                           style: TextStyle(
@@ -923,13 +890,13 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                             letterSpacing: 0.5,
                           ),
                         ),
-                      if (label != l10n.description) const SizedBox(height: 4),
+                      if (label != UiStrings.description) const SizedBox(height: 4),
                       Text(
                         value,
                         style: TextStyle(
-                          fontSize: label == l10n.description ? 14 : 14,
+                          fontSize: label == UiStrings.description ? 14 : 14,
                           color: color,
-                          fontWeight: label == l10n.description ? FontWeight.normal : FontWeight.w600,
+                          fontWeight: label == UiStrings.description ? FontWeight.normal : FontWeight.w600,
                           height: 1.6,
                         ),
                       ),
@@ -945,7 +912,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   }
 
   Widget _buildSkills() {
-    final skills = PortfolioProfileContent.skillCategories(appLocale);
+    final skills = PortfolioProfileContent.skillCategories(const Locale('en'));
 
     return Container(
       padding: const EdgeInsets.all(24.0),
@@ -954,8 +921,8 @@ class _PortfolioScreenState extends State<PortfolioScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSectionTitle(
-            l10n.skillsTitle,
-            subtitle: l10n.skillsSubtitle,
+            UiStrings.skillsTitle,
+            subtitle: UiStrings.skillsSubtitle,
           ),
           const SizedBox(height: 32),
           LayoutBuilder(
@@ -1022,7 +989,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                                     const SizedBox(width: 16),
                                     Expanded(
                                       child: Text(
-                                        category.category(appLocale),
+                                        category.category(const Locale('en')),
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleLarge
@@ -1036,7 +1003,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                                   ],
                                 ),
                                 const SizedBox(height: 24),
-                                ...category.skills(appLocale).map(
+                                ...category.skills(const Locale('en')).map(
                                   (skill) => Padding(
                                     padding: const EdgeInsets.only(bottom: 16),
                                     child: Row(
@@ -1110,8 +1077,8 @@ class _PortfolioScreenState extends State<PortfolioScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildSectionTitle(
-                l10n.featuredProjects,
-                subtitle: l10n.featuredProjectsSubtitle,
+                UiStrings.featuredProjects,
+                subtitle: UiStrings.featuredProjectsSubtitle,
               ),
               const SizedBox(height: 36),
               Wrap(
@@ -1219,7 +1186,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                           ),
                         ),
                         child: Text(
-                          project.isGithubPrivate ? l10n.privateRepo : l10n.openSource,
+                          project.isGithubPrivate ? UiStrings.privateRepo : UiStrings.openSource,
                           style: const TextStyle(
                             color: Colors.white70,
                             fontSize: 11,
@@ -1248,7 +1215,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        project.localizedCardDescription(appLocale),
+                        project.localizedCardDescription(const Locale('en')),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
@@ -1314,7 +1281,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                               onPressed: () => _openProjectDetails(project),
                               icon: const Icon(Icons.arrow_outward, size: 16),
                               label: Text(
-                                l10n.viewProject,
+                                UiStrings.viewProject,
                                 style: const TextStyle(fontWeight: FontWeight.w600),
                               ),
                               style: FilledButton.styleFrom(
@@ -1339,8 +1306,8 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                                     : primary,
                               ),
                               tooltip: project.isGithubPrivate
-                                  ? l10n.privateOnGithub
-                                  : l10n.viewOnGithub,
+                                  ? UiStrings.privateOnGithub
+                                  : UiStrings.viewOnGithub,
                               style: IconButton.styleFrom(
                                 backgroundColor: Colors.white.withValues(alpha: 0.08),
                                 padding: const EdgeInsets.all(12),
@@ -1392,8 +1359,8 @@ class _PortfolioScreenState extends State<PortfolioScreen>
               mainAxisSize: MainAxisSize.min,
               children: [
                 _buildSectionTitle(
-                  l10n.getInTouch,
-                  subtitle: l10n.getInTouchSubtitle,
+                  UiStrings.getInTouch,
+                  subtitle: UiStrings.getInTouchSubtitle,
                 ),
                 SizedBox(height: isSmallScreen ? 24 : 32),
                 AnimationLimiter(
@@ -1435,13 +1402,13 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                                       } else {
                                         if (!mounted) return;
                                         messenger.showSnackBar(
-                                          SnackBar(content: Text(l10n.couldNotOpenLink)),
+                                          SnackBar(content: Text(UiStrings.couldNotOpenLink)),
                                         );
                                       }
                                     } catch (e) {
                                       if (!mounted) return;
                                       messenger.showSnackBar(
-                                        SnackBar(content: Text(l10n.errorGeneric(e.toString()))),
+                                        SnackBar(content: Text(UiStrings.errorGeneric(e.toString()))),
                                       );
                                     }
                                   },
@@ -1581,7 +1548,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
           child: ElevatedButton.icon(
             icon: const FaIcon(FontAwesomeIcons.filePdf, size: 22),
             label: Text(
-              l10n.downloadCv,
+              UiStrings.downloadCv,
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
@@ -1596,14 +1563,14 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                 } else {
                   if (mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(l10n.couldNotOpenLink)),
+                      SnackBar(content: Text(UiStrings.couldNotOpenLink)),
                     );
                   }
                 }
               } catch (e) {
                 if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(l10n.errorGeneric(e.toString()))),
+                    SnackBar(content: Text(UiStrings.errorGeneric(e.toString()))),
                   );
                 }
               }
@@ -1652,7 +1619,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
           child: ElevatedButton.icon(
             icon: const FaIcon(FontAwesomeIcons.robot, size: 24),
             label: Text(
-              l10n.chatWithAI,
+              UiStrings.chatWithAI,
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -1706,7 +1673,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
           ),
           const SizedBox(height: 8),
           Text(
-            l10n.builtWith,
+            UiStrings.builtWith,
             style: const TextStyle(
               color: Colors.white70,
               fontSize: 14,
@@ -1732,7 +1699,6 @@ class _PortfolioScreenState extends State<PortfolioScreen>
             color: Color(0xFF0099FF),
           ),
           elevation: 0,
-          actions: [_buildLanguageToggle(compact: true)],
         ),
       );
     }
@@ -1759,12 +1725,11 @@ class _PortfolioScreenState extends State<PortfolioScreen>
           ),
           Row(
             children: [
-              _navButton(l10n.navAbout, aboutKey),
-              _navButton(l10n.navEducation, educationKey),
-              _navButton(l10n.navSkills, skillsKey),
-              _navButton(l10n.navProjects, projectsKey),
-              _navButton(l10n.navContact, contactKey),
-              _buildLanguageToggle(),
+              _navButton(UiStrings.navAbout, aboutKey),
+              _navButton(UiStrings.navEducation, educationKey),
+              _navButton(UiStrings.navSkills, skillsKey),
+              _navButton(UiStrings.navProjects, projectsKey),
+              _navButton(UiStrings.navContact, contactKey),
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: TextButton.icon(
@@ -1782,7 +1747,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                   onPressed: _openAssistant,
                   icon: const FaIcon(FontAwesomeIcons.robot, size: 16),
                   label: Text(
-                    l10n.navAIShort,
+                    UiStrings.navAIShort,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,

@@ -390,19 +390,13 @@ class PortfolioProject {
   final String? githubUrl;
   final bool isGithubPrivate;
 
-  bool _isArabic(Locale locale) => locale.languageCode == 'ar';
+  String localizedCardDescription(Locale locale) => cardDescription;
 
-  String localizedCardDescription(Locale locale) =>
-      _isArabic(locale) ? cardDescriptionAr : cardDescription;
+  String localizedSummary(Locale locale) => summary;
 
-  String localizedSummary(Locale locale) =>
-      _isArabic(locale) ? summaryAr : summary;
+  String localizedReadme(Locale locale) => readmeEn;
 
-  String localizedReadme(Locale locale) =>
-      _isArabic(locale) ? readmeAr : readmeEn;
-
-  List<String> localizedFeatures(Locale locale) =>
-      _isArabic(locale) ? featuresAr : featuresEn;
+  List<String> localizedFeatures(Locale locale) => featuresEn;
 
   /// Backward-compatible alias used by the AI assistant layer.
   List<String> get features => featuresEn;

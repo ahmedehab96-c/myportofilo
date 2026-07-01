@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../generated/l10n/app_localizations.dart';
+import '../ui_strings.dart';
 
 /// GitHub action: opens public repo or shows private-repo notice.
 class GithubRepoButton extends StatelessWidget {
@@ -20,18 +20,16 @@ class GithubRepoButton extends StatelessWidget {
   final bool outlined;
 
   void _showPrivateNotice(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(l10n.privateRepoNotice),
-        duration: const Duration(seconds: 4),
+      const SnackBar(
+        content: Text(UiStrings.privateRepoNotice),
+        duration: Duration(seconds: 4),
       ),
     );
   }
 
   Future<void> _openPublicRepo(BuildContext context) async {
     if (githubUrl == null) return;
-    final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     final uri = Uri.parse(githubUrl!);
     if (await canLaunchUrl(uri)) {
@@ -39,7 +37,7 @@ class GithubRepoButton extends StatelessWidget {
     } else {
       if (!context.mounted) return;
       messenger.showSnackBar(
-        SnackBar(content: Text(l10n.couldNotOpenGithub)),
+        const SnackBar(content: Text(UiStrings.couldNotOpenGithub)),
       );
     }
   }
@@ -48,10 +46,9 @@ class GithubRepoButton extends StatelessWidget {
   Widget build(BuildContext context) {
     if (githubUrl == null) return const SizedBox.shrink();
 
-    final l10n = AppLocalizations.of(context);
     final label = isPrivate
-        ? l10n.privateRepoLabel
-        : (compact ? l10n.code : l10n.sourceCode);
+        ? UiStrings.privateRepoLabel
+        : (compact ? UiStrings.code : UiStrings.sourceCode);
     final icon = isPrivate
         ? FaIcon(FontAwesomeIcons.lock, size: compact ? 14 : 16, color: Colors.white)
         : FaIcon(FontAwesomeIcons.github, size: compact ? 14 : 16, color: Colors.white);
@@ -83,7 +80,7 @@ class GithubRepoButton extends StatelessWidget {
       onPressed: onPressed,
       icon: icon,
       label: Text(
-        isPrivate ? l10n.privateOnGithub : l10n.viewOnGithub,
+        isPrivate ? UiStrings.privateOnGithub : UiStrings.viewOnGithub,
         style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
       ),
       style: ElevatedButton.styleFrom(

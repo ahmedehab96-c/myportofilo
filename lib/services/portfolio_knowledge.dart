@@ -107,7 +107,7 @@ I can answer detailed questions about Ahmed Ehab's portfolio:
   static List<ProjectKnowledge> get projects => projectsFor(const Locale('en'));
 
   static List<String> suggestedQuestionsFor(Locale locale) =>
-      locale.languageCode == 'ar' ? suggestedQuestionsAr : suggestedQuestions;
+      suggestedQuestions;
 
   static const suggestedQuestionsAr = [
     'من أنت؟',
