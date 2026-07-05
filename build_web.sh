@@ -6,23 +6,25 @@ echo "==> Installing dependencies"
 ./prepare_project.sh
 
 echo "==> Building web (release, no service worker)"
-if [ -n "$NETLIFY_DEPLOY" ] || [ "$USE_WASM" = "0" ]; then
-  echo "    Target: canvaskit (dart2js) — best Netlify compatibility"
-  flutter build web --release \
-    --pwa-strategy=none \
-    --tree-shake-icons \
-    --no-wasm-dry-run \
-    --no-web-resources-cdn \
-    -O4 \
-    "$@"
-else
-  echo "    Target: wasm (skwasm) — smaller local build"
+# Default: canvaskit (dart2js) — works on Netlify and all browsers.
+# Set USE_WASM=1 only for optional smaller local preview.
+if [ "$USE_WASM" = "1" ]; then
+  echo "    Target: wasm (skwasm) — local only"
   flutter build web --release \
     --pwa-strategy=none \
     --tree-shake-icons \
     --no-wasm-dry-run \
     --no-web-resources-cdn \
     --wasm \
+    -O4 \
+    "$@"
+else
+  echo "    Target: canvaskit (dart2js) — Netlify + production"
+  flutter build web --release \
+    --pwa-strategy=none \
+    --tree-shake-icons \
+    --no-wasm-dry-run \
+    --no-web-resources-cdn \
     -O4 \
     "$@"
 fi
@@ -42,7 +44,7 @@ fi
 echo "==> Stripping debug symbol files"
 find build/web -name '*.symbols' -delete 2>/dev/null || true
 
-if [ -z "$NETLIFY_DEPLOY" ] && [ "$USE_WASM" != "0" ]; then
+if [ "$USE_WASM" = "1" ]; then
   echo "==> WASM-only trim (smaller first load)"
   # Keep only dart2wasm/skwasm build — remove dart2js fallback (~3MB + 20MB canvaskit).
   perl -0777 -i -pe 's/,\{"compileTarget":"dart2js","renderer":"canvaskit","mainJsPath":"main\.dart\.js"\}//g' build/web/flutter_bootstrap.js
@@ -77,8 +79,8 @@ if grep -q '"builds":\[\]' build/web/flutter_bootstrap.js; then
 fi
 
 TOTAL=$(du -sh build/web | awk '{print $1}')
-WASM=$(du -ch build/web/main.dart.wasm build/web/main.dart.mjs build/web/canvaskit/skwasm.wasm build/web/canvaskit/skwasm.js 2>/dev/null | tail -1 | awk '{print $1}')
+JS=$(du -h build/web/main.dart.js 2>/dev/null | awk '{print $1}')
 
 echo "==> Deploy folder ready: build/web"
-echo "    Total size: $TOTAL (core WASM ~${WASM:-?})"
+echo "    Total size: $TOTAL (main.dart.js ~${JS:-?})"
 echo "    Local preview: ./run_web.sh"

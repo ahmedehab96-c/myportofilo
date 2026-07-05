@@ -16,9 +16,17 @@ fi
 flutter --version
 
 export NETLIFY_DEPLOY=1
+export USE_WASM=0
 
 chmod +x build_web.sh prepare_project.sh
 ./build_web.sh
+
+# Safety: production deploy must ship dart2js, not wasm-only (black screen on Netlify).
+if [ ! -f build/web/main.dart.js ]; then
+  echo "ERROR: main.dart.js missing — refusing wasm-only deploy." >&2
+  exit 1
+fi
+rm -f build/web/main.dart.wasm build/web/main.dart.mjs
 
 echo "==> Netlify deploy size:"
 du -sh build/web
