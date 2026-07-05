@@ -71,6 +71,92 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
 
   Color _techColor(String t) => _techColors[t] ?? const Color(0xFF58A6FF);
 
+  String get _origin {
+    final base = Uri.base;
+    if (base.hasScheme && base.host.isNotEmpty) {
+      return '${base.scheme}://${base.host}${base.hasPort ? ':${base.port}' : ''}';
+    }
+    return '';
+  }
+
+  Widget _buildTrySection(BuildContext context) {
+    final project = widget.project;
+    if (!project.hasTryActions) return const SizedBox.shrink();
+
+    final apkUrl = project.resolveApkUrl(_origin);
+    final webUrl = project.resolveWebTryUrl(_origin);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 16),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: const Color(0xFF388BFD).withValues(alpha: 0.08),
+            border: Border.all(
+              color: const Color(0xFF388BFD).withValues(alpha: 0.25),
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                UiStrings.tryThisProject,
+                style: TextStyle(
+                  color: _ghText,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: [
+                  if (apkUrl != null)
+                    FilledButton.icon(
+                      onPressed: () => _launch(context, apkUrl),
+                      icon: const FaIcon(FontAwesomeIcons.android, size: 16),
+                      label: const Text(UiStrings.downloadApk),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: const Color(0xFF238636),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 12,
+                        ),
+                      ),
+                    ),
+                  if (webUrl != null)
+                    FilledButton.icon(
+                      onPressed: () => _launch(context, webUrl),
+                      icon: const Icon(Icons.open_in_browser, size: 18),
+                      label: Text(
+                        project.webTryIsAdmin
+                            ? UiStrings.tryWebAdmin
+                            : UiStrings.tryWebApp,
+                      ),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: const Color(0xFF388BFD),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 12,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   Future<void> _launch(BuildContext ctx, String url) async {
     final messenger = ScaffoldMessenger.of(ctx);
     try {
@@ -84,7 +170,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
       } else {
         if (!ctx.mounted) return;
         messenger.showSnackBar(
-          SnackBar(content: Text(UiStrings.couldNotOpenLink)),
+          const SnackBar(content: Text(UiStrings.couldNotOpenLink)),
         );
       }
     } catch (e) {
@@ -164,8 +250,8 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
 
   Widget _buildProjectPanel(BuildContext context) {
     final project = widget.project;
-    final readme = project.readmeEn.trim();
-    final features = project.featuresEn;
+    final readme = project.readme.trim();
+    final features = project.features;
 
     return FadeInUp(
       duration: const Duration(milliseconds: 500),
@@ -198,9 +284,9 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 _buildScreenshotGallery(context),
                 const SizedBox(height: 28),
               ],
-              Text(
+              const Text(
                 UiStrings.overview,
-                style: const TextStyle(
+                style: TextStyle(
                   color: _ghText,
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
@@ -220,9 +306,9 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              Text(
+              const Text(
                 UiStrings.features,
-                style: const TextStyle(
+                style: TextStyle(
                   color: _ghText,
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
@@ -255,9 +341,9 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              Text(
+              const Text(
                 UiStrings.techStack,
-                style: const TextStyle(
+                style: TextStyle(
                   color: _ghText,
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
@@ -278,9 +364,9 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 OutlinedButton.icon(
                   onPressed: () => _launch(context, project.githubUrl!),
                   icon: const FaIcon(FontAwesomeIcons.github, size: 14),
-                  label: Text(
+                  label: const Text(
                     UiStrings.viewReadmeGitHub,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
@@ -320,7 +406,11 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
             itemCount: widget.project.screenshots.length,
             itemBuilder: (_, i) => Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: _buildSingleScreenshot(context, widget.project.screenshots[i]),
+              child: _buildSingleScreenshot(
+                context,
+                widget.project.screenshots[i],
+                galleryHeight: 380,
+              ),
             ),
           ),
         ),
@@ -383,7 +473,11 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
     );
   }
 
-  Widget _buildSingleScreenshot(BuildContext context, String imagePath) {
+  Widget _buildSingleScreenshot(
+    BuildContext context,
+    String imagePath, {
+    double? galleryHeight,
+  }) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
@@ -406,55 +500,62 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
         tag: imagePath,
         child: Container(
           width: double.infinity,
-          constraints: const BoxConstraints(maxHeight: 380),
+          height: galleryHeight,
+          constraints: galleryHeight == null
+              ? const BoxConstraints(maxHeight: 380)
+              : null,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: _ghBorder),
           ),
           clipBehavior: Clip.antiAlias,
           child: Stack(
-            alignment: Alignment.bottomRight,
+            fit: galleryHeight != null ? StackFit.expand : StackFit.loose,
             children: [
               Image.asset(
                 imagePath,
                 fit: BoxFit.contain,
+                alignment: Alignment.topCenter,
                 width: double.infinity,
                 errorBuilder: (_, __, ___) => Container(
                   height: 200,
                   color: const Color(0xFF0D1117),
-                  child: Center(
+                  child: const Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.image_outlined,
+                        Icon(Icons.image_outlined,
                             color: _ghMuted, size: 48),
-                        const SizedBox(height: 8),
+                        SizedBox(height: 8),
                         Text(UiStrings.screenshotSoon,
-                            style: const TextStyle(
+                            style: TextStyle(
                                 color: _ghMuted, fontSize: 14)),
                       ],
                     ),
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.all(10),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.7),
-                  borderRadius: BorderRadius.circular(6),
-                  border: Border.all(color: Colors.white12),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.zoom_in, color: Colors.white70, size: 14),
-                    const SizedBox(width: 4),
-                    Text(UiStrings.viewFull,
-                        style: const TextStyle(
-                            color: Colors.white70, fontSize: 12)),
-                  ],
+              Positioned(
+                right: 10,
+                bottom: 10,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withValues(alpha: 0.7),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(color: Colors.white12),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.zoom_in, color: Colors.white70, size: 14),
+                      SizedBox(width: 4),
+                      Text(UiStrings.viewFull,
+                          style: TextStyle(
+                              color: Colors.white70, fontSize: 12)),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -514,9 +615,9 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   UiStrings.about,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: _ghText,
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
@@ -534,9 +635,9 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 const SizedBox(height: 16),
                 const Divider(color: _ghBorder, height: 1),
                 const SizedBox(height: 16),
-                Text(
+                const Text(
                   UiStrings.topics,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: _ghText,
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
@@ -574,6 +675,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
               ],
             ),
           ),
+          _buildTrySection(context),
           const SizedBox(height: 16),
           if (project.githubUrl != null)
             SizedBox(

@@ -1,6 +1,9 @@
 [build]
   publish = "build/web"
-  command = "chmod +x build_web.sh && ./build_web.sh"
+  command = "chmod +x scripts/netlify_build.sh && ./scripts/netlify_build.sh"
+
+[build.environment]
+  NETLIFY_DEPLOY = "1"
 
 [[redirects]]
   from = "/*"
@@ -9,14 +12,41 @@
   force = false
 
 [[headers]]
-  for = "/*"
+  for = "/index.html"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+  for = "/flutter_bootstrap.js"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/flutter.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/main.dart.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/main.dart.mjs"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/main.dart.wasm"
+  [headers.values]
+    Content-Type = "application/wasm"
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "/*.wasm"
   [headers.values]
     Content-Type = "application/wasm"
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "/canvaskit/*"
@@ -25,5 +55,15 @@
 
 [[headers]]
   for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/icons/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/favicon.png"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"

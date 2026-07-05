@@ -23,6 +23,7 @@ abstract final class UiStrings {
   static const featuredProjects = 'Featured Projects';
   static const featuredProjectsSubtitle =
       'Selected apps and platforms I designed and built.';
+  static const featuredProject = 'FEATURED';
   static const privateRepo = 'Private repo';
   static const openSource = 'Open source';
   static const viewProject = 'View project';
@@ -33,10 +34,13 @@ abstract final class UiStrings {
   static const email = 'Email';
   static const downloadCv = 'Download CV';
   static const chatWithAI = 'Chat with AI Assistant';
-  static const builtWith = 'Built with Flutter & ❤️';
   static const couldNotOpenLink = 'Could not open link';
   static const techStack = 'Tech Stack';
   static const viewReadmeGitHub = 'View README on GitHub';
+  static const tryThisProject = 'Try this project';
+  static const downloadApk = 'Download APK';
+  static const tryWebAdmin = 'Try Web Admin';
+  static const tryWebApp = 'Try Web App';
   static const about = 'About';
   static const topics = 'Topics';
   static const features = 'Features';

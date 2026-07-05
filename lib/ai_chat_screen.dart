@@ -106,13 +106,13 @@ class _AIChatScreenState extends State<AIChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           children: [
-            const FaIcon(FontAwesomeIcons.robot, color: Color(0xFF0099FF)),
-            const SizedBox(width: 12),
+            FaIcon(FontAwesomeIcons.robot, color: Color(0xFF0099FF)),
+            SizedBox(width: 12),
             Text(
               UiStrings.aiAssistant,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -363,11 +363,11 @@ class _AIChatScreenState extends State<AIChatScreen> {
                 ),
                 child: TextField(
                   controller: _messageController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: UiStrings.typeMessage,
-                    hintStyle: const TextStyle(color: Colors.white60),
+                    hintStyle: TextStyle(color: Colors.white60),
                     border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(
+                    contentPadding: EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 12,
                     ),

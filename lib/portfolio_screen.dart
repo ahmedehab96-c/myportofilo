@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
-import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, TargetPlatform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 import 'project_details_screen.dart';
 import 'ai_chat_screen.dart';
@@ -10,10 +10,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'widgets/brand_contact_icon.dart';
+import 'widgets/deferred_asset_image.dart';
+import 'widgets/glass_panel.dart';
+import 'widgets/hero_stats_strip.dart';
+import 'widgets/nav_pill.dart';
 import 'widgets/portfolio_background.dart';
+import 'widgets/projects_bento_grid.dart';
+import 'widgets/section_block.dart';
 import 'data/portfolio_content.dart';
 import 'data/portfolio_profile_content.dart';
 import 'services/portfolio_knowledge.dart';
+import 'theme/portfolio_palette.dart';
 import 'ui_strings.dart';
 
 class PortfolioScreen extends StatefulWidget {
@@ -25,11 +32,21 @@ class PortfolioScreen extends StatefulWidget {
 
 class _PortfolioScreenState extends State<PortfolioScreen>
     with TickerProviderStateMixin {
+  static const double _navDrawerBreakpoint = 1280;
+
   late AnimationController _controller;
+  final bool _backgroundAnimate = false;
   final Map<int, bool> hoveredItems = {};
   String displayedName = "";
   int currentLetterIndex = 0;
+  bool _nameErasing = false;
   Timer? _letterAnimationTimer;
+
+  static const _heroFullName = 'AHMED EHAB MOHAMMED';
+  static const _nameTypeMs = 42;
+  static const _nameEraseMs = 28;
+  static const _nameHoldMs = 450;
+  static const _namePauseMs = 220;
 
   final ScrollController _scrollController = ScrollController();
   final aboutKey = GlobalKey();
@@ -37,6 +54,11 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   final skillsKey = GlobalKey();
   final projectsKey = GlobalKey();
   final contactKey = GlobalKey();
+
+  int _activeNavIndex = 0;
+  final _sectionKeys = <GlobalKey>[];
+
+  static const _stickyNavHeight = 72.0;
 
   final spacing = 30.0;
   final dotSize = 2.0;
@@ -70,75 +92,134 @@ class _PortfolioScreenState extends State<PortfolioScreen>
     },
   ];
 
+  PortfolioPalette get palette => context.palette;
+
   @override
   void initState() {
     super.initState();
+    _sectionKeys.addAll([aboutKey, educationKey, skillsKey, projectsKey, contactKey]);
+    _scrollController.addListener(_updateActiveSection);
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 24),
-    )..repeat();
+      duration: const Duration(seconds: kIsWeb ? 32 : 24),
+    );
 
-    // Start letter-by-letter animation
+    if (kIsWeb) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_scrollController.hasClients) {
+          _scrollController.jumpTo(0);
+        }
+        _updateActiveSection();
+      });
+    } else {
+      _controller.repeat();
+    }
     _startLetterAnimation();
-
-    // Add delay to start animations
-    Future.delayed(const Duration(milliseconds: 500), () {
-      if (mounted) {
-        setState(() {});
-      }
-    });
   }
 
   void _startLetterAnimation() {
     _letterAnimationTimer?.cancel();
-    const fullName = "AHMED EHAB MOHAMMED";
-    _letterAnimationTimer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
-      if (mounted) {
-        if (currentLetterIndex < fullName.length) {
+
+    void tick() {
+      if (!mounted) return;
+
+      if (!_nameErasing) {
+        if (currentLetterIndex < _heroFullName.length) {
           setState(() {
-            displayedName = fullName.substring(0, currentLetterIndex + 1);
             currentLetterIndex++;
+            displayedName = _heroFullName.substring(0, currentLetterIndex);
           });
-        } else {
-          // Reset after showing full name for 3 seconds
-          Future.delayed(const Duration(seconds: 3), () {
-            if (mounted) {
-              setState(() {
-                displayedName = "";
-                currentLetterIndex = 0;
-              });
-            }
-          });
-          timer.cancel();
-          // Restart animation after 2 seconds
-          Future.delayed(const Duration(seconds: 2), () {
-            if (mounted) {
-              _startLetterAnimation();
-            }
-          });
+          _letterAnimationTimer = Timer(
+            const Duration(milliseconds: _nameTypeMs),
+            tick,
+          );
+          return;
         }
-      } else {
-        timer.cancel();
+
+        _letterAnimationTimer = Timer(
+          const Duration(milliseconds: _nameHoldMs),
+          () {
+            if (!mounted) return;
+            setState(() => _nameErasing = true);
+            tick();
+          },
+        );
+        return;
       }
-    });
+
+      if (currentLetterIndex > 0) {
+        setState(() {
+          currentLetterIndex--;
+          displayedName = _heroFullName.substring(0, currentLetterIndex);
+        });
+        _letterAnimationTimer = Timer(
+          const Duration(milliseconds: _nameEraseMs),
+          tick,
+        );
+        return;
+      }
+
+      setState(() {
+        displayedName = "";
+        _nameErasing = false;
+      });
+      _letterAnimationTimer = Timer(
+        const Duration(milliseconds: _namePauseMs),
+        tick,
+      );
+    }
+
+    tick();
+  }
+
+  void _updateActiveSection() {
+    if (!_scrollController.hasClients) return;
+
+    var active = 0;
+    for (var i = _sectionKeys.length - 1; i >= 0; i--) {
+      final ctx = _sectionKeys[i].currentContext;
+      if (ctx == null) continue;
+      final box = ctx.findRenderObject();
+      if (box is! RenderBox || !box.hasSize) continue;
+      final top = box.localToGlobal(Offset.zero).dy;
+      if (top <= 160) {
+        active = i;
+        break;
+      }
+    }
+
+    if (active != _activeNavIndex && mounted) {
+      setState(() => _activeNavIndex = active);
+    }
   }
 
   @override
   void dispose() {
+    _scrollController.removeListener(_updateActiveSection);
     _letterAnimationTimer?.cancel();
     _controller.dispose();
     _scrollController.dispose();
     super.dispose();
   }
 
+  void _scrollToSection(int index) {
+    if (index < 0 || index >= _sectionKeys.length) return;
+    setState(() => _activeNavIndex = index);
+    _scrollToKey(_sectionKeys[index]);
+  }
+
   void _scrollToKey(GlobalKey key) {
-    final context = key.currentContext;
-    if (context != null) {
+    final ctx = key.currentContext;
+    if (ctx != null) {
       Scrollable.ensureVisible(
-        context,
-        duration: const Duration(milliseconds: 600),
-        curve: Curves.easeInOut,
-      );
+        ctx,
+        duration: const Duration(milliseconds: 1050),
+        curve: Curves.easeInOutCubicEmphasized,
+        alignment: 0.07,
+        alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
+      ).whenComplete(() {
+        if (mounted) _updateActiveSection();
+      });
     }
   }
 
@@ -164,76 +245,88 @@ class _PortfolioScreenState extends State<PortfolioScreen>
     }
   }
 
+  Widget _reveal(Widget child, {Duration delay = Duration.zero}) => FadeInUp(
+        duration: const Duration(milliseconds: kIsWeb ? 520 : 800),
+        delay: delay,
+        from: 20,
+        child: child,
+      );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _openAssistant,
-        backgroundColor: const Color(0xFF0099FF),
+        backgroundColor: PortfolioPalette.accent,
         foregroundColor: Colors.white,
         icon: const FaIcon(FontAwesomeIcons.robot, size: 20),
-        label: Text(
+        label: const Text(
           UiStrings.navAI,
-          style: const TextStyle(fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
-      drawer: MediaQuery.of(context).size.width < 600
+      drawer: MediaQuery.sizeOf(context).width < _navDrawerBreakpoint
           ? Drawer(
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 300),
                 child: ListView(
                   padding: EdgeInsets.zero,
                   children: [
-                    DrawerHeader(
-                      decoration: const BoxDecoration(color: Colors.blueAccent),
+                    const DrawerHeader(
+                      decoration: BoxDecoration(
+                        gradient: PortfolioPalette.accentGradient,
+                      ),
                       child: Text(
                         UiStrings.navNavigation,
-                        style: const TextStyle(color: Colors.white, fontSize: 24),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                     ListTile(
-                      title: Text(UiStrings.navAbout),
+                      title: const Text(UiStrings.navAbout),
                       onTap: () {
                         Navigator.pop(context);
-                        _scrollToKey(aboutKey);
+                        _scrollToSection(0);
                       },
                     ),
                     ListTile(
-                      title: Text(UiStrings.navEducation),
+                      title: const Text(UiStrings.navEducation),
                       onTap: () {
                         Navigator.pop(context);
-                        _scrollToKey(educationKey);
+                        _scrollToSection(1);
                       },
                     ),
                     ListTile(
-                      title: Text(UiStrings.navSkills),
+                      title: const Text(UiStrings.navSkills),
                       onTap: () {
                         Navigator.pop(context);
-                        _scrollToKey(skillsKey);
+                        _scrollToSection(2);
                       },
                     ),
                     ListTile(
-                      title: Text(UiStrings.navProjects),
+                      title: const Text(UiStrings.navProjects),
                       onTap: () {
                         Navigator.pop(context);
-                        _scrollToKey(projectsKey);
+                        _scrollToSection(3);
                       },
                     ),
                     ListTile(
-                      title: Text(UiStrings.navContact),
+                      title: const Text(UiStrings.navContact),
                       onTap: () {
                         Navigator.pop(context);
-                        _scrollToKey(contactKey);
+                        _scrollToSection(4);
                       },
                     ),
-                    const Divider(),
                     ListTile(
                       leading: const FaIcon(
                         FontAwesomeIcons.robot,
                         color: Color(0xFF0099FF),
                         size: 20,
                       ),
-                      title: Text(UiStrings.navAI),
+                      title: const Text(UiStrings.navAI),
                       onTap: () {
                         Navigator.pop(context);
                         _openAssistant();
@@ -246,15 +339,25 @@ class _PortfolioScreenState extends State<PortfolioScreen>
           : null,
       body: LayoutBuilder(
         builder: (context, constraints) {
+          final useDrawerNav = constraints.maxWidth < _navDrawerBreakpoint;
+
           return Stack(
             children: [
               Positioned.fill(
-                child: PortfolioBackground(animation: _controller),
+                child: PortfolioBackground(
+                  animation: _controller,
+                  palette: palette,
+                  animate: _backgroundAnimate,
+                ),
               ),
-              // Content
               SafeArea(
+                top: !kIsWeb,
+                bottom: false,
                 child: SingleChildScrollView(
                   controller: _scrollController,
+                  padding: EdgeInsets.only(
+                    top: useDrawerNav ? 0 : _stickyNavHeight,
+                  ),
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
                       minHeight: constraints.maxHeight,
@@ -264,21 +367,31 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        _buildNavigationBar(),
+                        if (useDrawerNav) _buildNavigationBar(),
                         _buildHeader(),
-                        Container(key: aboutKey, child: _buildAbout()),
-                        Container(key: educationKey, child: _buildEducation()),
+                        _buildAbout(),
+                        _buildEducation(),
                         _buildSkills(),
                         _buildProjects(),
                         _buildContact(),
-                      _buildResumeButton(),
-                      _buildAIChatButton(),
-                      _buildFooter(),
+                        _buildResumeButton(),
+                        _buildAIChatButton(),
+                        _buildFooter(),
                       ],
                     ),
                   ),
                 ),
               ),
+              if (!useDrawerNav)
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: SafeArea(
+                    bottom: false,
+                    child: _buildNavigationBar(),
+                  ),
+                ),
             ],
           );
         },
@@ -292,35 +405,26 @@ class _PortfolioScreenState extends State<PortfolioScreen>
       height: size,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
-        gradient: const LinearGradient(
-          colors: [Color(0xFF0099FF), Color(0xFF7C3AED), Color(0xFF00B4D8)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF0099FF).withValues(alpha: 0.45),
-            blurRadius: 36,
-            spreadRadius: 4,
-            offset: const Offset(0, 12),
-          ),
-        ],
+        gradient: PortfolioPalette.photoRingGradient,
+        boxShadow: palette.accentGlow(alpha: 0.35, blur: 40),
       ),
       padding: const EdgeInsets.all(3),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(25),
         child: ColoredBox(
-          color: const Color(0xFF020617),
-          child: Image.asset(
-            'assets/images/ahmed.jpg',
+          color: palette.bgDeep,
+          child: DeferredAssetImage(
+            asset: 'assets/images/ahmed.jpg',
             fit: BoxFit.contain,
             width: size - 6,
             height: size - 6,
             alignment: Alignment.center,
+            placeholderColor: palette.bgDeep,
+            borderRadius: BorderRadius.circular(25),
             errorBuilder: (_, __, ___) => SizedBox(
               width: size - 6,
               height: size - 6,
-              child: Icon(Icons.person, size: size * 0.35, color: Colors.white38),
+              child: Icon(Icons.person, size: size * 0.35, color: palette.textMuted),
             ),
           ),
         ),
@@ -328,92 +432,8 @@ class _PortfolioScreenState extends State<PortfolioScreen>
     );
   }
 
-  Widget _buildStatItem(String number, String label) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ShaderMask(
-          shaderCallback: (bounds) => const LinearGradient(
-            colors: [Color(0xFF0099FF), Color(0xFF00D4FF)],
-          ).createShader(bounds),
-          child: Text(
-            number,
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.w800,
-              color: Colors.white,
-              letterSpacing: 1,
-            ),
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 12,
-            color: Colors.white54,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.5,
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildSectionTitle(String title, {String? subtitle}) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final isSmall = constraints.maxWidth < 600;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 4,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF0099FF), Color(0xFF7C3AED)],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: isSmall ? 22 : 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      letterSpacing: 0.3,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            if (subtitle != null) ...[
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.only(left: 18),
-                child: Text(
-                  subtitle,
-                  style: TextStyle(
-                    fontSize: isSmall ? 14 : 16,
-                    color: Colors.white60,
-                    height: 1.5,
-                  ),
-                ),
-              ),
-            ],
-          ],
-        );
-      },
-    );
+    return SectionHeader(title: title, subtitle: subtitle);
   }
 
   Widget _buildHeader() {
@@ -421,199 +441,193 @@ class _PortfolioScreenState extends State<PortfolioScreen>
       builder: (context, constraints) {
         final isDesktop = constraints.maxWidth >= 900;
         final isSmall = constraints.maxWidth < 600;
-        final photoSize = isDesktop ? 420.0 : isSmall ? 300.0 : 360.0;
+        final photoSize = isDesktop
+            ? (kIsWeb ? 360.0 : 420.0)
+            : isSmall
+                ? (kIsWeb ? 220.0 : 300.0)
+                : (kIsWeb ? 280.0 : 360.0);
 
-        final badge = FadeInDown(
-          duration: const Duration(milliseconds: 900),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF0099FF), Color(0xFF7C3AED)],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-              borderRadius: BorderRadius.circular(30),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF0099FF).withValues(alpha: 0.4),
-                  blurRadius: 16,
-                  spreadRadius: 1,
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const FaIcon(FontAwesomeIcons.flutter, color: Colors.white, size: 16),
-                const SizedBox(width: 8),
-                Text(
-                  PortfolioProfileContent.role(const Locale('en')),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: isSmall ? 14 : 16,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-              ],
-            ),
+        final badge = Container(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+          decoration: BoxDecoration(
+            gradient: PortfolioPalette.accentGradient,
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: palette.accentGlow(alpha: 0.32, blur: 18),
           ),
-        );
-
-        final nameText = FadeInLeft(
-          duration: const Duration(milliseconds: 1000),
-          delay: const Duration(milliseconds: 200),
-          child: Shimmer.fromColors(
-            baseColor: Colors.white,
-            highlightColor: const Color(0xFF0099FF),
-            period: const Duration(seconds: 3),
-            child: Text(
-              displayedName,
-              style: TextStyle(
-                fontWeight: FontWeight.w900,
-                fontSize: isSmall ? 34 : isDesktop ? 54 : 44,
-                color: Colors.white,
-                letterSpacing: 1.5,
-                height: 1.15,
-              ),
-            ),
-          ),
-        );
-
-        final tagline = FadeInLeft(
-          duration: const Duration(milliseconds: 1000),
-          delay: const Duration(milliseconds: 400),
-          child: Text(
-            UiStrings.heroTagline,
-            style: TextStyle(
-              color: Colors.white60,
-              fontWeight: FontWeight.w400,
-              height: 1.7,
-              fontSize: isSmall ? 14 : 17,
-            ),
-          ),
-        );
-
-        final stats = FadeInUp(
-          duration: const Duration(milliseconds: 900),
-          delay: const Duration(milliseconds: 500),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.04),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: Colors.white.withValues(alpha: 0.08),
-                width: 1,
-              ),
-            ),
-            child: Row(
-              mainAxisSize: isDesktop ? MainAxisSize.min : MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildStatItem(PortfolioKnowledge.yearsOfExperience, UiStrings.yearsExp),
-                Container(width: 1, height: 40, color: Colors.white12),
-                _buildStatItem("10+", UiStrings.statProjects),
-                Container(width: 1, height: 40, color: Colors.white12),
-                _buildStatItem("6+", UiStrings.statTechnologies),
-              ],
-            ),
-          ),
-        );
-
-        final ctaButtons = FadeInUp(
-          duration: const Duration(milliseconds: 900),
-          delay: const Duration(milliseconds: 650),
-          child: Wrap(
-            spacing: 16,
-            runSpacing: 12,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF0099FF), Color(0xFF0077CC)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(14),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF0099FF).withValues(alpha: 0.4),
-                      blurRadius: 20,
-                      offset: const Offset(0, 6),
-                    ),
-                  ],
-                ),
-                child: ElevatedButton.icon(
-                  onPressed: () => _scrollToKey(projectsKey),
-                  icon: const FaIcon(FontAwesomeIcons.briefcase, size: 18),
-                  label: Text(
-                    UiStrings.viewProjects,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                    elevation: 0,
-                    shadowColor: Colors.transparent,
-                  ),
-                ),
-              ),
-              OutlinedButton.icon(
-                onPressed: () => _scrollToKey(contactKey),
-                icon: const FaIcon(FontAwesomeIcons.envelope, size: 16),
-                label: Text(
-                  UiStrings.contactMe,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                ),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  side: BorderSide(
-                    color: const Color(0xFF0099FF).withValues(alpha: 0.6),
-                    width: 1.5,
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              const FaIcon(FontAwesomeIcons.flutter, color: Colors.white, size: 16),
+              const SizedBox(width: 8),
+              Text(
+                PortfolioProfileContent.role(const Locale('en')),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: isSmall ? 14 : 16,
+                  letterSpacing: 0.5,
                 ),
               ),
             ],
           ),
         );
 
+        final nameStyle = TextStyle(
+          fontWeight: FontWeight.w900,
+          fontSize: isSmall ? 34 : isDesktop ? 54 : 44,
+          color: palette.textPrimary,
+          letterSpacing: 1.5,
+          height: 1.15,
+        );
+
+        final showCursor = !_nameErasing &&
+            currentLetterIndex < _heroFullName.length;
+        final nameText = AnimatedOpacity(
+          opacity: displayedName.isEmpty ? 0 : 1,
+          duration: const Duration(milliseconds: 100),
+          curve: Curves.easeOut,
+          child: Shimmer.fromColors(
+            enabled: displayedName.isNotEmpty,
+            baseColor: palette.textPrimary.withValues(alpha: 0.88),
+            highlightColor: PortfolioPalette.accentBright,
+            period: const Duration(milliseconds: 1800),
+            child: Text(
+              displayedName.isEmpty ? '\u00A0' : displayedName,
+              maxLines: 2,
+              textAlign: isDesktop ? TextAlign.start : TextAlign.center,
+              style: nameStyle,
+            ),
+          ),
+        );
+
+        final cursorHeight = isSmall ? 28.0 : isDesktop ? 48.0 : 40.0;
+        final nameWithCursor = Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Flexible(child: nameText),
+            if (showCursor)
+              Padding(
+                padding: EdgeInsets.only(bottom: isSmall ? 4 : 6, left: 2),
+                child: _BlinkingCursor(
+                  color: PortfolioPalette.accent,
+                  height: cursorHeight,
+                ),
+              ),
+          ],
+        );
+
+        final tagline = Text(
+          UiStrings.heroTagline,
+          style: TextStyle(
+            color: palette.textSecondary,
+            fontWeight: FontWeight.w400,
+            height: 1.7,
+            fontSize: isSmall ? 14 : 17,
+          ),
+        );
+
+        const stats = HeroStatsStrip(
+          items: [
+            (
+              value: PortfolioKnowledge.yearsOfExperience,
+              label: UiStrings.yearsExp,
+              icon: FontAwesomeIcons.briefcase,
+            ),
+            (
+              value: '10+',
+              label: UiStrings.statProjects,
+              icon: FontAwesomeIcons.folderOpen,
+            ),
+            (
+              value: '6+',
+              label: UiStrings.statTechnologies,
+              icon: FontAwesomeIcons.code,
+            ),
+          ],
+        );
+
+        final ctaButtons = Wrap(
+          spacing: 16,
+          runSpacing: 12,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                gradient: PortfolioPalette.ctaGradient,
+                borderRadius: BorderRadius.circular(14),
+                boxShadow: palette.accentGlow(alpha: 0.35, blur: 20),
+              ),
+              child: ElevatedButton.icon(
+                onPressed: () => _scrollToSection(3),
+                icon: const FaIcon(FontAwesomeIcons.briefcase, size: 18),
+                label: const Text(
+                  UiStrings.viewProjects,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                ),
+              ),
+            ),
+            OutlinedButton.icon(
+              onPressed: () => _scrollToSection(4),
+              icon: const FaIcon(FontAwesomeIcons.envelope, size: 16),
+              label: const Text(
+                UiStrings.contactMe,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: palette.textPrimary,
+                side: BorderSide(
+                  color: palette.borderAccent,
+                  width: 1.5,
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              ),
+            ),
+          ],
+        );
+
         final textColumn = Column(
           crossAxisAlignment: isDesktop ? CrossAxisAlignment.start : CrossAxisAlignment.center,
           children: [
-            badge,
-            const SizedBox(height: 20),
-            nameText,
+            revealItem(badge),
             const SizedBox(height: 16),
-            tagline,
-            const SizedBox(height: 28),
+            revealItem(nameWithCursor, delay: const Duration(milliseconds: 70)),
+            const SizedBox(height: 12),
+            revealItem(tagline, delay: const Duration(milliseconds: 120)),
+            const SizedBox(height: 20),
             stats,
-            const SizedBox(height: 28),
-            ctaButtons,
+            const SizedBox(height: 20),
+            revealItem(ctaButtons, delay: const Duration(milliseconds: 220)),
           ],
+        );
+
+        final profilePhoto = Center(
+          child: revealItem(
+            _buildProfilePhoto(photoSize),
+            delay: const Duration(milliseconds: 150),
+          ),
         );
 
         if (isDesktop) {
           return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 72),
+            padding: const EdgeInsets.symmetric(
+              horizontal: kIsWeb ? 32 : 40,
+              vertical: kIsWeb ? 16 : 44,
+            ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(flex: 6, child: textColumn),
-                const SizedBox(width: 48),
-                Expanded(
-                  flex: 4,
-                  child: FadeIn(
-                    duration: const Duration(milliseconds: 1200),
-                    delay: const Duration(milliseconds: 300),
-                    child: Center(child: _buildProfilePhoto(photoSize)),
-                  ),
-                ),
+                const SizedBox(width: kIsWeb ? 32 : 48),
+                Expanded(flex: 4, child: profilePhoto),
               ],
             ),
           );
@@ -621,19 +635,25 @@ class _PortfolioScreenState extends State<PortfolioScreen>
 
         return Container(
           padding: EdgeInsets.symmetric(
-            horizontal: isSmall ? 20 : 32,
-            vertical: isSmall ? 36 : 48,
+            horizontal: isSmall ? 20 : 28,
+            vertical: kIsWeb ? 12 : (isSmall ? 28 : 36),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              FadeIn(
-                duration: const Duration(milliseconds: 1000),
-                child: _buildProfilePhoto(photoSize),
-              ),
-              const SizedBox(height: 32),
-              textColumn,
-            ],
+            children: kIsWeb
+                ? [
+                    textColumn,
+                    const SizedBox(height: 20),
+                    profilePhoto,
+                  ]
+                : [
+                    FadeIn(
+                      duration: const Duration(milliseconds: 1000),
+                      child: _buildProfilePhoto(photoSize),
+                    ),
+                    const SizedBox(height: 24),
+                    textColumn,
+                  ],
           ),
         );
       },
@@ -644,83 +664,75 @@ class _PortfolioScreenState extends State<PortfolioScreen>
     return LayoutBuilder(
       builder: (context, constraints) {
         final isSmall = constraints.maxWidth < 600;
-        final pad = isSmall ? 20.0 : 32.0;
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: pad, vertical: 8),
-          child: FadeInUp(
-            duration: const Duration(milliseconds: 900),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildSectionTitle(UiStrings.aboutMe),
-                const SizedBox(height: 24),
-                Container(
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        const Color(0xFF0A1929).withValues(alpha: 0.9),
-                        const Color(0xFF0D1F35).withValues(alpha: 0.8),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+
+        return SectionBlock(
+          sectionKey: aboutKey,
+          scrollController: _scrollController,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSectionTitle(UiStrings.aboutMe),
+              const SizedBox(height: 18),
+              GlassPanel(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      PortfolioProfileContent.aboutParagraph1(const Locale('en')),
+                      style: TextStyle(
+                        fontSize: isSmall ? 15 : 17,
+                        color: palette.textSecondary,
+                        height: 1.8,
+                      ),
                     ),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: const Color(0xFF0099FF).withValues(alpha: 0.12),
-                      width: 1,
+                    const SizedBox(height: 16),
+                    Text(
+                      PortfolioProfileContent.aboutParagraph2(const Locale('en')),
+                      style: TextStyle(
+                        fontSize: isSmall ? 15 : 17,
+                        color: palette.textSecondary,
+                        height: 1.8,
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        PortfolioProfileContent.aboutParagraph1(const Locale('en')),
-                        style: TextStyle(
-                          fontSize: isSmall ? 15 : 17,
-                          color: Colors.white70,
-                          height: 1.8,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        PortfolioProfileContent.aboutParagraph2(const Locale('en')),
-                        style: TextStyle(
-                          fontSize: isSmall ? 15 : 17,
-                          color: Colors.white70,
-                          height: 1.8,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Wrap(
-                        spacing: 10,
-                        runSpacing: 10,
-                        children: PortfolioProfileContent.aboutHighlights(const Locale('en'))
-                            .map((tag) => Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF0099FF).withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: const Color(0xFF0099FF).withValues(alpha: 0.3),
-                              width: 1,
-                            ),
-                          ),
-                          child: Text(
-                            tag,
-                            style: const TextStyle(
-                              color: Color(0xFF0099FF),
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        )).toList(),
-                      ),
-                    ],
-                  ),
+                    const SizedBox(height: 20),
+                    Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
+                      children: PortfolioProfileContent.aboutHighlights(const Locale('en'))
+                          .asMap()
+                          .entries
+                          .map((entry) => revealItem(
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 14,
+                                    vertical: 7,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: PortfolioPalette.accent
+                                        .withValues(alpha: 0.1),
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: palette.borderAccent,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    entry.value,
+                                    style: const TextStyle(
+                                      color: PortfolioPalette.accentBright,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                                delay: Duration(milliseconds: 60 * entry.key),
+                              ))
+                          .toList(),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },
@@ -737,24 +749,22 @@ class _PortfolioScreenState extends State<PortfolioScreen>
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final isSmallScreen = constraints.maxWidth < 600;
-
-        return Container(
-          padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
+        return SectionBlock(
+          sectionKey: educationKey,
+          scrollController: _scrollController,
+          delay: const Duration(milliseconds: 60),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildSectionTitle(UiStrings.educationTitle),
-              const SizedBox(height: 24),
+              const SizedBox(height: 18),
               ...List.generate(entries.length, (index) {
                 final entry = entries[index];
                 final icon = icons[index];
                 return Padding(
-                  padding: EdgeInsets.only(top: index == 0 ? 0 : 20),
-                  child: FadeInUp(
-                    duration: const Duration(milliseconds: 800),
-                    delay: Duration(milliseconds: 200 + index * 200),
-                    child: Hover3dWrapper(
+                  padding: EdgeInsets.only(top: index == 0 ? 0 : 14),
+                  child: _reveal(
+                    Hover3dWrapper(
                       maxTilt: 0.12,
                       perspective: 0.001,
                       scale: 1.02,
@@ -762,14 +772,14 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                       child: _buildEducationCard(
                         icon: icon,
                         iconColor: entry.color,
-                        title: entry.title(const Locale('en')),
-                        subtitle: entry.subtitle(const Locale('en')),
-                        details: entry
-                            .details(const Locale('en'))
+                        title: entry.title,
+                        subtitle: entry.subtitle,
+                        details: entry.details
                             .map((d) => (d.$1, d.$2, entry.color))
                             .toList(),
                       ),
                     ),
+                    delay: Duration(milliseconds: 80 * index),
                   ),
                 );
               }),
@@ -799,15 +809,10 @@ class _PortfolioScreenState extends State<PortfolioScreen>
       ),
       child: Container(
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [
-              Color(0xFF0A1929),
-              Color(0xFF1A1F3A),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          color: palette.surface,
           borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: palette.borderSubtle),
+          boxShadow: palette.panelShadow,
         ),
         child: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -821,7 +826,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                     width: 56,
                     height: 56,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.1),
+                      color: palette.bgMid,
                       borderRadius: BorderRadius.circular(14),
                       border: Border.all(
                         color: iconColor.withValues(alpha: 0.6),
@@ -851,10 +856,10 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                       children: [
                         Text(
                           title,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: palette.textPrimary,
                             letterSpacing: 0.5,
                           ),
                         ),
@@ -863,7 +868,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                           subtitle,
                           style: TextStyle(
                             fontSize: 15,
-                            color: Colors.white.withValues(alpha: 220),
+                            color: palette.textSecondary,
                             fontStyle: FontStyle.italic,
                             height: 1.4,
                           ),
@@ -885,7 +890,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                           label,
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.white.withValues(alpha: 180),
+                            color: palette.textMuted,
                             fontWeight: FontWeight.w600,
                             letterSpacing: 0.5,
                           ),
@@ -914,9 +919,10 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   Widget _buildSkills() {
     final skills = PortfolioProfileContent.skillCategories(const Locale('en'));
 
-    return Container(
-      padding: const EdgeInsets.all(24.0),
-      key: skillsKey,
+    return SectionBlock(
+      sectionKey: skillsKey,
+      scrollController: _scrollController,
+      delay: const Duration(milliseconds: 80),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -924,12 +930,12 @@ class _PortfolioScreenState extends State<PortfolioScreen>
             UiStrings.skillsTitle,
             subtitle: UiStrings.skillsSubtitle,
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 20),
           LayoutBuilder(
             builder: (context, constraints) {
               return Wrap(
-                spacing: 24,
-                runSpacing: 24,
+                spacing: 18,
+                runSpacing: 18,
                 children: skills.asMap().entries.map((entry) {
                   final index = entry.key;
                   final category = entry.value;
@@ -957,14 +963,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                         ),
                         child: Container(
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                const Color(0xFF0A1929),
-                                const Color(0xFF0A1929).withValues(alpha: 0.9),
-                              ],
-                            ),
+                            color: palette.surface,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Padding(
@@ -989,7 +988,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                                     const SizedBox(width: 16),
                                     Expanded(
                                       child: Text(
-                                        category.category(const Locale('en')),
+                                        category.category,
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleLarge
@@ -1003,7 +1002,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                                   ],
                                 ),
                                 const SizedBox(height: 24),
-                                ...category.skills(const Locale('en')).map(
+                                ...category.skills.map(
                                   (skill) => Padding(
                                     padding: const EdgeInsets.only(bottom: 16),
                                     child: Row(
@@ -1022,7 +1021,8 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                                                 .textTheme
                                                 .bodyLarge
                                                 ?.copyWith(
-                                                  color: Colors.white.withValues(alpha: 0.9),
+                                                  color: palette.textPrimary
+                                                      .withValues(alpha: 0.92),
                                                   height: 1.5,
                                                 ),
                                             softWrap: true,
@@ -1043,7 +1043,10 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                   return MouseRegion(
                     onEnter: (_) => setState(() => hoveredItems[hoverKey] = true),
                     onExit: (_) => setState(() => hoveredItems[hoverKey] = false),
-                    child: cardWidget,
+                    child: _reveal(
+                      cardWidget,
+                      delay: Duration(milliseconds: 70 * index),
+                    ),
                   );
                 }).toList(),
               );
@@ -1060,19 +1063,13 @@ class _PortfolioScreenState extends State<PortfolioScreen>
     return LayoutBuilder(
       builder: (context, constraints) {
         final isMobile = constraints.maxWidth < 700;
-        final pad = isMobile ? 16.0 : 32.0;
-        final columns = constraints.maxWidth >= 1200
-            ? 3
-            : constraints.maxWidth >= 900
-                ? 2
-                : 1;
-        final cardWidth = columns == 1
-            ? constraints.maxWidth - pad * 2
-            : (constraints.maxWidth - pad * 2 - (columns - 1) * 24) / columns;
+        final pad = isMobile ? 16.0 : 28.0;
 
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: pad, vertical: 48),
-          key: projectsKey,
+        return SectionBlock(
+          sectionKey: projectsKey,
+          scrollController: _scrollController,
+          delay: const Duration(milliseconds: 100),
+          padding: EdgeInsets.fromLTRB(pad, 20, pad, 28),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -1080,250 +1077,24 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                 UiStrings.featuredProjects,
                 subtitle: UiStrings.featuredProjectsSubtitle,
               ),
-              const SizedBox(height: 36),
-              Wrap(
-                spacing: 24,
-                runSpacing: 24,
-                children: projects.asMap().entries.map((entry) {
-                  return SizedBox(
-                    width: cardWidth,
-                    child: FadeInUp(
-                      duration: Duration(milliseconds: 500 + entry.key * 100),
-                      child: _buildModernProjectCard(entry.key, entry.value),
-                    ),
-                  );
-                }).toList(),
+              const SizedBox(height: 20),
+              ProjectsBentoGrid(
+                projects: projects,
+                hoveredItems: hoveredItems,
+                onHoverChanged: (index, hovering) {
+                  setState(() => hoveredItems[index] = hovering);
+                },
+                onOpenProject: _openProjectDetails,
+                onOpenGithub: (project) {
+                  if (project.githubUrl != null) {
+                    _launchUrl(project.githubUrl!);
+                  }
+                },
               ),
             ],
           ),
         );
       },
-    );
-  }
-
-  Widget _buildModernProjectCard(int index, PortfolioProject project) {
-    final primary = Theme.of(context).colorScheme.primary;
-    final isHovered = hoveredItems[index] == true;
-    final visibleTech = project.tech.take(4).toList();
-    final extraTech = project.tech.length - visibleTech.length;
-
-    return MouseRegion(
-      onEnter: (_) => setState(() => hoveredItems[index] = true),
-      onExit: (_) => setState(() => hoveredItems[index] = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 220),
-        curve: Curves.easeOut,
-        transform: isHovered
-            ? (Matrix4.identity()..translateByVector3(Vector3(0, -6, 0)))
-            : Matrix4.identity(),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              const Color(0xFF0F2744).withValues(alpha: 0.95),
-              const Color(0xFF0A1929).withValues(alpha: 0.98),
-            ],
-          ),
-          border: Border.all(
-            color: isHovered
-                ? primary.withValues(alpha: 0.55)
-                : Colors.white.withValues(alpha: 0.08),
-            width: isHovered ? 1.5 : 1,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: isHovered
-                  ? primary.withValues(alpha: 0.18)
-                  : Colors.black.withValues(alpha: 0.25),
-              blurRadius: isHovered ? 24 : 12,
-              offset: Offset(0, isHovered ? 10 : 6),
-            ),
-          ],
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () => _openProjectDetails(project),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    AspectRatio(
-                      aspectRatio: 16 / 10,
-                      child: Image.asset(
-                        project.imagePath,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        errorBuilder: (_, __, ___) => Container(
-                          color: const Color(0xFF0A1929),
-                          child: const Center(
-                            child: Icon(
-                              Icons.image_outlined,
-                              size: 48,
-                              color: Colors.white24,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 12,
-                      top: 12,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 5,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.55),
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.12),
-                          ),
-                        ),
-                        child: Text(
-                          project.isGithubPrivate ? UiStrings.privateRepo : UiStrings.openSource,
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(18, 18, 18, 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        project.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: primary,
-                          letterSpacing: 0.2,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        project.localizedCardDescription(const Locale('en')),
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 14,
-                          height: 1.55,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: [
-                          ...visibleTech.map(
-                            (t) => Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 5,
-                              ),
-                              decoration: BoxDecoration(
-                                color: primary.withValues(alpha: 0.12),
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: primary.withValues(alpha: 0.28),
-                                ),
-                              ),
-                              child: Text(
-                                t,
-                                style: TextStyle(
-                                  color: primary,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ),
-                          if (extraTech > 0)
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 5,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.06),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Text(
-                                '+$extraTech more',
-                                style: const TextStyle(
-                                  color: Colors.white54,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: 18),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: FilledButton.icon(
-                              onPressed: () => _openProjectDetails(project),
-                              icon: const Icon(Icons.arrow_outward, size: 16),
-                              label: Text(
-                                UiStrings.viewProject,
-                                style: const TextStyle(fontWeight: FontWeight.w600),
-                              ),
-                              style: FilledButton.styleFrom(
-                                backgroundColor: primary,
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(vertical: 12),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                            ),
-                          ),
-                          if (project.githubUrl != null) ...[
-                            const SizedBox(width: 10),
-                            IconButton.filledTonal(
-                              onPressed: () => _launchUrl(project.githubUrl!),
-                              icon: FaIcon(
-                                FontAwesomeIcons.github,
-                                size: 16,
-                                color: project.isGithubPrivate
-                                    ? Colors.white54
-                                    : primary,
-                              ),
-                              tooltip: project.isGithubPrivate
-                                  ? UiStrings.privateOnGithub
-                                  : UiStrings.viewOnGithub,
-                              style: IconButton.styleFrom(
-                                backgroundColor: Colors.white.withValues(alpha: 0.08),
-                                padding: const EdgeInsets.all(12),
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 
@@ -1351,9 +1122,16 @@ class _PortfolioScreenState extends State<PortfolioScreen>
             ? (constraints.maxWidth / 2) - 32
             : constraints.maxWidth;
 
-        return Container(
-          padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
-          key: contactKey,
+        return SectionBlock(
+          sectionKey: contactKey,
+          scrollController: _scrollController,
+          delay: const Duration(milliseconds: 120),
+          padding: EdgeInsets.fromLTRB(
+            isSmallScreen ? 16 : 24,
+            12,
+            isSmallScreen ? 16 : 24,
+            24,
+          ),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -1362,7 +1140,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                   UiStrings.getInTouch,
                   subtitle: UiStrings.getInTouchSubtitle,
                 ),
-                SizedBox(height: isSmallScreen ? 24 : 32),
+                SizedBox(height: isSmallScreen ? 16 : 20),
                 AnimationLimiter(
                   child: ListView.separated(
                     shrinkWrap: true,
@@ -1374,6 +1152,129 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                     itemBuilder: (context, index) {
                       final contact = contacts[index];
                       final contactItemKey = 3000 + index;
+                      final card = Hover3dWrapper(
+                        maxTilt: 0.1,
+                        perspective: 0.001,
+                        scale: 1.015,
+                        glowColor: Theme.of(context).colorScheme.primary,
+                        onHoverChanged: (hovering) =>
+                            setState(() => hoveredItems[contactItemKey] = hovering),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () async {
+                              if (!mounted) return;
+                              final messenger = ScaffoldMessenger.of(context);
+                              try {
+                                final url =
+                                    Uri.parse(contact['url'] as String);
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url);
+                                } else {
+                                  if (!mounted) return;
+                                  messenger.showSnackBar(
+                                    const SnackBar(content: Text(UiStrings.couldNotOpenLink)),
+                                  );
+                                }
+                              } catch (e) {
+                                if (!mounted) return;
+                                messenger.showSnackBar(
+                                  SnackBar(content: Text(UiStrings.errorGeneric(e.toString()))),
+                                );
+                              }
+                            },
+                            borderRadius: BorderRadius.circular(16),
+                            child: Container(
+                              width: contactWidth,
+                              padding:
+                                  EdgeInsets.all(isSmallScreen ? 16 : 20),
+                              decoration: BoxDecoration(
+                                color: palette.surface,
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: palette.borderAccent,
+                                  width: 1,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(
+                                        isSmallScreen ? 8 : 12),
+                                    decoration: BoxDecoration(
+                                      color: palette.bgMid,
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary
+                                            .withValues(alpha: 0.3),
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: BrandContactIcon(
+                                      brand: contact['brand'] as String?,
+                                      icon: contact['icon'] as IconData?,
+                                      size: isSmallScreen ? 20 : 24,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary,
+                                    ),
+                                  ),
+                                  SizedBox(width: isSmallScreen ? 12 : 16),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          _contactLabel(contact['label'] as String),
+                                          style: TextStyle(
+                                            color: palette.textSecondary,
+                                            fontSize:
+                                                isSmallScreen ? 12 : 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          contact['value'] as String,
+                                          style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            fontSize:
+                                                isSmallScreen ? 14 : 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: isSmallScreen ? 14 : 16,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primary,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                      if (kIsWeb) {
+                        return _reveal(
+                          card,
+                          delay: Duration(milliseconds: 80 * index),
+                        );
+                      }
                       return AnimationConfiguration.staggeredList(
                         position: index,
                         duration: const Duration(milliseconds: 1200),
@@ -1381,135 +1282,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                           verticalOffset: 50.0,
                           child: FadeInAnimation(
                             duration: const Duration(milliseconds: 1200),
-                            child: Hover3dWrapper(
-                              maxTilt: 0.1,
-                              perspective: 0.001,
-                              scale: 1.015,
-                              glowColor: Theme.of(context).colorScheme.primary,
-                              onHoverChanged: (hovering) =>
-                                  setState(() => hoveredItems[contactItemKey] = hovering),
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  onTap: () async {
-                                    if (!mounted) return;
-                                    final messenger = ScaffoldMessenger.of(context);
-                                    try {
-                                      final url =
-                                          Uri.parse(contact['url'] as String);
-                                      if (await canLaunchUrl(url)) {
-                                        await launchUrl(url);
-                                      } else {
-                                        if (!mounted) return;
-                                        messenger.showSnackBar(
-                                          SnackBar(content: Text(UiStrings.couldNotOpenLink)),
-                                        );
-                                      }
-                                    } catch (e) {
-                                      if (!mounted) return;
-                                      messenger.showSnackBar(
-                                        SnackBar(content: Text(UiStrings.errorGeneric(e.toString()))),
-                                      );
-                                    }
-                                  },
-                                  borderRadius: BorderRadius.circular(16),
-                                  child: Container(
-                                    width: contactWidth,
-                                    padding:
-                                        EdgeInsets.all(isSmallScreen ? 16 : 20),
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          const Color(0xFF1A1A1A)
-                                              .withValues(alpha: 0.8),
-                                          const Color(0xFF000B14)
-                                              .withValues(alpha: 0.9),
-                                        ],
-                                      ),
-                                      borderRadius: BorderRadius.circular(16),
-                                      border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary
-                                            .withValues(alpha: 0.1),
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.all(
-                                              isSmallScreen ? 8 : 12),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white.withValues(alpha: 0.1),
-                                            borderRadius: BorderRadius.circular(12),
-                                            border: Border.all(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary
-                                                  .withValues(alpha: 0.3),
-                                              width: 1,
-                                            ),
-                                          ),
-                                          child: BrandContactIcon(
-                                            brand: contact['brand'] as String?,
-                                            icon: contact['icon'] as IconData?,
-                                            size: isSmallScreen ? 20 : 24,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                          ),
-                                        ),
-                                        SizedBox(width: isSmallScreen ? 12 : 16),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                _contactLabel(contact['label'] as String),
-                                                style: TextStyle(
-                                                  color: Colors.white70,
-                                                  fontSize:
-                                                      isSmallScreen ? 12 : 14,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                              const SizedBox(height: 4),
-                                              Text(
-                                                contact['value'] as String,
-                                                style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary,
-                                                  fontSize:
-                                                      isSmallScreen ? 14 : 16,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward_ios,
-                                          size: isSmallScreen ? 14 : 16,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            child: card,
                           ),
                         ),
                       );
@@ -1526,30 +1299,19 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   Widget _buildResumeButton() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: FadeInUp(
-        duration: const Duration(milliseconds: 800),
-        child: Container(
+      child: _reveal(
+        Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFF0099FF), Color(0xFF0077CC)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            gradient: PortfolioPalette.ctaGradient,
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0xFF0099FF).withValues(alpha: 0.45),
-                blurRadius: 24,
-                offset: const Offset(0, 8),
-              ),
-            ],
+            boxShadow: palette.accentGlow(alpha: 0.38, blur: 24),
           ),
           child: ElevatedButton.icon(
             icon: const FaIcon(FontAwesomeIcons.filePdf, size: 22),
-            label: Text(
+            label: const Text(
               UiStrings.downloadCv,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 0.5,
@@ -1563,7 +1325,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                 } else {
                   if (mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(UiStrings.couldNotOpenLink)),
+                      const SnackBar(content: Text(UiStrings.couldNotOpenLink)),
                     );
                   }
                 }
@@ -1585,6 +1347,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
             ),
           ),
         ),
+        delay: const Duration(milliseconds: 140),
       ),
     );
   }
@@ -1592,35 +1355,25 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   Widget _buildAIChatButton() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-      child: FadeInUp(
-        duration: const Duration(milliseconds: 1200),
-        delay: const Duration(milliseconds: 400),
-        child: Container(
+      child: _reveal(
+        Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [
-                Color(0xFF2D1B69),
-                Color(0xFF1A1F3A),
-                Color(0xFF0099FF),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            gradient: PortfolioPalette.aiGradient,
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF0099FF).withValues(alpha: 40),
-                blurRadius: 20,
-                spreadRadius: 2,
+                color: PortfolioPalette.violet.withValues(alpha: 0.35),
+                blurRadius: 24,
+                spreadRadius: 1,
               ),
             ],
           ),
           child: ElevatedButton.icon(
             icon: const FaIcon(FontAwesomeIcons.robot, size: 24),
-            label: Text(
+            label: const Text(
               UiStrings.chatWithAI,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.5,
@@ -1642,6 +1395,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
             ),
           ),
         ),
+        delay: const Duration(milliseconds: 180),
       ),
     );
   }
@@ -1651,10 +1405,10 @@ class _PortfolioScreenState extends State<PortfolioScreen>
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary.withValues(alpha: 8),
+        color: PortfolioPalette.accent.withValues(alpha: 0.06),
         border: Border(
           top: BorderSide(
-            color: Theme.of(context).colorScheme.primary.withValues(alpha: 20),
+            color: palette.borderAccent,
             width: 1,
           ),
         ),
@@ -1663,21 +1417,11 @@ class _PortfolioScreenState extends State<PortfolioScreen>
         children: [
           Text(
             "© $currentYear Ahmed's Portfolio",
-            style: const TextStyle(
-              color: Colors.white70,
+            style: TextStyle(
+              color: palette.textSecondary,
               fontSize: 14,
               fontWeight: FontWeight.w400,
               letterSpacing: 0.5,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            UiStrings.builtWith,
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
             ),
             textAlign: TextAlign.center,
           ),
@@ -1687,145 +1431,95 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   }
 
   Widget _buildNavigationBar() {
-    bool isMobile = MediaQuery.of(context).size.width < 600;
+    const navItems = [
+      UiStrings.navAbout,
+      UiStrings.navEducation,
+      UiStrings.navSkills,
+      UiStrings.navProjects,
+      UiStrings.navContact,
+    ];
 
-    if (isMobile) {
-      return Container(
-        constraints: const BoxConstraints(maxHeight: 56),
-        child: AppBar(
-          backgroundColor: const Color(0xFF050D14),
-          title: const SizedBox(),
-          iconTheme: const IconThemeData(
-            color: Color(0xFF0099FF),
-          ),
-          elevation: 0,
-        ),
-      );
-    }
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final useDrawerNav = constraints.maxWidth < _navDrawerBreakpoint;
 
-    return Container(
-      constraints: const BoxConstraints(maxHeight: 80),
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ShaderMask(
-            shaderCallback: (bounds) => const LinearGradient(
-              colors: [Color(0xFF0099FF), Color(0xFF7C3AED)],
-            ).createShader(bounds),
-            child: const Text(
-              "Ahmed Ehab",
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 20,
-                color: Colors.white,
-                letterSpacing: 0.5,
+        if (useDrawerNav) {
+          return Container(
+            constraints: const BoxConstraints(maxHeight: 56),
+            child: AppBar(
+              backgroundColor: palette.bgDeep.withValues(alpha: 0.92),
+              title: const SizedBox.shrink(),
+              centerTitle: true,
+              iconTheme: const IconThemeData(
+                color: PortfolioPalette.accent,
               ),
+              elevation: 0,
             ),
-          ),
-          Row(
-            children: [
-              _navButton(UiStrings.navAbout, aboutKey),
-              _navButton(UiStrings.navEducation, educationKey),
-              _navButton(UiStrings.navSkills, skillsKey),
-              _navButton(UiStrings.navProjects, projectsKey),
-              _navButton(UiStrings.navContact, contactKey),
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: TextButton.icon(
-                  style: TextButton.styleFrom(
-                    backgroundColor: const Color(0xFF0099FF),
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 16,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: _openAssistant,
-                  icon: const FaIcon(FontAwesomeIcons.robot, size: 16),
-                  label: Text(
-                    UiStrings.navAIShort,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+          );
+        }
+
+        return PortfolioNavBar(
+          items: navItems,
+          activeIndex: _activeNavIndex,
+          onSelected: _scrollToSection,
+          onOpenAi: _openAssistant,
+        );
+      },
     );
   }
 }
 
-Widget _navButton(String label, GlobalKey key) {
-  return Builder(
-    builder: (context) {
-      final isDesktop = kIsWeb || defaultTargetPlatform == TargetPlatform.macOS || defaultTargetPlatform == TargetPlatform.windows || defaultTargetPlatform == TargetPlatform.linux;
-      
-      final button = TextButton(
-        style: TextButton.styleFrom(
-          backgroundColor: const Color(0xFF0A1929),
-          foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 24,
-            vertical: 16,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-            side: BorderSide(
-              color: const Color(0xFF0099FF).withValues(alpha: 50),
-              width: 1,
+class _BlinkingCursor extends StatefulWidget {
+  const _BlinkingCursor({required this.color, this.height = 36});
+
+  final Color color;
+  final double height;
+
+  @override
+  State<_BlinkingCursor> createState() => _BlinkingCursorState();
+}
+
+class _BlinkingCursorState extends State<_BlinkingCursor>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 520),
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: Tween<double>(begin: 0.2, end: 1).animate(
+        CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+      ),
+      child: Container(
+        width: 3,
+        height: widget.height,
+        decoration: BoxDecoration(
+          color: widget.color,
+          borderRadius: BorderRadius.circular(2),
+          boxShadow: [
+            BoxShadow(
+              color: widget.color.withValues(alpha: 0.55),
+              blurRadius: 8,
             ),
-          ),
+          ],
         ),
-        onPressed: () {
-          Scrollable.ensureVisible(
-            key.currentContext!,
-            duration: const Duration(milliseconds: 600),
-            curve: Curves.easeInOut,
-          );
-        },
-        child: Text(
-          label,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-            letterSpacing: 0.5,
-          ),
-        ),
-      );
-      
-      if (isDesktop) {
-        return Container(
-          constraints: const BoxConstraints(
-            minWidth: 100,
-            maxHeight: 48,
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: button,
-          ),
-        );
-      } else {
-        return Container(
-          constraints: const BoxConstraints(
-            minWidth: 100,
-            maxHeight: 48,
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: button,
-        );
-      }
-    },
-  );
+      ),
+    );
+  }
 }
 
 class Hover3dWrapper extends StatefulWidget {
@@ -1842,7 +1536,7 @@ class Hover3dWrapper extends StatefulWidget {
     this.maxTilt = 0.12,
     this.perspective = 0.001,
     this.scale = 1.02,
-    this.glowColor = const Color(0xFF0099FF),
+    this.glowColor = PortfolioPalette.accent,
     this.onHoverChanged,
   });
 

@@ -96,8 +96,8 @@ I can answer detailed questions about Ahmed Ehab's portfolio:
               id: p.id,
               title: p.title,
               keywords: p.keywords,
-              summary: p.localizedSummary(locale),
-              features: p.localizedFeatures(locale),
+              summary: p.summary,
+              features: p.features,
               tech: p.tech,
               isGithubPrivate: p.isGithubPrivate,
             ),
@@ -108,34 +108,6 @@ I can answer detailed questions about Ahmed Ehab's portfolio:
 
   static List<String> suggestedQuestionsFor(Locale locale) =>
       suggestedQuestions;
-
-  static const suggestedQuestionsAr = [
-    'من أنت؟',
-    'أخبرني عن نفسك',
-    'ما هي مسمى وظيفتك؟',
-    'ما هي مشاريعك؟',
-    'أخبرني عن HRM NAWA TECH',
-    'ما هو Life OS؟',
-    'أخبرني عن Mezo Food App',
-    'ما هو IT Assist NAWA TECH؟',
-    'أخبرني عن تطبيق وردي',
-    'هل يمكن تحميل APK لـ Life OS أو وردي؟',
-    'أي مشروع يستخدم Firebase؟',
-    'ما هي مهاراتك التقنية؟',
-    'هل تعرف GetX و BLoC؟',
-    'ما تقنيات الباكند التي تستخدمها؟',
-    'هل يمكنك بناء نظام مصادقة؟',
-    'ما هو تعليمك؟',
-    'أخبرني عن دبلومات الذكاء الاصطناعي',
-    'أين درست؟',
-    'كيف أتواصل معك؟',
-    'ما هو بريدك الإلكتروني؟',
-    'هل أنت متاح للعمل؟',
-    'كم يكلف تطوير تطبيق؟',
-    'أين أحمل السيرة الذاتية؟',
-    'ما الأقسام في هذا البورتفوليو؟',
-    'بماذا يمكنك مساعدتي؟',
-  ];
 
   static const List<FaqEntry> faqEntries = [
     // --- About ---
@@ -369,18 +341,25 @@ For private-source projects, contact Ahmed at $email for collaboration or access
       'Life OS, Werdi, Mezo Food App, and IT Assist NAWA TECH are public on GitHub. Only HRM NAWA TECH remains private. For hiring or partnership inquiries, contact Ahmed directly.',
     ),
     FaqEntry(
-      ['apk', 'download apk', 'android app', 'install app', 'life os apk', 'werdi apk'],
-      '''APK downloads are on GitHub Releases only (Android):
+      ['demo', 'try project', 'web demo', 'live demo', 'how to try'],
+      """Use **Try this project** on each project page:
+• **Download APK** — Android install
+• **Try Web Admin** / **Try Web App** — opens the Flutter web build
 
+HRM: web admin — ${PortfolioContent.demosBaseUrl}/hrm/ — admin@demo.com / Admin12345!
+Mezo: admin web — ${PortfolioContent.demosBaseUrl}/mezo-admin/
+Life OS web: ${PortfolioContent.demosBaseUrl}/lifeos/ · IT Assist web: ${PortfolioContent.demosBaseUrl}/itassist/
+
+Full steps (English + Arabic) are in the portfolio README.md on GitHub.""",
+    ),
+    FaqEntry(
+      ['apk', 'download apk', 'android app', 'install app'],
+      """APK downloads:
+
+HRM employee app — ${PortfolioContent.demosBaseUrl}/apk/hrm.apk
 Life OS — https://github.com/ahmedehab96-c/LifeOS/releases/tag/portfolio-apk-v1
-• Download app-release.apk (~65 MB), wait until 100%, then install.
-• If install fails: uninstall any older Life OS copy first.
-
-Werdi — https://github.com/ahmedehab96-c/werdi/releases/tag/portfolio-apk-v1
-• Download app-arm64-v8a-release.apk (~55 MB, v1.0.1+11, arm64 phones 2017+), wait until 100%, then install.
-• Google Play Protect may warn — tap Install anyway (not OK). Normal for apps outside Play Store.
-• If install fails: uninstall any older Werdi copy first.
-• Enable "Install unknown apps" for Chrome in Android settings.''',
+IT Assist — https://github.com/ahmedehab96-c/it-assist-nawa-tech/releases/tag/v1.0.0
+Werdi — https://github.com/ahmedehab96-c/werdi/releases/tag/portfolio-apk-v1""",
     ),
     FaqEntry(
       ['linkedin', 'linked in', 'professional profile'],
@@ -451,15 +430,10 @@ class ProjectKnowledge {
   String detailReplyFor(Locale locale) {
     final featuresText = features.map((f) => '• $f').join('\n');
     final techText = tech.join(', ');
-    final isAr = locale.languageCode == 'ar';
     final repoNote = isGithubPrivate
-        ? (isAr
-            ? '\n\n🔒 الكود المصدري: مستودع GitHub خاص (تواصل مع أحمد للوصول).'
-            : '\n\n🔒 Source code: Private GitHub repository (contact Ahmed for access).')
+        ? '\n\n🔒 Source code: Private GitHub repository (contact Ahmed for access).'
         : '';
-    final featuresLabel = isAr ? 'الميزات:' : 'Features:';
-    final techLabel = isAr ? 'التقنيات:' : 'Tech:';
-    return '$summary\n\n$featuresLabel\n$featuresText\n\n$techLabel $techText$repoNote';
+    return '$summary\n\nFeatures:\n$featuresText\n\nTech: $techText$repoNote';
   }
 
   String get detailReply => detailReplyFor(const Locale('en'));

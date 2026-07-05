@@ -1,33 +1,282 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <base href="$FLUTTER_BASE_HREF">
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Ahmed's Portfolio - Mid-Level Flutter Engineer">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ahmed Ehab Mohammed — Mid-Level Flutter Engineer Portfolio">
+  <meta name="theme-color" content="#060B14">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="myportofilo">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Ahmed Portfolio">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
-  <link rel="icon" type="image/png" href="favicon.png"/>
-  <title>Ahmed's Portfolio</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Ahmed Ehab — Flutter Portfolio</title>
   <link rel="manifest" href="manifest.json">
-  <link rel="preload" href="flutter_build_config.js" as="script">
-  <link rel="preload" href="flutter.js" as="script">
-  <link rel="preload" href="main.dart.js" as="script">
+  <link rel="preload" href="flutter_bootstrap.js" as="script">
+  <script>
+    document.documentElement.dataset.theme = 'dark';
+  </script>
+  <style>
+    html[data-theme="dark"] {
+      --bg-0: #060B14;
+      --bg-1: #0A1120;
+      --surface: #182338;
+      --accent: #4F8CFF;
+      --accent-2: #7C6BF0;
+      --text: #F1F5F9;
+      --text-muted: #94A3B8;
+      --border: rgba(255,255,255,0.1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg-0);
+      color: var(--text);
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    /* Instant shell — visible before Flutter loads */
+    #instant-shell {
+      position: fixed;
+      inset: 0;
+      z-index: 99998;
+      overflow: hidden;
+      background: var(--bg-0);
+      transition: opacity 0.12s ease-out, visibility 0.12s ease-out;
+    }
+
+    #instant-shell.gone {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .shell-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(37,99,235,0.1), transparent),
+        radial-gradient(ellipse 60% 40% at 90% 90%, rgba(99,102,241,0.08), transparent),
+        linear-gradient(165deg, var(--bg-0) 0%, var(--bg-1) 45%, var(--bg-0) 100%);
+    }
+
+    .shell-inner {
+      position: relative;
+      z-index: 1;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 20px 40px;
+      text-align: center;
+    }
+
+    .shell-badge {
+      display: inline-block;
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #fff;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      margin-bottom: 18px;
+      box-shadow: 0 4px 14px rgba(37,99,235,0.2);
+    }
+
+    .shell-name {
+      margin: 0 0 12px;
+      font-size: clamp(1.75rem, 6vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      line-height: 1.12;
+      color: var(--text);
+    }
+
+    .shell-tagline {
+      margin: 0 0 28px;
+      max-width: 520px;
+      font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+      line-height: 1.65;
+      color: var(--text-muted);
+    }
+
+    .shell-stats {
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 14px 20px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: 0 4px 16px rgba(15,23,42,0.08);
+      margin-bottom: 22px;
+    }
+
+    .shell-stat {
+      padding: 4px 20px;
+      text-align: center;
+    }
+
+    .shell-stat + .shell-stat {
+      border-left: 1px solid var(--border);
+    }
+
+    .shell-stat-num {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--accent), #38bdf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .shell-stat-label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .shell-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    .shell-progress {
+      width: min(280px, 80vw);
+      height: 4px;
+      margin-top: 8px;
+      border-radius: 999px;
+      background: var(--border);
+      overflow: hidden;
+    }
+
+    .shell-progress-bar {
+      height: 100%;
+      width: 35%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      animation: shellLoad 1.4s ease-in-out infinite;
+    }
+
+    @keyframes shellLoad {
+      0% { transform: translateX(-120%); }
+      100% { transform: translateX(320%); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 0.9; }
+    }
+
+    .shell-hint.error {
+      color: #f87171;
+      animation: none;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      max-width: 420px;
+      line-height: 1.5;
+    }
+
+    .shell-retry {
+      margin-top: 16px;
+      padding: 10px 22px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    @media (min-width: 900px) {
+      .shell-inner { padding-top: 48px; }
+    }
+  </style>
 </head>
 <body>
+  <!-- Shows instantly while Flutter downloads -->
+  <div id="instant-shell" aria-hidden="true">
+    <div class="shell-bg"></div>
+    <div class="shell-inner">
+      <span class="shell-badge">Mid-Level Flutter Engineer</span>
+      <h1 class="shell-name">AHMED EHAB MOHAMMED</h1>
+      <p class="shell-tagline">Crafting beautiful &amp; functional mobile experiences with a focus on clean architecture and great UX.</p>
+      <div class="shell-stats">
+        <div class="shell-stat">
+          <span class="shell-stat-num">3+</span>
+          <span class="shell-stat-label">Years Exp.</span>
+        </div>
+        <div class="shell-stat">
+          <span class="shell-stat-num">10+</span>
+          <span class="shell-stat-label">Projects</span>
+        </div>
+        <div class="shell-stat">
+          <span class="shell-stat-num">6+</span>
+          <span class="shell-stat-label">Technologies</span>
+        </div>
+      </div>
+      <p class="shell-hint" id="shell-status">Loading portfolio…</p>
+      <div class="shell-progress" id="shell-progress" aria-hidden="true"><div class="shell-progress-bar"></div></div>
+      <button type="button" class="shell-retry" id="shell-retry" hidden onclick="location.reload()">Reload page</button>
+    </div>
+  </div>
+
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(function (regs) {
         regs.forEach(function (r) { r.unregister(); });
       });
     }
+
+    function hideShell() {
+      var shell = document.getElementById('instant-shell');
+      if (!shell || shell.classList.contains('gone')) return;
+      shell.classList.add('gone');
+      setTimeout(function () { shell.remove(); }, 120);
+    }
+
+    function showLoadError(msg) {
+      var status = document.getElementById('shell-status');
+      var progress = document.getElementById('shell-progress');
+      var retry = document.getElementById('shell-retry');
+      if (status) {
+        status.textContent = msg;
+        status.classList.add('error');
+      }
+      if (progress) progress.hidden = true;
+      if (retry) retry.hidden = false;
+    }
+
+    window.addEventListener('flutter-first-frame', hideShell);
+
+    window.addEventListener('error', function (e) {
+      if (e.message) showLoadError('Failed to load app. Please reload or try Chrome.');
+    });
+
+    window.addEventListener('unhandledrejection', function () {
+      showLoadError('Failed to load app. Please reload or try Chrome.');
+    });
+
+    setTimeout(function () {
+      if (!document.getElementById('instant-shell') ||
+          document.getElementById('instant-shell').classList.contains('gone')) return;
+      showLoadError('Still loading… check your connection and reload.');
+    }, 30000);
   </script>
-  <script src="flutter_build_config.js"></script>
-  <script src="flutter.js"></script>
-  <script>
-    _flutter.loader.load({ config: { renderer: 'canvaskit' } });
-  </script>
+  <script src="flutter_bootstrap.js"></script>
 </body>
 </html>
