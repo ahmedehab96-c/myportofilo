@@ -3,26 +3,7 @@ class PortfolioContent {
   PortfolioContent._();
 
   /// Bump when assistant/portfolio data changes (shown in chat to verify web load).
-  static const assistantDataVersion = '3.2.0';
-
-  /// Remote Netlify site for web demos + hosted APKs (separate from portfolio).
-  /// Override at build: --dart-define=DEMOS_BASE_URL=https://your-demos.netlify.app
-  static const demosBaseUrl = String.fromEnvironment(
-    'DEMOS_BASE_URL',
-    defaultValue: 'https://ahmed-portfolio-demos.netlify.app',
-  );
-
-  static String get _demosOrigin {
-    final u = demosBaseUrl.trim();
-    if (u.endsWith('/')) return u.substring(0, u.length - 1);
-    return u;
-  }
-
-  /// Resolve a path on the remote demos host (e.g. `/hrm/` → full URL).
-  static String demosUrl(String path) {
-    final p = path.startsWith('/') ? path : '/$path';
-    return '$_demosOrigin$p';
-  }
+  static const assistantDataVersion = '3.3.0';
 
   /// Project IDs shown large in the bento grid layout.
   static const bentoFeaturedIds = {'hrm', 'mezo'};
@@ -74,9 +55,13 @@ The admin web dashboard offers real-time visibility into employees, attendance, 
       ],
       githubUrl: 'https://github.com/ahmedehab96-c/hrm-nawa-tech',
       isGithubPrivate: true,
-      apkUrl: '/apk/hrm.apk',
-      webTryPath: '/hrm/',
-      webTryIsAdmin: true,
+      apkUrl:
+          'https://github.com/ahmedehab96-c/hrm-nawa-tech/releases/download/portfolio-apk-v1/app-release.apk',
+      webSetupGuide: '''**Run web admin locally (from GitHub)**
+1. Clone the repo and open the Flutter project.
+2. `flutter pub get` then `flutter run -d chrome`
+3. Open `/welcome` → **Try Admin Dashboard**
+4. Optional API: in `backend/` run `php artisan serve` — in the mobile app Settings enable **Use server API** with your PC IP.''',
     ),
     PortfolioProject(
       id: 'lifeos',
@@ -122,8 +107,10 @@ The dashboard combines daily task planning, habit tracking, finance charts, goal
       isGithubPrivate: false,
       apkUrl:
           'https://github.com/ahmedehab96-c/LifeOS/releases/download/portfolio-apk-v1/app-release.apk',
-      webTryPath: '/lifeos/',
-      webTryIsAdmin: false,
+      webSetupGuide: '''**Run web app locally (from GitHub)**
+1. Clone [LifeOS](https://github.com/ahmedehab96-c/LifeOS)
+2. `flutter pub get` then `flutter run -d chrome` (Chrome desktop recommended)
+3. No login required — data syncs when Supabase is configured.''',
     ),
     PortfolioProject(
       id: 'mezo',
@@ -180,8 +167,13 @@ The admin panel includes a branded web login, live order inbox with status filte
       ],
       githubUrl: 'https://github.com/ahmedehab96-c/mezo-food-app',
       isGithubPrivate: false,
-      webTryPath: '/mezo-admin/',
-      webTryIsAdmin: true,
+      apkUrl:
+          'https://github.com/ahmedehab96-c/mezo-food-app/releases/download/portfolio-apk-v1/app-release.apk',
+      webSetupGuide: '''**Run admin web locally (from GitHub)**
+1. Clone [mezo-food-app](https://github.com/ahmedehab96-c/mezo-food-app)
+2. Add your `google-services.json` / Firebase web config (see repo README)
+3. `flutter pub get` then `flutter run -d chrome -t lib/admin/main_admin.dart`
+4. Sign in with a Firebase user that has an `admins/{uid}` document in Firestore.''',
     ),
     PortfolioProject(
       id: 'itassist',
@@ -233,8 +225,11 @@ The web admin panel provides dashboards, SLA policies, ticket assignment, knowle
       isGithubPrivate: false,
       apkUrl:
           'https://github.com/ahmedehab96-c/it-assist-nawa-tech/releases/download/v1.0.0/app-release.apk',
-      webTryPath: '/itassist/',
-      webTryIsAdmin: false,
+      webSetupGuide: '''**Run web locally (from GitHub)**
+1. Clone [it-assist-nawa-tech](https://github.com/ahmedehab96-c/it-assist-nawa-tech)
+2. Flutter app: `flutter pub get` → `flutter run -d chrome`
+3. Laravel admin panel: in `backend/` run `composer install`, `php artisan migrate --seed`, `php artisan serve`
+4. Open `http://127.0.0.1:8000/panel/login` for the IT admin dashboard.''',
     ),
     PortfolioProject(
       id: 'werdi',
@@ -309,8 +304,7 @@ class PortfolioProject {
     this.githubUrl,
     this.isGithubPrivate = true,
     this.apkUrl,
-    this.webTryPath,
-    this.webTryIsAdmin = true,
+    this.webSetupGuide,
   });
 
   final String id;
@@ -325,25 +319,12 @@ class PortfolioProject {
   final List<String> keywords;
   final String? githubUrl;
   final bool isGithubPrivate;
-  /// APK path (`/apk/x.apk` on demos host) or full GitHub Releases URL.
+  /// Direct GitHub Releases URL for the Android APK.
   final String? apkUrl;
-  /// Web demo path (`/hrm/` on demos host) or full URL. Admin or full app.
-  final String? webTryPath;
-  final bool webTryIsAdmin;
+  /// How to run the web/admin build locally from the project repo (no hosted demo).
+  final String? webSetupGuide;
 
-  String? resolveApkUrl(String _) {
-    if (apkUrl == null) return null;
-    if (apkUrl!.startsWith('http')) return apkUrl;
-    return PortfolioContent.demosUrl(apkUrl!);
-  }
-
-  String? resolveWebTryUrl(String _) {
-    if (webTryPath == null) return null;
-    if (webTryPath!.startsWith('http')) return webTryPath;
-    return PortfolioContent.demosUrl(webTryPath!);
-  }
-
-  bool get hasTryActions => apkUrl != null || webTryPath != null;
+  bool get hasTrySection => apkUrl != null || webSetupGuide != null;
 
   String get imagePath => cardImage;
 

@@ -343,21 +343,19 @@ For private-source projects, contact Ahmed at $email for collaboration or access
     FaqEntry(
       ['demo', 'try project', 'web demo', 'live demo', 'how to try'],
       """Use **Try this project** on each project page:
-• **Download APK** — Android install
-• **Try Web Admin** / **Try Web App** — opens the Flutter web build
+• **Download APK** — GitHub Releases (Android)
+• **How to open the web version** — clone the repo and run Flutter web locally (steps on each project page)
 
-HRM: web admin — ${PortfolioContent.demosBaseUrl}/hrm/ — admin@demo.com / Admin12345!
-Mezo: admin web — ${PortfolioContent.demosBaseUrl}/mezo-admin/
-Life OS web: ${PortfolioContent.demosBaseUrl}/lifeos/ · IT Assist web: ${PortfolioContent.demosBaseUrl}/itassist/
-
-Full steps (English + Arabic) are in the portfolio README.md on GitHub.""",
+No hosted web demos — keeps the portfolio site fast on Netlify.
+Full steps are in the portfolio README.md on GitHub.""",
     ),
     FaqEntry(
       ['apk', 'download apk', 'android app', 'install app'],
-      """APK downloads:
+      """APK downloads (GitHub Releases):
 
-HRM employee app — ${PortfolioContent.demosBaseUrl}/apk/hrm.apk
+HRM — https://github.com/ahmedehab96-c/hrm-nawa-tech/releases/tag/portfolio-apk-v1
 Life OS — https://github.com/ahmedehab96-c/LifeOS/releases/tag/portfolio-apk-v1
+Mezo — https://github.com/ahmedehab96-c/mezo-food-app/releases/tag/portfolio-apk-v1
 IT Assist — https://github.com/ahmedehab96-c/it-assist-nawa-tech/releases/tag/v1.0.0
 Werdi — https://github.com/ahmedehab96-c/werdi/releases/tag/portfolio-apk-v1""",
     ),

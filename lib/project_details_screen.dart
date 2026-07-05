@@ -71,20 +71,9 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
 
   Color _techColor(String t) => _techColors[t] ?? const Color(0xFF58A6FF);
 
-  String get _origin {
-    final base = Uri.base;
-    if (base.hasScheme && base.host.isNotEmpty) {
-      return '${base.scheme}://${base.host}${base.hasPort ? ':${base.port}' : ''}';
-    }
-    return '';
-  }
-
   Widget _buildTrySection(BuildContext context) {
     final project = widget.project;
-    if (!project.hasTryActions) return const SizedBox.shrink();
-
-    final apkUrl = project.resolveApkUrl(_origin);
-    final webUrl = project.resolveWebTryUrl(_origin);
+    if (!project.hasTrySection) return const SizedBox.shrink();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,45 +100,54 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 12),
-              Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                children: [
-                  if (apkUrl != null)
-                    FilledButton.icon(
-                      onPressed: () => _launch(context, apkUrl),
-                      icon: const FaIcon(FontAwesomeIcons.android, size: 16),
-                      label: const Text(UiStrings.downloadApk),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: const Color(0xFF238636),
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 14,
-                          vertical: 12,
-                        ),
-                      ),
+              if (project.apkUrl != null) ...[
+                const SizedBox(height: 12),
+                FilledButton.icon(
+                  onPressed: () => _launch(context, project.apkUrl!),
+                  icon: const FaIcon(FontAwesomeIcons.android, size: 16),
+                  label: const Text(UiStrings.downloadApk),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: const Color(0xFF238636),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 12,
                     ),
-                  if (webUrl != null)
-                    FilledButton.icon(
-                      onPressed: () => _launch(context, webUrl),
-                      icon: const Icon(Icons.open_in_browser, size: 18),
-                      label: Text(
-                        project.webTryIsAdmin
-                            ? UiStrings.tryWebAdmin
-                            : UiStrings.tryWebApp,
-                      ),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: const Color(0xFF388BFD),
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 14,
-                          vertical: 12,
-                        ),
-                      ),
+                  ),
+                ),
+              ],
+              if (project.webSetupGuide != null) ...[
+                const SizedBox(height: 16),
+                const Text(
+                  UiStrings.webSetupTitle,
+                  style: TextStyle(
+                    color: _ghText,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  project.webSetupGuide!,
+                  style: const TextStyle(
+                    color: _ghMuted,
+                    fontSize: 12,
+                    height: 1.65,
+                  ),
+                ),
+                if (project.githubUrl != null) ...[
+                  const SizedBox(height: 10),
+                  TextButton.icon(
+                    onPressed: () => _launch(context, project.githubUrl!),
+                    icon: const FaIcon(FontAwesomeIcons.github, size: 14),
+                    label: const Text(UiStrings.runWebFromGitHub),
+                    style: TextButton.styleFrom(
+                      foregroundColor: _ghBlue,
+                      padding: EdgeInsets.zero,
                     ),
+                  ),
                 ],
-              ),
+              ],
             ],
           ),
         ),

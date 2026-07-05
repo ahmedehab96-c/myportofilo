@@ -39,8 +39,8 @@ abstract final class UiStrings {
   static const viewReadmeGitHub = 'View README on GitHub';
   static const tryThisProject = 'Try this project';
   static const downloadApk = 'Download APK';
-  static const tryWebAdmin = 'Try Web Admin';
-  static const tryWebApp = 'Try Web App';
+  static const runWebFromGitHub = 'Run web from GitHub';
+  static const webSetupTitle = 'How to open the web version';
   static const about = 'About';
   static const topics = 'Topics';
   static const features = 'Features';
