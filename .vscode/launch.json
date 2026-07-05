@@ -2,10 +2,26 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "myportofilo (Chrome)",
+      "name": "Portfolio — local preview (recommended)",
       "request": "launch",
       "type": "dart",
-      "deviceId": "chrome"
+      "program": "lib/main.dart",
+      "deviceId": "web-server",
+      "toolArgs": [
+        "--web-port=8080",
+        "--web-hostname=127.0.0.1"
+      ]
+    },
+    {
+      "name": "Portfolio — Chrome debug",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "chrome",
+      "toolArgs": [
+        "--web-port=8080",
+        "--web-hostname=127.0.0.1"
+      ]
     }
   ]
 }

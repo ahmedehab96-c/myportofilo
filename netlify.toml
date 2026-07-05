@@ -22,7 +22,7 @@
 [[headers]]
   for = "/flutter_bootstrap.js"
   [headers.values]
-    Cache-Control = "public, max-age=3600"
+    Cache-Control = "no-cache, no-store, must-revalidate"
 
 [[headers]]
   for = "/flutter.js"

@@ -264,11 +264,17 @@
     window.addEventListener('flutter-first-frame', hideShell);
 
     window.addEventListener('error', function (e) {
-      if (e.message) showLoadError('Failed to load app. Please reload or try Chrome.');
+      var src = e.filename || '';
+      if (src.indexOf('main.dart.mjs') !== -1 || src.indexOf('main.dart.wasm') !== -1) {
+        showLoadError('Cached old build detected. Hard reload: Ctrl+Shift+R (Cmd+Shift+R on Mac).');
+      }
     });
 
-    window.addEventListener('unhandledrejection', function () {
-      showLoadError('Failed to load app. Please reload or try Chrome.');
+    window.addEventListener('unhandledrejection', function (e) {
+      var reason = String(e.reason || '');
+      if (reason.indexOf('main.dart.mjs') !== -1) {
+        showLoadError('Cached old build detected. Hard reload: Ctrl+Shift+R (Cmd+Shift+R on Mac).');
+      }
     });
 
     setTimeout(function () {
@@ -277,6 +283,6 @@
       showLoadError('Still loading… check your connection and reload.');
     }, 30000);
   </script>
-  <script src="flutter_bootstrap.js"></script>
+  <script src="flutter_bootstrap.js?v=canvaskit4"></script>
 </body>
 </html>
