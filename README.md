@@ -30,11 +30,11 @@ Each featured project includes:
 
 | Project | Description | APK | Repository |
 |---------|-------------|-----|------------|
-| **HRM NAWA TECH** | HR platform — admin web, employee app, Laravel API, AI | [APK](https://github.com/ahmedehab96-c/hrm-nawa-tech/releases/tag/portfolio-apk-v1) | Private |
-| **Life OS** | Productivity — tasks, habits, finance, Groq AI | [APK](https://github.com/ahmedehab96-c/LifeOS/releases/tag/portfolio-apk-v1) | [LifeOS](https://github.com/ahmedehab96-c/LifeOS) |
-| **Mezo Food App** | Food delivery + admin panel, Firebase, Stripe | [APK](https://github.com/ahmedehab96-c/mezo-food-app/releases/tag/portfolio-apk-v1) | [mezo-food-app](https://github.com/ahmedehab96-c/mezo-food-app) |
-| **IT Assist NAWA TECH** | ITSM — tickets, AI assistant, Socket.IO, Laravel | [APK](https://github.com/ahmedehab96-c/it-assist-nawa-tech/releases/tag/v1.0.0) | [it-assist-nawa-tech](https://github.com/ahmedehab96-c/it-assist-nawa-tech) |
-| **Werdi Quran App** | Memorization, tasmee3, Mushaf, ayah audio | [APK](https://github.com/ahmedehab96-c/werdi/releases/tag/portfolio-apk-v1) | [werdi](https://github.com/ahmedehab96-c/werdi) |
+| **HRM NAWA TECH** | HR platform — admin web, employee app, Laravel API, AI | [APK arm64](https://github.com/ahmedehab96-c/hrm-nawa-tech/releases/tag/portfolio-apk-v2) (~38 MB) | Private |
+| **Life OS** | Productivity — tasks, habits, finance, Groq AI | [APK arm64](https://github.com/ahmedehab96-c/LifeOS/releases/tag/portfolio-apk-v2) (~40 MB) | [LifeOS](https://github.com/ahmedehab96-c/LifeOS) |
+| **Mezo Food App** | Food delivery + admin panel, Firebase, Stripe | [APK arm64](https://github.com/ahmedehab96-c/mezo-food-app/releases/tag/portfolio-apk-v2) (~48 MB) | [mezo-food-app](https://github.com/ahmedehab96-c/mezo-food-app) |
+| **IT Assist NAWA TECH** | ITSM — tickets, AI assistant, Socket.IO, Laravel | [APK arm64](https://github.com/ahmedehab96-c/it-assist-nawa-tech/releases/tag/portfolio-apk-v2) (~42 MB) | [it-assist-nawa-tech](https://github.com/ahmedehab96-c/it-assist-nawa-tech) |
+| **Werdi Quran App** | Memorization, tasmee3, Mushaf, ayah audio | [APK arm64](https://github.com/ahmedehab96-c/werdi/releases/tag/portfolio-apk-v2) (~35 MB) | [werdi](https://github.com/ahmedehab96-c/werdi) |
 
 ---
 
@@ -118,6 +118,24 @@ First time only: `npx netlify-cli login`
 After deploy, if the old page shows: **Cmd+Shift+R** (hard reload) in Chrome.
 
 Git push updates GitHub only — **Netlify does not auto-build**.
+
+### Smaller APKs (arm64 only)
+
+Old universal APKs were **60–75 MB**. New **arm64-only** builds are ~**35–45 MB** (modern phones 2020+).
+
+```bash
+# 1. Build slim APKs (from Desktop project folders)
+chmod +x scripts/build_portfolio_apks.sh scripts/upload_portfolio_apks.sh
+./scripts/build_portfolio_apks.sh
+
+# 2. Upload to GitHub Releases (portfolio-apk-v2)
+./scripts/upload_portfolio_apks.sh
+
+# 3. Update portfolio download links + redeploy site
+#    (run after upload — switches buttons to portfolio-apk-v2)
+./scripts/activate_apk_v2_urls.sh
+./deploy.sh
+```
 
 ---
 
