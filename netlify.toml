@@ -1,6 +1,9 @@
+# Manual deploy only — build locally with ./scripts/deploy_netlify.sh
+# Git push does NOT trigger a Netlify build (ignore always skips CI).
 [build]
   publish = "build/web"
-  command = "chmod +x scripts/netlify_build.sh && ./scripts/netlify_build.sh"
+  command = "echo 'Skipped — use ./scripts/deploy_netlify.sh for manual deploy'"
+  ignore = "true"
 
 [build.environment]
   NETLIFY_DEPLOY = "1"

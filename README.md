@@ -88,19 +88,27 @@ Mobile only — no web build.
 
 ---
 
-## Build & Deploy
+## Build & Deploy (manual Netlify)
+
+**Local preview:**
 
 ```bash
-chmod +x build_web.sh run_web.sh
+chmod +x build_web.sh run_web.sh scripts/deploy_netlify.sh
 ./build_web.sh
 ./run_web.sh   # http://localhost:8080
 ```
 
-**Netlify:** push to `main` → `scripts/netlify_build.sh` builds `build/web` (~25 MB).
+**Publish to Netlify** (one command — build + upload, ~26 MB):
 
 ```bash
-NETLIFY_DEPLOY=1 ./build_web.sh
+./scripts/deploy_netlify.sh
 ```
+
+First time only: `npx netlify-cli login`
+
+Git push updates GitHub only — **Netlify does not auto-build** (`ignore = true` in `netlify.toml`).
+
+> Use `NETLIFY_DEPLOY=1 ./build_web.sh` or `./scripts/deploy_netlify.sh` — never plain `flutter build web --release` (wasm breaks the live site).
 
 ---
 
