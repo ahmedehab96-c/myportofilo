@@ -1,8 +1,7 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 import '../theme/portfolio_palette.dart';
-import 'scroll_reveal.dart';
+import 'motion/premium_entrance.dart';
 
 /// Professional section header with accent bar and divider.
 class SectionHeader extends StatelessWidget {
@@ -81,7 +80,7 @@ class SectionHeader extends StatelessWidget {
   }
 }
 
-/// Wraps a portfolio section with scroll-triggered entrance animation.
+/// Wraps a portfolio section with a subtle 3D scroll entrance.
 class SectionBlock extends StatelessWidget {
   const SectionBlock({
     super.key,
@@ -109,39 +108,29 @@ class SectionBlock extends StatelessWidget {
           12,
         );
 
-    final content = Container(
-      key: sectionKey,
-      padding: pad,
-      child: child,
-    );
-
-    if (scrollController != null) {
-      return ScrollReveal(
-        scrollController: scrollController!,
-        delay: delay,
-        child: content,
-      );
-    }
-
-    return FadeInUp(
-      duration: const Duration(milliseconds: 620),
+    return PremiumEntrance(
       delay: delay,
-      from: 18,
-      child: content,
+      scrollController: scrollController,
+      useBlur: false,
+      child: Container(
+        key: sectionKey,
+        padding: pad,
+        child: child,
+      ),
     );
   }
 }
 
-/// Subtle fade-in for inline elements (header chips, cards).
+/// Entrance helper with stagger support and scroll visibility.
 Widget revealItem(
   Widget child, {
   Duration delay = Duration.zero,
-  double from = 14,
+  double from = 28,
+  ScrollController? scrollController,
 }) {
-  return FadeInUp(
-    duration: const Duration(milliseconds: 480),
+  return PremiumEntrance(
     delay: delay,
-    from: from,
+    scrollController: scrollController,
     child: child,
   );
 }

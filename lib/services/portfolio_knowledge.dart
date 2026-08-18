@@ -7,7 +7,7 @@ class PortfolioKnowledge {
   PortfolioKnowledge._();
 
   static const fullName = 'Ahmed Ehab Mohammed';
-  static const role = 'Mid-Level Flutter Engineer';
+  static const role = 'Flutter Developer';
   static const yearsOfExperience = '3+';
   static const tagline =
       'Crafting beautiful and functional mobile experiences with a focus on user-centric design and clean code architecture';
@@ -20,10 +20,12 @@ class PortfolioKnowledge {
   static const linkedInUrl =
       'https://www.linkedin.com/in/ahmed-ehab-ba8a63285';
   static const cvUrl =
-      'https://drive.google.com/file/d/1l31V4wZzzsehnC_3tJoeSCafYpgcy9ov/view?usp=drivesdk';
+      'https://drive.google.com/file/d/1urs0hptHN-vwJoAcfW2wYL0IPkyVuGP3/view?usp=drivesdk';
+  static const dubaiCertificateUrl =
+      'https://ahmedmyportofilo.netlify.app/docs/ahmed-ehab-certificate.pdf';
 
   static const aboutParagraph1 =
-      'I am a Mid-Level Flutter engineer with 3+ years of experience building responsive and feature-rich applications. I enjoy solving problems and creating user-friendly designs that provide seamless experiences across different platforms.';
+      'I am a Flutter developer with 3+ years of experience building responsive and feature-rich applications. I enjoy solving problems and creating user-friendly designs that provide seamless experiences across different platforms.';
 
   static const aboutParagraph2 =
       'My focus is on creating clean, efficient, and maintainable code while delivering exceptional user experiences. I continuously grow my skills with the help of AI tools — using Cursor and Claude to accelerate development, explore new patterns, and stay at the forefront of mobile development.';
@@ -40,8 +42,11 @@ class PortfolioKnowledge {
     'Tell me about Mezo Food App',
     'What is IT Assist NAWA TECH?',
     'Tell me about Werdi Quran App',
-    'Can I download Life OS or Werdi APK?',
+    'Tell me about BankX Digital Banking',
+    'What is StepZone?',
+    'Can I download Life OS or Werdi from Google Play?',
     'Which project uses Firebase?',
+    'What sections are in this portfolio?',
   // Skills
     'What are your technical skills?',
     'Do you know GetX and BLoC?',
@@ -63,31 +68,39 @@ class PortfolioKnowledge {
   ];
 
   static const helpTopicsReply = '''
-I can answer detailed questions about Ahmed Ehab's portfolio:
+I can answer detailed questions about every part of Ahmed Ehab's portfolio:
 
-👤 About
-• Who Ahmed is, role, bio, and focus
+👤 Hero & About
+• Full name, role (Flutter Developer), tagline, years of experience (3+)
+• Bio, highlights (Flutter, Dart, Firebase, GetX, REST API, Clean Architecture, UI/UX)
+• Stats: 3+ years, 20+ projects, 6+ technologies
 
-📱 Projects (5 featured apps)
-• HRM NAWA TECH — cloud HR platform
-• Life OS — productivity & daily planning
-• Mezo Food App — food delivery platform with admin dashboard, maps, and Stripe
-• IT Assist NAWA TECH — IT support & helpdesk
-• Werdi Quran App (v1.0.1+11) — no login, local progress, tasmee3 evaluation
+📱 Projects (7 apps — ask about any by name)
+• HRM NAWA TECH — multi-tenant HR SaaS (Filament + Flutter + live Render demo + APK)
+• Life OS — productivity app + Groq AI + Google Play
+• Mezo Food App — food delivery + Flutter web admin + Firebase + APK
+• IT Assist NAWA TECH — ITSM + Laravel + live Render admin + APK
+• Werdi Quran App — memorization, tasmee3, Mushaf + Google Play
+• BankX Digital Banking — fintech UI demo + APK
+• StepZone — luxury shoe eCommerce + Supabase + APK
 
-🛠 Skills & expertise
-• Technical, backend, auth, tools, UI/UX, soft skills
-• Flutter, Dart, Firebase, Supabase, GetX, BLoC, Riverpod
+🛠 Skills (7 categories)
+• Technical Skills, Backend Integration, Laravel, Authentication
+• Tools & Platforms, UI/UX Skills, Soft Skills
 
-🎓 Education & certifications
-• BSc IT (Al-Mashriq University 2018)
+🎓 Education & certifications (4 entries)
+• BSc IT Al-Mashriq University 2018
 • Udemy Flutter Course
-• AI Diploma — ALBYAN Institute, Abu Dhabi (ACTVET accredited, Grade: Excellent)
+• One Million Prompters — Dubai Future Foundation / DCAI
+• AI Diploma — ALBYAN Institute Abu Dhabi (ACTVET, Excellent)
+
+💼 Services
+• Flutter apps, web dashboards, Firebase/Supabase, UI/UX, API & auth integration
 
 📞 Contact & collaboration
-• Email, phone, GitHub, LinkedIn, CV download, hiring, pricing
+• Email, phone (+971), GitHub, LinkedIn, CV download, hiring, pricing, live demos, APK links
 
-💡 Tip: Ask naturally, e.g. "What Firebase features do you use?" or "Tell me about IT Assist".''';
+💡 Examples: "Tell me about StepZone", "What is in the Skills section?", "How can I contact you?"''';
 
   static List<ProjectKnowledge> projectsFor(Locale locale) =>
       PortfolioContent.featuredProjects
@@ -105,6 +118,63 @@ I can answer detailed questions about Ahmed Ehab's portfolio:
           .toList(growable: false);
 
   static List<ProjectKnowledge> get projects => projectsFor(const Locale('en'));
+
+  /// Full portfolio facts for Gemini / deep local replies.
+  static String get assistantSystemPrompt {
+    final buffer = StringBuffer('''
+PORTFOLIO FACTS (use ONLY these — do not invent):
+
+Name: $fullName | Role: $role | Experience: $yearsOfExperience years
+Tagline: $tagline
+Email: $email | Phone: $phone
+GitHub: $githubUrl | LinkedIn: $linkedInUrl
+CV: $cvUrl | Dubai certificate: $dubaiCertificateUrl
+
+About:
+$aboutParagraph1
+$aboutParagraph2
+
+Hero stats: $yearsOfExperience years experience, 20+ projects, 6+ technologies
+About highlights: Flutter, Dart, Firebase, GetX, REST API, Clean Architecture, UI/UX
+
+Portfolio sections: Hero, About Me, Education & Certifications, Skills & Expertise (7 categories), Projects (7 apps), Contact, Download CV, AI Assistant
+
+Skills categories:
+1. Technical Skills — Flutter, Dart, BLoC/GetX/Riverpod, widgets, animations
+2. Backend Integration — Firebase, Supabase, REST, SQLite, Hive
+3. Laravel — REST API, Eloquent, Sanctum, RBAC, Flutter integration
+4. Authentication — email, Google/Facebook/Apple, RBAC
+5. Tools & Platforms — Git, VS Code, Android Studio, Cursor, Postman, Play Store
+6. UI/UX — Material/Cupertino, MVC/MVVM, themes, responsive design
+7. Soft Skills — problem-solving, agile, documentation, fast learning
+
+Education: BSc IT Al-Mashriq University 2018; Udemy Flutter; One Million Prompters (Dubai); AI Diploma ALBYAN Abu Dhabi ACTVET Oct 2026 Excellent
+
+Services: Flutter mobile/web apps, Firebase/Supabase backends, UI/UX, API & auth integration
+
+PROJECTS (${PortfolioContent.featuredProjects.length}):
+''');
+
+    for (final p in PortfolioContent.featuredProjects) {
+      buffer.writeln('--- ${p.title} (${p.id}) ---');
+      buffer.writeln('Summary: ${p.summary}');
+      buffer.writeln('Tech: ${p.tech.join(", ")}');
+      buffer.writeln('Features: ${p.features.take(6).join("; ")}');
+      if (p.liveDemoUrl != null) buffer.writeln('Live demo: ${p.liveDemoUrl}');
+      if (p.playStoreUrl != null) buffer.writeln('Google Play: ${p.playStoreUrl}');
+      if (p.apkUrl != null) buffer.writeln('APK: ${p.apkUrl}');
+      if (p.githubUrl != null) {
+        buffer.writeln(
+          'GitHub: ${p.githubUrl} (${p.isGithubPrivate ? "private" : "public"})',
+        );
+      } else if (p.isGithubPrivate) {
+        buffer.writeln('GitHub: private — contact for access');
+      }
+      buffer.writeln('');
+    }
+
+    return buffer.toString();
+  }
 
   static List<String> suggestedQuestionsFor(Locale locale) =>
       suggestedQuestions;
@@ -158,8 +228,8 @@ $aboutParagraph2''',
 • Header — name, role, and quick actions
 • About Me — background and approach
 • Education & Certifications
-• Skills & Expertise (6 categories)
-• Featured Projects (5 apps)
+• Skills & Expertise (7 categories)
+• Projects (7 featured apps)
 • Contact information
 • Download CV button
 • AI Assistant (this chat)''',
@@ -187,6 +257,11 @@ $aboutParagraph2''',
 💻 Flutter Development Course
    Udemy — Mobile App Development with Flutter
 
+🤖 One Million Prompters — Certificate of Completion
+   Dubai Future Foundation · Dubai Centre for Artificial Intelligence
+   Prompt engineering for AI systems (Dubai Universal Blueprint for AI)
+   View certificate: $dubaiCertificateUrl
+
 🧠 Training Diploma in Artificial Intelligence
    ALBYAN Institute, Abu Dhabi, UAE
    Accredited by ACTVET | 18 Oct 2026 | Grade: Excellent
@@ -210,22 +285,149 @@ Focus: Mobile App Development with Flutter.''',
 • Date: 18 October 2026 | Grade: Excellent
 • 120-hour professional diploma covering applied AI, machine learning concepts, and AI-driven system development''',
     ),
+    FaqEntry(
+      ['certificate', 'certification', 'dubai certificate', 'view certificate', 'one million prompters', 'prompt engineering', 'dubai future foundation'],
+      '''One Million Prompters — Certificate of Completion (Dubai):
+• Issued by Dubai Future Foundation & Dubai Centre for Artificial Intelligence
+• Prompt engineering for AI systems — Dubai Universal Blueprint for Artificial Intelligence
+• Listed under Education on the portfolio
 
-    // --- Skills (by category) ---
+View certificate (PDF): $dubaiCertificateUrl''',
+    ),
+
+    FaqEntry(
+      ['skills', 'skills section', 'expertise', 'what skills', 'skill categories'],
+      '''Skills & Expertise — 7 categories on the portfolio:
+
+1️⃣ Technical Skills — Flutter & Dart, cross-platform, BLoC/GetX/Riverpod, widgets, animations
+2️⃣ Backend Integration — Firebase, Supabase, REST, SQLite, Hive, SharedPreferences
+3️⃣ Laravel — REST API, Eloquent, Sanctum/Passport, RBAC, Flutter integration
+4️⃣ Authentication — email/password, Google/Facebook/Apple sign-in, route guarding
+5️⃣ Tools & Platforms — Git/GitHub, VS Code, Android Studio, Cursor, Postman, Play Store
+6️⃣ UI/UX Skills — Material/Cupertino, MVC/MVVM, light/dark themes, responsive design
+7️⃣ Soft Skills — problem-solving, agile, time management, documentation, fast learning
+
+Ask "What are your technical skills?" or "Do you know Laravel?" for details.''',
+    ),
+    FaqEntry(
+      ['hero', 'header', 'stats', 'years of experience', 'how many projects', 'technologies count'],
+      '''Hero section highlights:
+• Name: $fullName
+• Role: $role
+• Experience: $yearsOfExperience years
+• Portfolio stats: 20+ projects, 6+ technologies
+• Tagline: Crafting beautiful & functional mobile experiences with clean architecture and great UX''',
+    ),
+    FaqEntry(
+      ['about highlights', 'tech stack summary', 'what technologies'],
+      'About highlights on the portfolio: Flutter, Dart, Firebase, GetX, REST API, Clean Architecture, UI/UX.',
+    ),
+    FaqEntry(
+      ['life os', 'lifeos', 'productivity app', 'groq', 'google play life'],
+      '''Life OS — free personal productivity app:
+• Tasks, habits, goals, finance, notes, Groq-powered AI assistant
+• Offline SQLite + Supabase sync, speech-to-text
+• Google Play: https://play.google.com/store/apps/details?id=com.ahmed.lifeos
+• GitHub (public): https://github.com/ahmedehab96-c/LifeOS
+• Tech: Flutter, BLoC, Supabase, SQLite, Groq AI''',
+    ),
+    FaqEntry(
+      ['mezo', 'mezo food', 'food delivery', 'restaurant app'],
+      '''Mezo Food App — food ordering & delivery:
+• Customer Flutter app + responsive Flutter Web admin
+• Firebase, Google Maps, Stripe/demo/cash, Arabic/English RTL
+• Live admin: https://ahmedmyportofilo.netlify.app/demos/mezo-admin/
+• Admin: admin@mezofood.com / MezoDemo123!
+• APK: https://ahmedmyportofilo.netlify.app/apks/mezo.apk
+• GitHub: private''',
+    ),
+    FaqEntry(
+      ['it assist', 'itsm', 'helpdesk', 'it support app'],
+      '''IT Assist NAWA TECH — ITSM SaaS:
+• Flutter mobile + Laravel admin/API, tickets, AI assistant, Socket.IO, biometrics
+• Live panel: https://it-assist-api.onrender.com/panel/login
+• IT Admin: it@company.com / password | Employee: mohammed@company.com / password
+• APK: https://ahmedmyportofilo.netlify.app/apks/itassist.apk
+• GitHub: private''',
+    ),
+    FaqEntry(
+      ['werdi', 'quran', 'memorization', 'tasmee3', 'mushaf'],
+      '''Werdi Quran App (v1.0.1+11):
+• No login — open and start; local progress on device
+• Memorization, tasmee3 voice evaluation, Mushaf, ayah audio, achievements
+• Google Play: https://play.google.com/store/apps/details?id=com.werdi.app
+• GitHub (public): https://github.com/ahmedehab96-c/werdi
+• Tech: Flutter, BLoC, Drift, Supabase, just_audio''',
+    ),
+    FaqEntry(
+      ['bankx', 'banking', 'bank app', 'fintech', 'digital banking'],
+      '''BankX Digital Banking — Flutter banking UI demo:
+• Dashboard, transfers, bill pay, cards, biometric-ready sign-in, Material 3
+• APK: https://ahmedmyportofilo.netlify.app/apks/bankx.apk
+• Source: private repository — contact Ahmed for access
+• Tech: Flutter, Material 3, Clean Architecture''',
+    ),
+    FaqEntry(
+      ['stepzone', 'shoes', 'ecommerce', 'luxury shoes', 'online store'],
+      '''StepZone — luxury shoe eCommerce:
+• Supabase backend, Google sign-in, coupons, AED pricing, reviews
+• Demo: stepzone.demo@gmail.com / StepZone2026! | Coupons: LUXE10, KICKS20, WELCOME15
+• APK: https://ahmedmyportofilo.netlify.app/apks/stepzone.apk
+• GitHub (public): https://github.com/ahmedehab96-c/stepzone
+• Tech: Flutter, GetX, Supabase, PostgreSQL, Edge Functions''',
+    ),
+    FaqEntry(
+      ['navigation', 'menu', 'how to navigate', 'scroll sections'],
+      '''Use the top navigation (or mobile menu) to jump to:
+• About — bio and highlights
+• Education — degrees and AI certificates
+• Skills — 7 skill categories
+• Projects — 7 featured apps with demos and APKs
+• Contact — email, phone, GitHub, LinkedIn''',
+    ),
     FaqEntry(
       ['technical skills', 'flutter skills', 'dart skills', 'mobile development'],
       '''Technical Skills:
 • Flutter & Dart
 • Cross-platform apps (Android & iOS)
-• State management: Provider, GetX, BLoC, Riverpod
+• State management: BLoC, GetX, Riverpod
 • Custom widgets and UI components
 • Animations and responsive layouts
 • pub.dev packages integration''',
     ),
     FaqEntry(
+      [
+        'hrm saas',
+        'saas hrm',
+        'multi-tenant',
+        'hrm trial',
+        'filament',
+        'hrm demo',
+        'live hrm',
+        'hrm render',
+        'hrm nawa tech',
+        'tell me about hrm',
+        'responsive hrm',
+      ],
+      '''HRM NAWA TECH — multi-tenant HR SaaS with live demo:
+
+• Laravel Filament admin + Flutter employee app + REST API
+• Company self-registration + 14-day free trial + plan caps
+• Responsive employee UI (phone / tablet / desktop)
+• AI-assisted recruitment, leave, performance, reports
+• Live demo: https://hrm-nawa-api.onrender.com/admin
+  Admin: admin@demo.com / Admin12345!
+  Employee: emp01@demo.com / Employee12345!
+• API health: https://hrm-nawa-api.onrender.com/api/health
+• APK: https://ahmedmyportofilo.netlify.app/apks/hrm.apk
+• Source private — email GitHub username for access
+
+Stack: Laravel · Filament · Flutter · Sanctum · Docker.''',
+    ),
+    FaqEntry(
       ['backend', 'backend integration', 'api', 'database', 'firebase', 'supabase', 'laravel'],
       '''Backend Integration:
-• Laravel REST API — used in HRM NAWA TECH and IT Assist NAWA TECH
+• Laravel REST API — used in HRM NAWA TECH (Filament admin + Sanctum) and IT Assist NAWA TECH
 • Firebase — Auth, Firestore, Cloud Messaging (Mezo + IT Assist)
 • Supabase — cloud backend for Life OS
 • HTTP/Dio for RESTful API calls in Flutter
@@ -330,34 +532,52 @@ Focus: Mobile App Development with Flutter.''',
 Repository visibility:
 • HRM NAWA TECH — private
 • Life OS — public: https://github.com/ahmedehab96-c/LifeOS
-• Mezo Food App — public: https://github.com/ahmedehab96-c/mezo-food-app
-• IT Assist NAWA TECH — public: https://github.com/ahmedehab96-c/it-assist-nawa-tech
+• Mezo Food App — private
+• IT Assist NAWA TECH — private
 • Werdi Quran App — public: https://github.com/ahmedehab96-c/werdi
+• StepZone — public: https://github.com/ahmedehab96-c/stepzone
+• BankX — private (no public repo link)
 
 For private-source projects, contact Ahmed at $email for collaboration or access discussions.''',
     ),
     FaqEntry(
       ['private repo', 'private repository', 'private github', 'can i see code', 'source code private'],
-      'Life OS, Werdi, Mezo Food App, and IT Assist NAWA TECH are public on GitHub. Only HRM NAWA TECH remains private. For hiring or partnership inquiries, contact Ahmed directly.',
+      'Life OS and Werdi are public on GitHub. StepZone is public. HRM, Mezo, IT Assist, and BankX are private. For hiring or partnership inquiries, contact Ahmed directly.',
     ),
     FaqEntry(
       ['demo', 'try project', 'web demo', 'live demo', 'how to try'],
       """Use **Try this project** on each project page:
-• **Download APK** — GitHub Releases (Android)
-• **How to open the web version** — clone the repo and run Flutter web locally (steps on each project page)
 
-No hosted web demos — keeps the portfolio site fast on Netlify.
-Full steps are in the portfolio README.md on GitHub.""",
+• **HRM** — Open live demo (Render admin) + Download APK
+  Admin: https://hrm-nawa-api.onrender.com/admin
+  APK: https://ahmedmyportofilo.netlify.app/apks/hrm.apk
+
+• **Mezo Food** — Open live demo (web admin) + Download APK
+  Admin: https://ahmedmyportofilo.netlify.app/demos/mezo-admin/
+  Admin: admin@mezofood.com / MezoDemo123!
+  APK: https://ahmedmyportofilo.netlify.app/apks/mezo.apk
+
+• **IT Assist** — Open live demo (Render admin) + Download APK
+  Admin: https://it-assist-api.onrender.com/panel/login
+  IT: it@company.com / password
+  APK: https://ahmedmyportofilo.netlify.app/apks/itassist.apk
+
+Life OS — Google Play: https://play.google.com/store/apps/details?id=com.ahmed.lifeos
+Werdi — Google Play: https://play.google.com/store/apps/details?id=com.werdi.app
+Others have APKs on this portfolio under /apks/.
+StepZone — https://github.com/ahmedehab96-c/stepzone (public)""",
     ),
     FaqEntry(
       ['apk', 'download apk', 'android app', 'install app'],
-      """APK downloads (GitHub Releases):
+      """APK downloads (hosted on this portfolio):
 
-HRM — https://github.com/ahmedehab96-c/hrm-nawa-tech/releases/tag/portfolio-apk-v1
-Life OS — https://github.com/ahmedehab96-c/LifeOS/releases/tag/portfolio-apk-v1
-Mezo — https://github.com/ahmedehab96-c/mezo-food-app/releases/tag/portfolio-apk-v1
-IT Assist — https://github.com/ahmedehab96-c/it-assist-nawa-tech/releases/tag/v1.0.0
-Werdi — https://github.com/ahmedehab96-c/werdi/releases/tag/portfolio-apk-v1""",
+Life OS — Google Play: https://play.google.com/store/apps/details?id=com.ahmed.lifeos
+Werdi — Google Play: https://play.google.com/store/apps/details?id=com.werdi.app
+HRM — https://ahmedmyportofilo.netlify.app/apks/hrm.apk
+Mezo — https://ahmedmyportofilo.netlify.app/apks/mezo.apk
+IT Assist — https://ahmedmyportofilo.netlify.app/apks/itassist.apk
+StepZone — https://ahmedmyportofilo.netlify.app/apks/stepzone.apk
+BankX — https://ahmedmyportofilo.netlify.app/apks/bankx.apk""",
     ),
     FaqEntry(
       ['linkedin', 'linked in', 'professional profile'],

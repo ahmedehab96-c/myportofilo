@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'widgets/fa_shim.dart';
 import 'data/portfolio_content.dart';
+import 'theme/portfolio_palette.dart';
 import 'ui_strings.dart';
 import 'services/portfolio_assistant_service.dart';
 
@@ -108,7 +109,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
       appBar: AppBar(
         title: const Row(
           children: [
-            FaIcon(FontAwesomeIcons.robot, color: Color(0xFF0099FF)),
+            FaIcon(FontAwesomeIcons.robot, color: PortfolioPalette.violet),
             SizedBox(width: 12),
             Text(
               UiStrings.aiAssistant,
@@ -189,7 +190,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
                       fontSize: 12,
                       color: Colors.white,
                     ),
-                    backgroundColor: const Color(0xFF0A1929),
+                    backgroundColor: context.palette.cardSurface,
                     side: BorderSide(
                       color: Theme.of(context)
                           .colorScheme
@@ -239,7 +240,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
                       : Theme.of(context)
                           .colorScheme
                           .primary
-                          .withValues(alpha: 30),
+                          .withAlpha(30),
                 ),
               ),
               child: Column(
@@ -279,12 +280,12 @@ class _AIChatScreenState extends State<AIChatScreen> {
       width: 40,
       height: 40,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary.withValues(alpha: 20),
+        color: Theme.of(context).colorScheme.primary.withAlpha(20),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Icon(
         isUser ? Icons.person : Icons.smart_toy,
-        color: const Color(0xFF0099FF),
+        color: PortfolioPalette.violet,
         size: 24,
       ),
     );
@@ -342,7 +343,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
         color: Theme.of(context).colorScheme.surface,
         border: Border(
           top: BorderSide(
-            color: Theme.of(context).colorScheme.primary.withValues(alpha: 20),
+            color: Theme.of(context).colorScheme.primary.withAlpha(20),
           ),
         ),
       ),
@@ -358,7 +359,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
                     color: Theme.of(context)
                         .colorScheme
                         .primary
-                        .withValues(alpha: 30),
+                        .withAlpha(30),
                   ),
                 ),
                 child: TextField(

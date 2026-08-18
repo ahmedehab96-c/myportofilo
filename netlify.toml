@@ -8,6 +8,25 @@
 [build.environment]
   NETLIFY_DEPLOY = "1"
 
+# Nested Flutter admin SPA (before portfolio catch-all).
+[[redirects]]
+  from = "/demos/mezo-admin/*"
+  to = "/demos/mezo-admin/index.html"
+  status = 200
+  force = false
+
+[[redirects]]
+  from = "/demos/mezo/*"
+  to = "/demos/mezo/index.html"
+  status = 200
+  force = false
+
+[[redirects]]
+  from = "/demos/itassist/*"
+  to = "/demos/itassist/index.html"
+  status = 200
+  force = false
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -70,3 +89,20 @@
   for = "/favicon.png"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/docs/*"
+  [headers.values]
+    Content-Type = "application/pdf"
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/apks/*"
+  [headers.values]
+    Content-Type = "application/vnd.android.package-archive"
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/demos/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300"

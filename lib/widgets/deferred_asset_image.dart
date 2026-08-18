@@ -1,10 +1,9 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 import 'optimized_asset_image.dart';
 
-/// Defers image decode until after the first frame on web for faster startup.
-class DeferredAssetImage extends StatefulWidget {
+/// Asset image — shimmer while loading, then optimized decode.
+class DeferredAssetImage extends StatelessWidget {
   const DeferredAssetImage({
     super.key,
     required this.asset,
@@ -15,6 +14,7 @@ class DeferredAssetImage extends StatefulWidget {
     this.errorBuilder,
     this.placeholderColor,
     this.borderRadius,
+    this.useShimmer = true,
   });
 
   final String asset;
@@ -25,52 +25,32 @@ class DeferredAssetImage extends StatefulWidget {
   final ImageErrorWidgetBuilder? errorBuilder;
   final Color? placeholderColor;
   final BorderRadius? borderRadius;
-
-  @override
-  State<DeferredAssetImage> createState() => _DeferredAssetImageState();
-}
-
-class _DeferredAssetImageState extends State<DeferredAssetImage> {
-  bool _ready = !kIsWeb;
-
-  @override
-  void initState() {
-    super.initState();
-    if (kIsWeb) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) setState(() => _ready = true);
-      });
-    }
-  }
+  final bool useShimmer;
 
   @override
   Widget build(BuildContext context) {
-    if (!_ready) {
-      return ClipRRect(
-        borderRadius: widget.borderRadius ?? BorderRadius.zero,
-        child: SizedBox(
-          width: widget.width,
-          height: widget.height,
-          child: ColoredBox(
-            color: widget.placeholderColor ?? const Color(0xFF0E1628),
-          ),
-        ),
-      );
-    }
-
     final image = OptimizedAssetImage(
-      asset: widget.asset,
-      fit: widget.fit,
-      width: widget.width,
-      height: widget.height,
-      alignment: widget.alignment,
-      errorBuilder: widget.errorBuilder,
+      asset: asset,
+      fit: fit,
+      width: width,
+      height: height,
+      alignment: alignment,
+      shimmerRadius: borderRadius?.topLeft.x ?? 12,
+      useShimmer: useShimmer,
+      placeholderColor: placeholderColor,
+      errorBuilder: errorBuilder ??
+          (context, error, stackTrace) => ColoredBox(
+                color: placeholderColor ?? const Color(0xFF0E1628),
+                child: const Center(
+                  child: Icon(Icons.broken_image_outlined, color: Colors.white38),
+                ),
+              ),
     );
 
-    if (widget.borderRadius == null) return image;
+    if (borderRadius == null) return image;
 
     return ClipRRect(
-      borderRadius: widget.borderRadius!,
+      borderRadius: borderRadius!,
       child: image,
     );
   }

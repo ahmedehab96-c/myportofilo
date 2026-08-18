@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'fa_shim.dart';
 
 import '../theme/portfolio_palette.dart';
 import '../ui_strings.dart';
@@ -25,18 +25,35 @@ class PortfolioNavBar extends StatefulWidget {
   State<PortfolioNavBar> createState() => _PortfolioNavBarState();
 }
 
-class _PortfolioNavBarState extends State<PortfolioNavBar> {
+class _PortfolioNavBarState extends State<PortfolioNavBar>
+    with SingleTickerProviderStateMixin {
   final _rowKey = GlobalKey();
   final _pillKeys = <GlobalKey>[];
   double _indicatorLeft = 0;
   double _indicatorWidth = 0;
   bool _indicatorReady = false;
+  late final AnimationController _glowController;
+  late final Animation<double> _glowPulse;
 
   @override
   void initState() {
     super.initState();
     _pillKeys.addAll(List.generate(widget.items.length, (_) => GlobalKey()));
+    _glowController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 3600),
+    )..repeat(reverse: true);
+    _glowPulse = CurvedAnimation(
+      parent: _glowController,
+      curve: Curves.easeInOutSine,
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) => _syncIndicator());
+  }
+
+  @override
+  void dispose() {
+    _glowController.dispose();
+    super.dispose();
   }
 
   @override
@@ -74,30 +91,44 @@ class _PortfolioNavBarState extends State<PortfolioNavBar> {
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 980),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: p.bgDeep.withValues(alpha: 0.82),
-              borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: p.borderAccent),
-              boxShadow: [
-                ...p.panelShadow,
-                BoxShadow(
-                  color: PortfolioPalette.accent.withValues(alpha: 0.12),
-                  blurRadius: 24,
-                  offset: const Offset(0, 8),
+          child: AnimatedBuilder(
+            animation: _glowPulse,
+            builder: (context, child) {
+              final pulse = _glowPulse.value;
+              return DecoratedBox(
+                decoration: BoxDecoration(
+                  color: p.bgDeep.withValues(alpha: 0.82),
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(
+                    color: PortfolioPalette.accent.withValues(
+                      alpha: 0.18 + pulse * 0.22,
+                    ),
+                  ),
+                  boxShadow: [
+                    ...p.panelShadow,
+                    BoxShadow(
+                      color: PortfolioPalette.accent.withValues(
+                        alpha: 0.1 + pulse * 0.14,
+                      ),
+                      blurRadius: 20 + pulse * 12,
+                      spreadRadius: pulse * 1.5,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+                child: child,
+              );
+            },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(18),
               child: Stack(
                 children: [
-                  const Positioned(
-                    left: 0,
-                    right: 0,
+                  Positioned(
+                    left: -40 + _glowPulse.value * 80,
+                    right: -40 - _glowPulse.value * 80,
                     top: 0,
                     height: 2,
-                    child: DecoratedBox(
+                    child: const DecoratedBox(
                       decoration: BoxDecoration(
                         gradient: PortfolioPalette.accentGradient,
                       ),

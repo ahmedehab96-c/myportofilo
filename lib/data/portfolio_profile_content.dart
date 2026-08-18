@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../widgets/fa_shim.dart';
 
 import '../services/portfolio_knowledge.dart';
 
@@ -9,12 +9,14 @@ class ProfileEducationEntry {
     required this.subtitle,
     required this.details,
     required this.color,
+    this.certificateUrl,
   });
 
   final String title;
   final String subtitle;
   final List<(String, String)> details;
   final Color color;
+  final String? certificateUrl;
 }
 
 class ProfileSkillCategory {
@@ -26,7 +28,7 @@ class ProfileSkillCategory {
   });
 
   final String category;
-  final IconData icon;
+  final FaIconData icon;
   final Color color;
   final List<String> skills;
 }
@@ -69,6 +71,23 @@ class PortfolioProfileContent {
             ('Description', 'Mobile App Development with Flutter'),
           ],
           color: Color(0xFF00B0FF),
+        ),
+        ProfileEducationEntry(
+          title: 'One Million Prompters — Certificate of Completion',
+          subtitle:
+              'Dubai Future Foundation · Dubai Centre for Artificial Intelligence',
+          details: [
+            (
+              'Issued by',
+              'Dubai Future Foundation & Dubai Centre for Artificial Intelligence',
+            ),
+            (
+              'Description',
+              'Completed the One Million Prompters initiative — developing skills in prompt engineering for AI systems, aligned with the Dubai Universal Blueprint for Artificial Intelligence.',
+            ),
+          ],
+          color: Color(0xFF00C853),
+          certificateUrl: PortfolioKnowledge.dubaiCertificateUrl,
         ),
         ProfileEducationEntry(
           title: 'Training Diploma in Artificial Intelligence',

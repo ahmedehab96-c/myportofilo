@@ -20,7 +20,7 @@ abstract final class UiStrings {
   static const educationTitle = 'Education & Certifications';
   static const skillsTitle = 'Skills & Expertise';
   static const skillsSubtitle = 'Technologies and tools I specialize in:';
-  static const featuredProjects = 'Featured Projects';
+  static const featuredProjects = 'Projects';
   static const featuredProjectsSubtitle =
       'Selected apps and platforms I designed and built.';
   static const featuredProject = 'FEATURED';
@@ -33,14 +33,17 @@ abstract final class UiStrings {
   static const phone = 'Phone';
   static const email = 'Email';
   static const downloadCv = 'Download CV';
+  static const viewCertificate = 'View Certificate';
   static const chatWithAI = 'Chat with AI Assistant';
   static const couldNotOpenLink = 'Could not open link';
   static const techStack = 'Tech Stack';
   static const viewReadmeGitHub = 'View README on GitHub';
   static const tryThisProject = 'Try this project';
   static const downloadApk = 'Download APK';
-  static const runWebFromGitHub = 'Run web from GitHub';
-  static const webSetupTitle = 'How to open the web version';
+  static const getOnGooglePlay = 'Get on Google Play';
+  static const openLiveDemo = 'Open live demo';
+  static const runWebFromGitHub = 'Open GitHub repo';
+  static const webSetupTitle = 'How to try (step by step)';
   static const about = 'About';
   static const topics = 'Topics';
   static const features = 'Features';
@@ -73,6 +76,7 @@ abstract final class UiStrings {
   static String welcomeMessage(String version) =>
       "Hello! I am Ahmed Ehab's portfolio AI assistant.\n\n"
       'Data version: $version\n\n'
-      'I know everything on this site: About, 5 featured projects, 6 skill areas, education, contact, and more.\n\n'
+      'I know everything on this site: About, Education, Skills (7 categories), '
+      'all 7 projects with demos/APKs, Contact, CV, and services.\n\n'
       'Tap a suggested question below, or ask: "What can you help me with?"';
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-/// Official brand logos for GitHub and LinkedIn; Font Awesome for other contacts.
+import 'fa_shim.dart';
+
+/// Brand logos for GitHub and LinkedIn — CanvasKit-safe (no flutter_svg).
 class BrandContactIcon extends StatelessWidget {
   const BrandContactIcon({
     super.key,
@@ -13,7 +13,7 @@ class BrandContactIcon extends StatelessWidget {
   });
 
   final String? brand;
-  final IconData? icon;
+  final FaIconData? icon;
   final double size;
   final Color? color;
 
@@ -26,19 +26,9 @@ class BrandContactIcon extends StatelessWidget {
 
     switch (brand) {
       case 'github':
-        return SvgPicture.asset(
-          'assets/icons/github.svg',
-          width: size,
-          height: size,
-          colorFilter: const ColorFilter.mode(_githubWhite, BlendMode.srcIn),
-        );
+        return BrandMarkIcon(brand: 'github', size: size, color: _githubWhite);
       case 'linkedin':
-        return SvgPicture.asset(
-          'assets/icons/linkedin.svg',
-          width: size,
-          height: size,
-          colorFilter: const ColorFilter.mode(_linkedinBlue, BlendMode.srcIn),
-        );
+        return BrandMarkIcon(brand: 'linkedin', size: size, color: _linkedinBlue);
       default:
         return FaIcon(
           icon ?? FontAwesomeIcons.circle,

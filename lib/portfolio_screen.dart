@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:vector_math/vector_math_64.dart' show Vector3;
 import 'project_details_screen.dart';
 import 'ai_chat_screen.dart';
-import 'package:animate_do/animate_do.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'widgets/fa_shim.dart';
 import 'widgets/brand_contact_icon.dart';
-import 'widgets/deferred_asset_image.dart';
 import 'widgets/glass_panel.dart';
+import 'widgets/hero_profile_visual.dart';
 import 'widgets/hero_stats_strip.dart';
 import 'widgets/nav_pill.dart';
 import 'widgets/portfolio_background.dart';
+import 'animations/motion_tokens.dart';
+import 'widgets/motion/animated_icon_badge.dart';
+import 'widgets/motion/premium_hover_card.dart';
 import 'widgets/projects_bento_grid.dart';
 import 'widgets/section_block.dart';
 import 'data/portfolio_content.dart';
@@ -22,6 +21,7 @@ import 'data/portfolio_profile_content.dart';
 import 'services/portfolio_knowledge.dart';
 import 'theme/portfolio_palette.dart';
 import 'ui_strings.dart';
+import 'utils/responsive_helper.dart';
 
 class PortfolioScreen extends StatefulWidget {
   const PortfolioScreen({super.key});
@@ -32,11 +32,9 @@ class PortfolioScreen extends StatefulWidget {
 
 class _PortfolioScreenState extends State<PortfolioScreen>
     with TickerProviderStateMixin {
-  static const double _navDrawerBreakpoint = 1280;
 
   late AnimationController _controller;
   final bool _backgroundAnimate = false;
-  final Map<int, bool> hoveredItems = {};
   String displayedName = "";
   int currentLetterIndex = 0;
   bool _nameErasing = false;
@@ -56,6 +54,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   final contactKey = GlobalKey();
 
   int _activeNavIndex = 0;
+  double _heroNameScrollOpacity = 1.0;
   final _sectionKeys = <GlobalKey>[];
 
   static const _stickyNavHeight = 72.0;
@@ -98,23 +97,37 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   void initState() {
     super.initState();
     _sectionKeys.addAll([aboutKey, educationKey, skillsKey, projectsKey, contactKey]);
-    _scrollController.addListener(_updateActiveSection);
+    _scrollController.addListener(_onScrollChanged);
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: kIsWeb ? 32 : 24),
     );
 
-    if (kIsWeb) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (_scrollController.hasClients) {
-          _scrollController.jumpTo(0);
-        }
-        _updateActiveSection();
-      });
-    } else {
+    if (_backgroundAnimate) {
       _controller.repeat();
     }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(0);
+      }
+      _onScrollChanged();
+    });
     _startLetterAnimation();
+  }
+
+  void _onScrollChanged() {
+    _updateHeroNameOpacity();
+    _updateActiveSection();
+  }
+
+  void _updateHeroNameOpacity() {
+    if (!_scrollController.hasClients) return;
+
+    final offset = _scrollController.offset;
+    final next = 1.0 - (offset / 280).clamp(0.0, 1.0);
+    if ((next - _heroNameScrollOpacity).abs() > 0.008 && mounted) {
+      setState(() => _heroNameScrollOpacity = next);
+    }
   }
 
   void _startLetterAnimation() {
@@ -195,7 +208,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
 
   @override
   void dispose() {
-    _scrollController.removeListener(_updateActiveSection);
+    _scrollController.removeListener(_onScrollChanged);
     _letterAnimationTimer?.cancel();
     _controller.dispose();
     _scrollController.dispose();
@@ -245,19 +258,13 @@ class _PortfolioScreenState extends State<PortfolioScreen>
     }
   }
 
-  Widget _reveal(Widget child, {Duration delay = Duration.zero}) => FadeInUp(
-        duration: const Duration(milliseconds: kIsWeb ? 520 : 800),
-        delay: delay,
-        from: 20,
-        child: child,
-      );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _openAssistant,
-        backgroundColor: PortfolioPalette.accent,
+        backgroundColor: PortfolioPalette.violet,
         foregroundColor: Colors.white,
         icon: const FaIcon(FontAwesomeIcons.robot, size: 20),
         label: const Text(
@@ -265,18 +272,28 @@ class _PortfolioScreenState extends State<PortfolioScreen>
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
-      drawer: MediaQuery.sizeOf(context).width < _navDrawerBreakpoint
+      drawer: ResponsiveHelper.of(context).useDrawerNav
           ? Drawer(
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 300),
                 child: ListView(
                   padding: EdgeInsets.zero,
                   children: [
-                    const DrawerHeader(
+                    DrawerHeader(
                       decoration: BoxDecoration(
-                        gradient: PortfolioPalette.accentGradient,
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            palette.bgElevated,
+                            palette.bgDeep,
+                          ],
+                        ),
+                        border: Border(
+                          bottom: BorderSide(color: palette.borderSubtle),
+                        ),
                       ),
-                      child: Text(
+                      child: const Text(
                         UiStrings.navNavigation,
                         style: TextStyle(
                           color: Colors.white,
@@ -323,7 +340,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                     ListTile(
                       leading: const FaIcon(
                         FontAwesomeIcons.robot,
-                        color: Color(0xFF0099FF),
+                        color: PortfolioPalette.violet,
                         size: 20,
                       ),
                       title: const Text(UiStrings.navAI),
@@ -339,7 +356,8 @@ class _PortfolioScreenState extends State<PortfolioScreen>
           : null,
       body: LayoutBuilder(
         builder: (context, constraints) {
-          final useDrawerNav = constraints.maxWidth < _navDrawerBreakpoint;
+          final useDrawerNav =
+              ResponsiveHelper.fromWidth(constraints.maxWidth).useDrawerNav;
 
           return Stack(
             children: [
@@ -348,10 +366,12 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                   animation: _controller,
                   palette: palette,
                   animate: _backgroundAnimate,
+                  lite: kIsWeb || constraints.maxWidth < 900,
                 ),
               ),
               SafeArea(
-                top: !kIsWeb,
+                // Keep top inset on mobile browsers too (notch / status bar).
+                top: true,
                 bottom: false,
                 child: SingleChildScrollView(
                   controller: _scrollController,
@@ -399,39 +419,6 @@ class _PortfolioScreenState extends State<PortfolioScreen>
     );
   }
 
-  Widget _buildProfilePhoto(double size) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(28),
-        gradient: PortfolioPalette.photoRingGradient,
-        boxShadow: palette.accentGlow(alpha: 0.35, blur: 40),
-      ),
-      padding: const EdgeInsets.all(3),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(25),
-        child: ColoredBox(
-          color: palette.bgDeep,
-          child: DeferredAssetImage(
-            asset: 'assets/images/ahmed.jpg',
-            fit: BoxFit.contain,
-            width: size - 6,
-            height: size - 6,
-            alignment: Alignment.center,
-            placeholderColor: palette.bgDeep,
-            borderRadius: BorderRadius.circular(25),
-            errorBuilder: (_, __, ___) => SizedBox(
-              width: size - 6,
-              height: size - 6,
-              child: Icon(Icons.person, size: size * 0.35, color: palette.textMuted),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildSectionTitle(String title, {String? subtitle}) {
     return SectionHeader(title: title, subtitle: subtitle);
   }
@@ -439,33 +426,55 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   Widget _buildHeader() {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final isDesktop = constraints.maxWidth >= 900;
-        final isSmall = constraints.maxWidth < 600;
-        final photoSize = isDesktop
-            ? (kIsWeb ? 360.0 : 420.0)
+        final r = ResponsiveHelper.fromWidth(constraints.maxWidth);
+        final isDesktop = r.isDesktop || constraints.maxWidth >= 900;
+        final isSmall = r.isMobile;
+        final photoWidth = isDesktop
+            ? (kIsWeb ? 520.0 : 560.0)
             : isSmall
-                ? (kIsWeb ? 220.0 : 300.0)
-                : (kIsWeb ? 280.0 : 360.0);
+                ? (kIsWeb ? 320.0 : 340.0)
+                : (kIsWeb ? 400.0 : 420.0);
+        const photoAspect = 704 / 729;
+        final photoHeight = photoWidth / photoAspect;
+
+        // Scale name to phone width — never clip mid-letter.
+        final nameFontSize = isDesktop
+            ? 54.0
+            : isSmall
+                ? (constraints.maxWidth * 0.065).clamp(22.0, 28.0)
+                : 44.0;
 
         final badge = Container(
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+          padding: EdgeInsets.symmetric(
+            horizontal: isSmall ? 14 : 18,
+            vertical: isSmall ? 7 : 8,
+          ),
           decoration: BoxDecoration(
-            gradient: PortfolioPalette.accentGradient,
+            color: palette.surfaceRaised,
             borderRadius: BorderRadius.circular(30),
-            boxShadow: palette.accentGlow(alpha: 0.32, blur: 18),
+            border: Border.all(
+              color: PortfolioPalette.accent.withValues(alpha: 0.4),
+            ),
+            boxShadow: palette.accentGlow(alpha: 0.18, blur: 18),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const FaIcon(FontAwesomeIcons.flutter, color: Colors.white, size: 16),
+              const FaIcon(
+                FontAwesomeIcons.flutter,
+                size: 18,
+                color: PortfolioPalette.accent,
+              ),
               const SizedBox(width: 8),
-              Text(
-                PortfolioProfileContent.role(const Locale('en')),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: isSmall ? 14 : 16,
-                  letterSpacing: 0.5,
+              Flexible(
+                child: Text(
+                  PortfolioProfileContent.role(const Locale('en')),
+                  style: TextStyle(
+                    color: PortfolioPalette.accent,
+                    fontWeight: FontWeight.w700,
+                    fontSize: isSmall ? 13 : 16,
+                    letterSpacing: 0.5,
+                  ),
                 ),
               ),
             ],
@@ -474,51 +483,51 @@ class _PortfolioScreenState extends State<PortfolioScreen>
 
         final nameStyle = TextStyle(
           fontWeight: FontWeight.w900,
-          fontSize: isSmall ? 34 : isDesktop ? 54 : 44,
+          fontSize: nameFontSize,
           color: palette.textPrimary,
-          letterSpacing: 1.5,
-          height: 1.15,
+          letterSpacing: isSmall ? 0.6 : 1.5,
+          height: 1.2,
         );
 
         final showCursor = !_nameErasing &&
             currentLetterIndex < _heroFullName.length;
-        final nameText = AnimatedOpacity(
-          opacity: displayedName.isEmpty ? 0 : 1,
-          duration: const Duration(milliseconds: 100),
-          curve: Curves.easeOut,
-          child: Shimmer.fromColors(
-            enabled: displayedName.isNotEmpty,
-            baseColor: palette.textPrimary.withValues(alpha: 0.88),
-            highlightColor: PortfolioPalette.accentBright,
-            period: const Duration(milliseconds: 1800),
-            child: Text(
-              displayedName.isEmpty ? '\u00A0' : displayedName,
-              maxLines: 2,
-              textAlign: isDesktop ? TextAlign.start : TextAlign.center,
-              style: nameStyle,
-            ),
-          ),
+
+        // No Shimmer on web — ShaderMask breaks text on some Android Chrome builds.
+        final nameText = Text(
+          displayedName.isEmpty ? '\u00A0' : displayedName,
+          maxLines: 2,
+          softWrap: true,
+          overflow: TextOverflow.ellipsis,
+          textAlign: isDesktop ? TextAlign.start : TextAlign.center,
+          style: nameStyle,
         );
 
-        final cursorHeight = isSmall ? 28.0 : isDesktop ? 48.0 : 40.0;
-        final nameWithCursor = Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Flexible(child: nameText),
-            if (showCursor)
-              Padding(
-                padding: EdgeInsets.only(bottom: isSmall ? 4 : 6, left: 2),
-                child: _BlinkingCursor(
-                  color: PortfolioPalette.accent,
-                  height: cursorHeight,
+        final cursorHeight = isSmall ? 22.0 : isDesktop ? 48.0 : 40.0;
+        final nameWithCursor = AnimatedOpacity(
+          opacity: _heroNameScrollOpacity,
+          duration: const Duration(milliseconds: 320),
+          curve: Curves.easeOutCubic,
+          child: Row(
+            mainAxisAlignment:
+                isDesktop ? MainAxisAlignment.start : MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Flexible(child: nameText),
+              if (showCursor)
+                Padding(
+                  padding: EdgeInsets.only(bottom: isSmall ? 3 : 6, left: 2),
+                  child: _BlinkingCursor(
+                    color: PortfolioPalette.accent,
+                    height: cursorHeight,
+                  ),
                 ),
-              ),
-          ],
+            ],
+          ),
         );
 
         final tagline = Text(
           UiStrings.heroTagline,
+          textAlign: isDesktop ? TextAlign.start : TextAlign.center,
           style: TextStyle(
             color: palette.textSecondary,
             fontWeight: FontWeight.w400,
@@ -527,15 +536,16 @@ class _PortfolioScreenState extends State<PortfolioScreen>
           ),
         );
 
-        const stats = HeroStatsStrip(
-          items: [
+        final stats = HeroStatsStrip(
+          scrollController: _scrollController,
+          items: const [
             (
               value: PortfolioKnowledge.yearsOfExperience,
               label: UiStrings.yearsExp,
               icon: FontAwesomeIcons.briefcase,
             ),
             (
-              value: '10+',
+              value: '20+',
               label: UiStrings.statProjects,
               icon: FontAwesomeIcons.folderOpen,
             ),
@@ -547,73 +557,134 @@ class _PortfolioScreenState extends State<PortfolioScreen>
           ],
         );
 
-        final ctaButtons = Wrap(
-          spacing: 16,
-          runSpacing: 12,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                gradient: PortfolioPalette.ctaGradient,
-                borderRadius: BorderRadius.circular(14),
-                boxShadow: palette.accentGlow(alpha: 0.35, blur: 20),
+        // Explicit InkWell CTAs — ElevatedButton+transparent bg paints empty on some phones.
+        Widget primaryCta({required bool fullWidth}) {
+          final child = Row(
+            mainAxisSize: fullWidth ? MainAxisSize.max : MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              FaIcon(
+                FontAwesomeIcons.briefcase,
+                size: 18,
+                color: PortfolioPalette.onAccent,
               ),
-              child: ElevatedButton.icon(
-                onPressed: () => _scrollToSection(3),
-                icon: const FaIcon(FontAwesomeIcons.briefcase, size: 18),
-                label: const Text(
-                  UiStrings.viewProjects,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              SizedBox(width: 10),
+              Text(
+                UiStrings.viewProjects,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: PortfolioPalette.onAccent,
                 ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
+              ),
+            ],
+          );
+          return Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () => _scrollToSection(3),
+              borderRadius: BorderRadius.circular(14),
+              child: Ink(
+                width: fullWidth ? double.infinity : null,
+                decoration: BoxDecoration(
+                  gradient: PortfolioPalette.ctaGradient,
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: palette.accentGlow(alpha: 0.35, blur: 20),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: fullWidth ? 20 : 28,
+                    vertical: 16,
+                  ),
+                  child: child,
                 ),
               ),
             ),
-            OutlinedButton.icon(
-              onPressed: () => _scrollToSection(4),
-              icon: const FaIcon(FontAwesomeIcons.envelope, size: 16),
-              label: const Text(
+          );
+        }
+
+        Widget secondaryCta({required bool fullWidth}) {
+          final child = Row(
+            mainAxisSize: fullWidth ? MainAxisSize.max : MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FaIcon(
+                FontAwesomeIcons.envelope,
+                size: 16,
+                color: palette.textPrimary,
+              ),
+              const SizedBox(width: 10),
+              Text(
                 UiStrings.contactMe,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: palette.textPrimary,
-                side: BorderSide(
-                  color: palette.borderAccent,
-                  width: 1.5,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: palette.textPrimary,
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              ),
+            ],
+          );
+          return Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () => _scrollToSection(4),
+              borderRadius: BorderRadius.circular(14),
+              child: Container(
+                width: fullWidth ? double.infinity : null,
+                padding: EdgeInsets.symmetric(
+                  horizontal: fullWidth ? 20 : 28,
+                  vertical: 16,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: palette.borderAccent, width: 1.5),
+                ),
+                child: child,
               ),
             ),
-          ],
-        );
+          );
+        }
+
+        final ctaButtons = isSmall
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  primaryCta(fullWidth: true),
+                  const SizedBox(height: 12),
+                  secondaryCta(fullWidth: true),
+                ],
+              )
+            : Wrap(
+                spacing: 16,
+                runSpacing: 12,
+                alignment: isDesktop ? WrapAlignment.start : WrapAlignment.center,
+                children: [
+                  primaryCta(fullWidth: false),
+                  secondaryCta(fullWidth: false),
+                ],
+              );
 
         final textColumn = Column(
-          crossAxisAlignment: isDesktop ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+          crossAxisAlignment:
+              isDesktop ? CrossAxisAlignment.start : CrossAxisAlignment.center,
           children: [
-            revealItem(badge),
+            badge,
             const SizedBox(height: 16),
-            revealItem(nameWithCursor, delay: const Duration(milliseconds: 70)),
+            nameWithCursor,
             const SizedBox(height: 12),
-            revealItem(tagline, delay: const Duration(milliseconds: 120)),
+            tagline,
             const SizedBox(height: 20),
             stats,
             const SizedBox(height: 20),
-            revealItem(ctaButtons, delay: const Duration(milliseconds: 220)),
+            ctaButtons,
           ],
         );
 
-        final profilePhoto = Center(
-          child: revealItem(
-            _buildProfilePhoto(photoSize),
-            delay: const Duration(milliseconds: 150),
-          ),
+        final profileVisual = HeroProfileVisual(
+          width: photoWidth,
+          palette: palette,
+          bleedRight: isDesktop,
+          alignment: isDesktop ? Alignment.centerRight : Alignment.center,
         );
 
         if (isDesktop) {
@@ -622,12 +693,22 @@ class _PortfolioScreenState extends State<PortfolioScreen>
               horizontal: kIsWeb ? 32 : 40,
               vertical: kIsWeb ? 16 : 44,
             ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: Stack(
+              clipBehavior: Clip.none,
               children: [
-                Expanded(flex: 6, child: textColumn),
-                const SizedBox(width: kIsWeb ? 32 : 48),
-                Expanded(flex: 4, child: profilePhoto),
+                Positioned(
+                  right: kIsWeb ? -28 : -12,
+                  top: -12,
+                  child: profileVisual,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(flex: 6, child: textColumn),
+                    const SizedBox(width: kIsWeb ? 32 : 48),
+                    SizedBox(width: photoWidth * 0.72, height: photoHeight),
+                  ],
+                ),
               ],
             ),
           );
@@ -635,25 +716,16 @@ class _PortfolioScreenState extends State<PortfolioScreen>
 
         return Container(
           padding: EdgeInsets.symmetric(
-            horizontal: isSmall ? 20 : 28,
+            horizontal: isSmall ? 16 : 28,
             vertical: kIsWeb ? 12 : (isSmall ? 28 : 36),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: kIsWeb
-                ? [
-                    textColumn,
-                    const SizedBox(height: 20),
-                    profilePhoto,
-                  ]
-                : [
-                    FadeIn(
-                      duration: const Duration(milliseconds: 1000),
-                      child: _buildProfilePhoto(photoSize),
-                    ),
-                    const SizedBox(height: 24),
-                    textColumn,
-                  ],
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              textColumn,
+              const SizedBox(height: 20),
+              Center(child: profileVisual),
+            ],
           ),
         );
       },
@@ -673,8 +745,12 @@ class _PortfolioScreenState extends State<PortfolioScreen>
             children: [
               _buildSectionTitle(UiStrings.aboutMe),
               const SizedBox(height: 18),
-              GlassPanel(
-                child: Column(
+              PremiumHoverCard(
+                scrollController: _scrollController,
+                entranceDelay: const Duration(milliseconds: 90),
+                shellGlow: true,
+                child: GlassPanel(
+                  child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -726,11 +802,13 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                                   ),
                                 ),
                                 delay: Duration(milliseconds: 60 * entry.key),
+                                scrollController: _scrollController,
                               ))
                           .toList(),
                     ),
                   ],
                 ),
+              ),
               ),
             ],
           ),
@@ -744,6 +822,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
     final icons = [
       FontAwesomeIcons.graduationCap,
       FontAwesomeIcons.flutter,
+      FontAwesomeIcons.robot,
       FontAwesomeIcons.brain,
     ];
 
@@ -762,24 +841,30 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                 final entry = entries[index];
                 final icon = icons[index];
                 return Padding(
-                  padding: EdgeInsets.only(top: index == 0 ? 0 : 14),
-                  child: _reveal(
-                    Hover3dWrapper(
-                      maxTilt: 0.12,
-                      perspective: 0.001,
-                      scale: 1.02,
-                      glowColor: entry.color,
-                      child: _buildEducationCard(
-                        icon: icon,
-                        iconColor: entry.color,
-                        title: entry.title,
-                        subtitle: entry.subtitle,
-                        details: entry.details
-                            .map((d) => (d.$1, d.$2, entry.color))
-                            .toList(),
-                      ),
+                  padding: EdgeInsets.only(
+                    top: index == 0 ? 4 : 22,
+                    bottom: 8,
+                    left: 4,
+                    right: 4,
+                  ),
+                  child: PremiumHoverCard(
+                    glowColor: entry.color,
+                    scrollController: _scrollController,
+                    entranceDelay: Duration(milliseconds: 80 * index),
+                    borderRadius: MotionTokens.cardRadius,
+                    floating: true,
+                    shellGlow: true,
+                    enableGlowPulse: true,
+                    child: _buildEducationCard(
+                      icon: icon,
+                      iconColor: entry.color,
+                      title: entry.title,
+                      subtitle: entry.subtitle,
+                      details: entry.details
+                          .map((d) => (d.$1, d.$2, entry.color))
+                          .toList(),
+                      certificateUrl: entry.certificateUrl,
                     ),
-                    delay: Duration(milliseconds: 80 * index),
                   ),
                 );
               }),
@@ -791,63 +876,49 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   }
 
   Widget _buildEducationCard({
-    required IconData icon,
+    required FaIconData icon,
     required Color iconColor,
     required String title,
     required String subtitle,
     required List<(String, String, Color)> details,
+    String? certificateUrl,
   }) {
-    return Card(
-      elevation: 12,
-      shadowColor: iconColor.withValues(alpha: 60),
-      shape: RoundedRectangleBorder(
+    return Container(
+      decoration: BoxDecoration(
+        color: palette.cardSurface,
         borderRadius: BorderRadius.circular(20),
-        side: BorderSide(
-          color: iconColor.withValues(alpha: 50),
-          width: 2,
+        border: Border.all(
+          color: iconColor.withValues(alpha: 0.35),
+          width: 1.5,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: iconColor.withValues(alpha: 0.35),
+            blurRadius: 36,
+            spreadRadius: 1,
+            offset: const Offset(0, 18),
+          ),
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.35),
+            blurRadius: 24,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          color: palette.surface,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: palette.borderSubtle),
-          boxShadow: palette.panelShadow,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      color: palette.bgMid,
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: iconColor.withValues(alpha: 0.6),
-                        width: 2,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: iconColor.withValues(alpha: 0.3),
-                          blurRadius: 12,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
-                    child: Center(
-                      child: FaIcon(
-                        icon,
-                        color: iconColor,
-                        size: 28,
-                        semanticLabel: title,
-                      ),
-                    ),
+                  AnimatedIconBadge(
+                    icon: icon,
+                    color: iconColor,
+                    size: 28,
+                    semanticLabel: title,
+                    flutterBrand: icon == FontAwesomeIcons.flutter,
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -909,10 +980,37 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                   ),
                 );
               }).toList(),
+              if (certificateUrl != null) ...[
+                const SizedBox(height: 18),
+                OutlinedButton.icon(
+                  onPressed: () => _viewCertificate(certificateUrl),
+                  icon: FaIcon(
+                    FontAwesomeIcons.filePdf,
+                    size: 18,
+                    color: iconColor,
+                  ),
+                  label: Text(
+                    UiStrings.viewCertificate,
+                    style: TextStyle(
+                      color: iconColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: iconColor.withValues(alpha: 0.7)),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18,
+                      vertical: 12,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),
-      ),
     );
   }
 
@@ -939,32 +1037,51 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                 children: skills.asMap().entries.map((entry) {
                   final index = entry.key;
                   final category = entry.value;
-                  final hoverKey = 2000 + index;
-                  final isHovered = hoveredItems[hoverKey] == true;
 
-                  final cardWidget = AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    transform: isHovered
-                        ? (Matrix4.identity()..translateByVector3(Vector3(0, -6, 0)))
-                        : Matrix4.identity(),
-                    child: SizedBox(
-                      width: constraints.maxWidth > 600
-                          ? (constraints.maxWidth / 2) - 36
-                          : constraints.maxWidth,
-                      child: Card(
-                        elevation: isHovered ? 10 : 4,
-                        shadowColor: category.color.withValues(alpha: 0.25),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(
-                            color: isHovered ? category.color : Colors.transparent,
-                            width: 1.5,
-                          ),
-                        ),
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 4,
+                      vertical: 10,
+                    ),
+                    child: PremiumHoverCard(
+                    glowColor: category.color,
+                    scrollController: _scrollController,
+                    entranceDelay: Duration(milliseconds: 70 * index),
+                    borderRadius: MotionTokens.cardRadius,
+                    floating: true,
+                    shellGlow: true,
+                    enableGlowPulse: true,
+                    builder: (context, state) {
+                      final isHovered = state.hovered;
+                      return SizedBox(
+                        width: constraints.maxWidth > 600
+                            ? (constraints.maxWidth / 2) - 36
+                            : constraints.maxWidth,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: palette.surface,
+                            color: palette.cardSurface,
                             borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: isHovered
+                                  ? category.color.withValues(alpha: 0.65)
+                                  : category.color.withValues(alpha: 0.28),
+                              width: 1.5,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: category.color.withValues(
+                                  alpha: isHovered ? 0.38 : 0.22,
+                                ),
+                                blurRadius: isHovered ? 38 : 28,
+                                spreadRadius: 1,
+                                offset: Offset(0, isHovered ? 18 : 12),
+                              ),
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.32),
+                                blurRadius: 20,
+                                offset: const Offset(0, 8),
+                              ),
+                            ],
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(24),
@@ -973,17 +1090,12 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                               children: [
                                 Row(
                                   children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                        color: category.color.withValues(alpha: 0.1),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: FaIcon(
-                                        category.icon,
-                                        color: category.color,
-                                        size: 24,
-                                      ),
+                                    AnimatedIconBadge(
+                                      icon: category.icon,
+                                      color: category.color,
+                                      size: 24,
+                                      boxSize: 48,
+                                      semanticLabel: category.category,
                                     ),
                                     const SizedBox(width: 16),
                                     Expanded(
@@ -1004,13 +1116,16 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                                 const SizedBox(height: 24),
                                 ...category.skills.map(
                                   (skill) => Padding(
-                                    padding: const EdgeInsets.only(bottom: 16),
+                                    padding:
+                                        const EdgeInsets.only(bottom: 16),
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Icon(
                                           Icons.arrow_right,
-                                          color: category.color.withValues(alpha: 0.8),
+                                          color: category.color
+                                              .withValues(alpha: 0.8),
                                           size: 20,
                                         ),
                                         const SizedBox(width: 12),
@@ -1022,7 +1137,8 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                                                 .bodyLarge
                                                 ?.copyWith(
                                                   color: palette.textPrimary
-                                                      .withValues(alpha: 0.92),
+                                                      .withValues(
+                                                          alpha: 0.92),
                                                   height: 1.5,
                                                 ),
                                             softWrap: true,
@@ -1036,17 +1152,9 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  );
-
-                  return MouseRegion(
-                    onEnter: (_) => setState(() => hoveredItems[hoverKey] = true),
-                    onExit: (_) => setState(() => hoveredItems[hoverKey] = false),
-                    child: _reveal(
-                      cardWidget,
-                      delay: Duration(milliseconds: 70 * index),
-                    ),
+                      );
+                    },
+                  ),
                   );
                 }).toList(),
               );
@@ -1080,10 +1188,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
               const SizedBox(height: 20),
               ProjectsBentoGrid(
                 projects: projects,
-                hoveredItems: hoveredItems,
-                onHoverChanged: (index, hovering) {
-                  setState(() => hoveredItems[index] = hovering);
-                },
+                scrollController: _scrollController,
                 onOpenProject: _openProjectDetails,
                 onOpenGithub: (project) {
                   if (project.githubUrl != null) {
@@ -1102,6 +1207,17 @@ class _PortfolioScreenState extends State<PortfolioScreen>
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
+  }
+
+  Future<void> _viewCertificate(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+        webOnlyWindowName: '_blank',
+      );
     }
   }
 
@@ -1141,8 +1257,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                   subtitle: UiStrings.getInTouchSubtitle,
                 ),
                 SizedBox(height: isSmallScreen ? 16 : 20),
-                AnimationLimiter(
-                  child: ListView.separated(
+                ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: contacts.length,
@@ -1151,144 +1266,115 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                     ),
                     itemBuilder: (context, index) {
                       final contact = contacts[index];
-                      final contactItemKey = 3000 + index;
-                      final card = Hover3dWrapper(
-                        maxTilt: 0.1,
-                        perspective: 0.001,
-                        scale: 1.015,
+                      return PremiumHoverCard(
                         glowColor: Theme.of(context).colorScheme.primary,
-                        onHoverChanged: (hovering) =>
-                            setState(() => hoveredItems[contactItemKey] = hovering),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () async {
+                        scrollController: _scrollController,
+                        entranceDelay: Duration(milliseconds: 80 * index),
+                        borderRadius: 16,
+                        onTap: () async {
+                          if (!mounted) return;
+                          final messenger = ScaffoldMessenger.of(context);
+                          try {
+                            final url = Uri.parse(contact['url'] as String);
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(url);
+                            } else {
                               if (!mounted) return;
-                              final messenger = ScaffoldMessenger.of(context);
-                              try {
-                                final url =
-                                    Uri.parse(contact['url'] as String);
-                                if (await canLaunchUrl(url)) {
-                                  await launchUrl(url);
-                                } else {
-                                  if (!mounted) return;
-                                  messenger.showSnackBar(
-                                    const SnackBar(content: Text(UiStrings.couldNotOpenLink)),
-                                  );
-                                }
-                              } catch (e) {
-                                if (!mounted) return;
-                                messenger.showSnackBar(
-                                  SnackBar(content: Text(UiStrings.errorGeneric(e.toString()))),
-                                );
-                              }
-                            },
-                            borderRadius: BorderRadius.circular(16),
-                            child: Container(
-                              width: contactWidth,
-                              padding:
-                                  EdgeInsets.all(isSmallScreen ? 16 : 20),
-                              decoration: BoxDecoration(
-                                color: palette.surface,
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(
-                                  color: palette.borderAccent,
-                                  width: 1,
+                              messenger.showSnackBar(
+                                const SnackBar(
+                                  content: Text(UiStrings.couldNotOpenLink),
+                                ),
+                              );
+                            }
+                          } catch (e) {
+                            if (!mounted) return;
+                            messenger.showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  UiStrings.errorGeneric(e.toString()),
                                 ),
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.all(
-                                        isSmallScreen ? 8 : 12),
-                                    decoration: BoxDecoration(
-                                      color: palette.bgMid,
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary
-                                            .withValues(alpha: 0.3),
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: BrandContactIcon(
-                                      brand: contact['brand'] as String?,
-                                      icon: contact['icon'] as IconData?,
-                                      size: isSmallScreen ? 20 : 24,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary,
-                                    ),
-                                  ),
-                                  SizedBox(width: isSmallScreen ? 12 : 16),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          _contactLabel(contact['label'] as String),
-                                          style: TextStyle(
-                                            color: palette.textSecondary,
-                                            fontSize:
-                                                isSmallScreen ? 12 : 14,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 4),
-                                        Text(
-                                          contact['value'] as String,
-                                          style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            fontSize:
-                                                isSmallScreen ? 14 : 16,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: isSmallScreen ? 14 : 16,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .primary,
-                                  ),
-                                ],
-                              ),
+                            );
+                          }
+                        },
+                        child: Container(
+                          width: contactWidth,
+                          padding: EdgeInsets.all(isSmallScreen ? 16 : 20),
+                          decoration: BoxDecoration(
+                            color: palette.surface,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: palette.borderAccent,
+                              width: 1,
                             ),
                           ),
-                        ),
-                      );
-                      if (kIsWeb) {
-                        return _reveal(
-                          card,
-                          delay: Duration(milliseconds: 80 * index),
-                        );
-                      }
-                      return AnimationConfiguration.staggeredList(
-                        position: index,
-                        duration: const Duration(milliseconds: 1200),
-                        child: SlideAnimation(
-                          verticalOffset: 50.0,
-                          child: FadeInAnimation(
-                            duration: const Duration(milliseconds: 1200),
-                            child: card,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding:
+                                    EdgeInsets.all(isSmallScreen ? 8 : 12),
+                                decoration: BoxDecoration(
+                                  color: palette.bgMid,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withValues(alpha: 0.3),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: BrandContactIcon(
+                                  brand: contact['brand'] as String?,
+                                  icon: contact['icon'] as FaIconData?,
+                                  size: isSmallScreen ? 20 : 24,
+                                  color:
+                                      Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                              SizedBox(width: isSmallScreen ? 12 : 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      _contactLabel(
+                                          contact['label'] as String),
+                                      style: TextStyle(
+                                        color: palette.textSecondary,
+                                        fontSize: isSmallScreen ? 12 : 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      contact['value'] as String,
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        fontSize: isSmallScreen ? 14 : 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: isSmallScreen ? 14 : 16,
+                                color:
+                                    Theme.of(context).colorScheme.primary,
+                              ),
+                            ],
                           ),
                         ),
                       );
                     },
                   ),
-                ),
               ],
             ),
         );
@@ -1299,55 +1385,60 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   Widget _buildResumeButton() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: _reveal(
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: PortfolioPalette.ctaGradient,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: palette.accentGlow(alpha: 0.38, blur: 24),
-          ),
-          child: ElevatedButton.icon(
-            icon: const FaIcon(FontAwesomeIcons.filePdf, size: 22),
-            label: const Text(
-              UiStrings.downloadCv,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0.5,
-              ),
-            ),
-            onPressed: () async {
-              try {
-                final url = Uri.parse(PortfolioKnowledge.cvUrl);
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url, mode: LaunchMode.externalApplication);
-                } else {
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text(UiStrings.couldNotOpenLink)),
-                    );
-                  }
-                }
-              } catch (e) {
-                if (mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(UiStrings.errorGeneric(e.toString()))),
-                  );
-                }
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () async {
+            try {
+              final url = Uri.parse(PortfolioKnowledge.cvUrl);
+              if (await canLaunchUrl(url)) {
+                await launchUrl(url, mode: LaunchMode.externalApplication);
+              } else if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text(UiStrings.couldNotOpenLink)),
+                );
               }
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.transparent,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 18),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              elevation: 0,
-              shadowColor: Colors.transparent,
+            } catch (e) {
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(UiStrings.errorGeneric(e.toString()))),
+                );
+              }
+            }
+          },
+          borderRadius: BorderRadius.circular(16),
+          child: Ink(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: PortfolioPalette.ctaGradient,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: palette.accentGlow(alpha: 0.38, blur: 24),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 18),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.filePdf,
+                    size: 22,
+                    color: PortfolioPalette.onAccent,
+                  ),
+                  SizedBox(width: 12),
+                  Text(
+                    UiStrings.downloadCv,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.5,
+                      color: PortfolioPalette.onAccent,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-        delay: const Duration(milliseconds: 140),
       ),
     );
   }
@@ -1355,47 +1446,45 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   Widget _buildAIChatButton() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-      child: _reveal(
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: PortfolioPalette.aiGradient,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: PortfolioPalette.violet.withValues(alpha: 0.35),
-                blurRadius: 24,
-                spreadRadius: 1,
-              ),
-            ],
-          ),
-          child: ElevatedButton.icon(
-            icon: const FaIcon(FontAwesomeIcons.robot, size: 24),
-            label: const Text(
-              UiStrings.chatWithAI,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.5,
-              ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: _openAssistant,
+          borderRadius: BorderRadius.circular(20),
+          child: Ink(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: PortfolioPalette.aiGradient,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: PortfolioPalette.violet.withValues(alpha: 0.35),
+                  blurRadius: 24,
+                  spreadRadius: 1,
+                ),
+              ],
             ),
-            onPressed: _openAssistant,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.transparent,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 32,
-                vertical: 20,
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FaIcon(FontAwesomeIcons.robot, size: 24, color: Colors.white),
+                  SizedBox(width: 12),
+                  Text(
+                    UiStrings.chatWithAI,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              elevation: 0,
-              shadowColor: Colors.transparent,
             ),
           ),
         ),
-        delay: const Duration(milliseconds: 180),
       ),
     );
   }
@@ -1441,7 +1530,8 @@ class _PortfolioScreenState extends State<PortfolioScreen>
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final useDrawerNav = constraints.maxWidth < _navDrawerBreakpoint;
+        final useDrawerNav =
+            ResponsiveHelper.fromWidth(constraints.maxWidth).useDrawerNav;
 
         if (useDrawerNav) {
           return Container(
@@ -1521,95 +1611,3 @@ class _BlinkingCursorState extends State<_BlinkingCursor>
     );
   }
 }
-
-class Hover3dWrapper extends StatefulWidget {
-  final Widget child;
-  final double maxTilt;
-  final double perspective;
-  final double scale;
-  final Color glowColor;
-  final ValueChanged<bool>? onHoverChanged;
-
-  const Hover3dWrapper({
-    super.key,
-    required this.child,
-    this.maxTilt = 0.12,
-    this.perspective = 0.001,
-    this.scale = 1.02,
-    this.glowColor = PortfolioPalette.accent,
-    this.onHoverChanged,
-  });
-
-  @override
-  State<Hover3dWrapper> createState() => _Hover3dWrapperState();
-}
-
-class _Hover3dWrapperState extends State<Hover3dWrapper> {
-  double _tiltX = 0;
-  double _tiltY = 0;
-  bool _hovering = false;
-
-  void _handlePointer(PointerEvent event) {
-    final renderBox = context.findRenderObject();
-    if (renderBox is! RenderBox) return;
-
-    final size = renderBox.size;
-    final localPos = renderBox.globalToLocal(event.position);
-    final normX = ((localPos.dx / size.width) - 0.5) * 2; // -1..1
-    final normY = ((localPos.dy / size.height) - 0.5) * 2; // -1..1
-
-    setState(() {
-      _tiltY = normX * widget.maxTilt;
-      _tiltX = -normY * widget.maxTilt;
-      _hovering = true;
-    });
-
-    widget.onHoverChanged?.call(true);
-  }
-
-  void _resetTilt() {
-    setState(() {
-      _tiltX = 0;
-      _tiltY = 0;
-      _hovering = false;
-    });
-    widget.onHoverChanged?.call(false);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final scaleValue = _hovering ? widget.scale : 1.0;
-    final matrix = Matrix4.identity()
-      ..setEntry(3, 2, widget.perspective)
-      ..rotateX(_tiltX)
-      ..rotateY(_tiltY)
-      ..scaleByVector3(Vector3(scaleValue, scaleValue, 1.0));
-
-    return MouseRegion(
-      onHover: _handlePointer,
-      onExit: (_) => _resetTilt(),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        curve: Curves.easeOut,
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: widget.glowColor.withValues(
-                alpha: _hovering ? 40 : 16,
-              ),
-              blurRadius: _hovering ? 28 : 14,
-              spreadRadius: _hovering ? 6 : 2,
-              offset: const Offset(0, 10),
-            ),
-          ],
-        ),
-        child: Transform(
-          alignment: Alignment.center,
-          transform: matrix,
-          child: widget.child,
-        ),
-      ),
-    );
-  }
-}
-

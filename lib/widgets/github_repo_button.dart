@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../ui_strings.dart';
+import 'fa_shim.dart';
 
 /// GitHub action: opens public repo or shows private-repo notice.
 class GithubRepoButton extends StatelessWidget {
@@ -49,9 +49,10 @@ class GithubRepoButton extends StatelessWidget {
     final label = isPrivate
         ? UiStrings.privateRepoLabel
         : (compact ? UiStrings.code : UiStrings.sourceCode);
-    final icon = isPrivate
-        ? FaIcon(FontAwesomeIcons.lock, size: compact ? 14 : 16, color: Colors.white)
-        : FaIcon(FontAwesomeIcons.github, size: compact ? 14 : 16, color: Colors.white);
+    final size = compact ? 14.0 : 16.0;
+    final Widget icon = isPrivate
+        ? FaIcon(FontAwesomeIcons.lock, size: size, color: Colors.white)
+        : BrandMarkIcon(brand: 'github', size: size, color: Colors.white);
 
     final onPressed =
         isPrivate ? () => _showPrivateNotice(context) : () => _openPublicRepo(context);

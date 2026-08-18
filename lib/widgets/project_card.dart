@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 import '../data/portfolio_content.dart';
+import '../animations/motion_tokens.dart';
 import '../theme/portfolio_palette.dart';
 import '../ui_strings.dart';
+import '../utils/responsive_helper.dart';
 import 'deferred_asset_image.dart';
+import 'fa_shim.dart';
 
 enum ProjectCardSize { featured, standard }
 
-/// Unified project card — same layout for all sizes; featured is taller with badge.
+/// Unified project card — image on top, single concise line below.
 class ProjectCard extends StatelessWidget {
   const ProjectCard({
     super.key,
@@ -28,188 +29,116 @@ class ProjectCard extends StatelessWidget {
 
   bool get _featured => size == ProjectCardSize.featured;
 
-  double get _cardHeight => _featured ? 420 : 360;
-
-  double get _imageHeight => _featured ? 188 : 158;
-
-  int get _descriptionLines => _featured ? 3 : 2;
-
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
+    final r = ResponsiveHelper.of(context);
     final primary = Theme.of(context).colorScheme.primary;
-    final tech = project.tech.take(_featured ? 4 : 3).toList();
-    final extraTech = project.tech.length - tech.length;
+    final pad = r.isMobile ? 12.0 : 14.0;
 
-    return SizedBox(
-      height: _cardHeight,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 220),
-        curve: Curves.easeOutCubic,
-        transform: isHovered
-            ? (Matrix4.identity()..translateByVector3(Vector3(0, -3, 0)))
-            : Matrix4.identity(),
-        decoration: p.projectCard(
-          hovered: isHovered,
-          featured: _featured,
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: onTap,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _ProjectPreview(
-                  palette: p,
-                  imagePath: project.cardImage,
-                  isPrivate: project.isGithubPrivate,
-                  height: _imageHeight,
-                  featured: _featured,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+    return AnimatedContainer(
+      duration: MotionTokens.hoverDuration,
+      curve: MotionTokens.hoverCurve,
+      decoration: p.projectCard(
+        hovered: isHovered,
+        featured: _featured,
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _ProjectPreview(
+                palette: p,
+                imagePath: project.cardImage,
+                isPrivate: project.isGithubPrivate,
+                featured: _featured,
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(pad, 10, pad, 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      project.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: r.adaptiveFont(16),
+                        fontWeight: FontWeight.w700,
+                        color: p.textPrimary,
+                        letterSpacing: 0.1,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      project.summary,
+                      maxLines: _featured ? 2 : 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: r.adaptiveFont(13),
+                        height: 1.4,
+                        color: p.textSecondary,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            if (_featured) ...[
-                              const _FeaturedBadge(),
-                              const SizedBox(width: 8),
-                            ],
-                            Expanded(
-                              child: Text(
-                                project.title,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: p.textPrimary,
-                                  letterSpacing: 0.1,
-                                ),
+                        Expanded(
+                          child: TextButton.icon(
+                            onPressed: onTap,
+                            icon: Icon(
+                              Icons.arrow_forward,
+                              color: primary,
+                              size: 16,
+                            ),
+                            label: Text(
+                              UiStrings.viewProject,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: primary,
+                                fontWeight: FontWeight.w600,
+                                fontSize: r.adaptiveFont(13),
                               ),
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          project.cardDescription,
-                          maxLines: _descriptionLines,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 13,
-                            height: 1.45,
-                            color: p.textSecondary,
+                            style: TextButton.styleFrom(
+                              alignment: Alignment.centerLeft,
+                              padding: const EdgeInsets.symmetric(vertical: 6),
+                              minimumSize: const Size(48, 36),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        Wrap(
-                          spacing: 6,
-                          runSpacing: 6,
-                          children: [
-                            ...tech.map(
-                              (t) => _TechChip(label: t, color: primary, palette: p),
+                        if (onGithub != null)
+                          IconButton(
+                            onPressed: onGithub,
+                            icon: BrandMarkIcon(
+                              brand: 'github',
+                              size: 16,
+                              color: project.isGithubPrivate
+                                  ? p.textMuted
+                                  : p.textSecondary,
                             ),
-                            if (extraTech > 0)
-                              _TechChip(
-                                label: '+$extraTech',
-                                color: p.textMuted,
-                                palette: p,
-                                muted: true,
-                              ),
-                          ],
-                        ),
-                        const Spacer(),
-                        Divider(height: 1, color: p.borderSubtle),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextButton.icon(
-                                onPressed: onTap,
-                                icon: Icon(
-                                  Icons.arrow_forward_rounded,
-                                  size: 16,
-                                  color: primary,
-                                ),
-                                label: Text(
-                                  UiStrings.viewProject,
-                                  style: TextStyle(
-                                    color: primary,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                                style: TextButton.styleFrom(
-                                  alignment: Alignment.centerLeft,
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 4,
-                                  ),
-                                  minimumSize: Size.zero,
-                                  tapTargetSize:
-                                      MaterialTapTargetSize.shrinkWrap,
-                                ),
-                              ),
+                            tooltip: project.isGithubPrivate
+                                ? UiStrings.privateOnGithub
+                                : UiStrings.viewOnGithub,
+                            style: IconButton.styleFrom(
+                              backgroundColor: p.bgMid,
+                              minimumSize: const Size(36, 36),
+                              padding: EdgeInsets.zero,
                             ),
-                            if (onGithub != null)
-                              IconButton(
-                                onPressed: onGithub,
-                                icon: FaIcon(
-                                  FontAwesomeIcons.github,
-                                  size: 16,
-                                  color: project.isGithubPrivate
-                                      ? p.textMuted
-                                      : p.textSecondary,
-                                ),
-                                tooltip: project.isGithubPrivate
-                                    ? UiStrings.privateOnGithub
-                                    : UiStrings.viewOnGithub,
-                                style: IconButton.styleFrom(
-                                  backgroundColor: p.bgMid,
-                                  minimumSize: const Size(34, 34),
-                                  padding: EdgeInsets.zero,
-                                ),
-                              ),
-                          ],
-                        ),
+                          ),
                       ],
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _FeaturedBadge extends StatelessWidget {
-  const _FeaturedBadge();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-      decoration: BoxDecoration(
-        color: PortfolioPalette.gold.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(
-          color: PortfolioPalette.gold.withValues(alpha: 0.35),
-        ),
-      ),
-      child: const Text(
-        UiStrings.featuredProject,
-        style: TextStyle(
-          fontSize: 9,
-          fontWeight: FontWeight.w800,
-          letterSpacing: 0.8,
-          color: PortfolioPalette.gold,
         ),
       ),
     );
@@ -221,14 +150,12 @@ class _ProjectPreview extends StatelessWidget {
     required this.palette,
     required this.imagePath,
     required this.isPrivate,
-    required this.height,
     required this.featured,
   });
 
   final PortfolioPalette palette;
   final String imagePath;
   final bool isPrivate;
-  final double height;
   final bool featured;
 
   @override
@@ -237,44 +164,66 @@ class _ProjectPreview extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(pad, pad, pad, 0),
-      child: SizedBox(
-        height: height,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            DecoratedBox(
-              decoration: BoxDecoration(
-                color: palette.imagePlaceholder,
-                borderRadius: BorderRadius.circular(
-                  PortfolioPalette.projectImageRadius,
-                ),
-                border: Border.all(color: palette.borderSubtle),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  PortfolioPalette.projectImageRadius - 1,
-                ),
-                child: DeferredAssetImage(
-                  asset: imagePath,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.topCenter,
-                  placeholderColor: palette.imagePlaceholder,
-                  errorBuilder: (_, __, ___) => Center(
-                    child: Icon(
-                      Icons.image_outlined,
-                      size: 36,
-                      color: palette.textMuted,
+      child: AspectRatio(
+        aspectRatio: featured ? 16 / 9 : 16 / 10,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Stack(
+              fit: StackFit.expand,
+              children: [
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        palette.bgMid,
+                        palette.imagePlaceholder,
+                        palette.bgDeep,
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(
+                      PortfolioPalette.projectImageRadius,
+                    ),
+                    border: Border.all(color: palette.borderSubtle),
+                    boxShadow: [
+                      BoxShadow(
+                        color: PortfolioPalette.accent.withValues(alpha: 0.08),
+                        blurRadius: featured ? 20 : 14,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(
+                      PortfolioPalette.projectImageRadius - 1,
+                    ),
+                    child: DeferredAssetImage(
+                      asset: imagePath,
+                      fit: BoxFit.contain,
+                      alignment: Alignment.center,
+                      width: constraints.maxWidth,
+                      height: constraints.maxHeight,
+                      useShimmer: false,
+                      placeholderColor: palette.imagePlaceholder,
+                      errorBuilder: (_, __, ___) => Center(
+                        child: Icon(
+                          Icons.image_outlined,
+                          size: 36,
+                          color: palette.textMuted,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            Positioned(
-              top: 8,
-              right: 8,
-              child: _RepoBadge(isPrivate: isPrivate, palette: palette),
-            ),
-          ],
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: _RepoBadge(isPrivate: isPrivate, palette: palette),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -310,42 +259,6 @@ class _RepoBadge extends StatelessWidget {
           fontSize: 9,
           fontWeight: FontWeight.w700,
           letterSpacing: 0.2,
-        ),
-      ),
-    );
-  }
-}
-
-class _TechChip extends StatelessWidget {
-  const _TechChip({
-    required this.label,
-    required this.color,
-    required this.palette,
-    this.muted = false,
-  });
-
-  final String label;
-  final Color color;
-  final PortfolioPalette palette;
-  final bool muted;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: muted ? palette.bgMid : color.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(
-          color: muted ? palette.borderSubtle : color.withValues(alpha: 0.22),
-        ),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(
-          color: muted ? palette.textMuted : color,
-          fontSize: 11,
-          fontWeight: FontWeight.w600,
         ),
       ),
     );

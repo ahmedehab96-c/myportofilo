@@ -1,25 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'fa_shim.dart';
 
+import '../animations/motion_tokens.dart';
 import '../theme/portfolio_palette.dart';
-import 'section_block.dart';
+import '../utils/responsive_helper.dart';
+import 'motion/animated_stat_value.dart';
+import 'motion/premium_hover_card.dart';
 
 /// Horizontal hero stats card with staggered entrance and hover polish.
 class HeroStatsStrip extends StatelessWidget {
   const HeroStatsStrip({
     super.key,
     required this.items,
+    this.scrollController,
   });
 
-  final List<({String value, String label, IconData icon})> items;
+  final List<({String value, String label, FaIconData icon})> items;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    final isSmall = MediaQuery.sizeOf(context).width < 600;
+    final isSmall = ResponsiveHelper.of(context).isMobile;
 
-    return revealItem(
-      DecoratedBox(
+    return PremiumHoverCard(
+      floating: true,
+      shellGlow: true,
+      enableGlowPulse: true,
+      scrollController: scrollController,
+      entranceDelay: const Duration(milliseconds: 170),
+      borderRadius: 18,
+      child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
           gradient: LinearGradient(
@@ -31,14 +42,7 @@ class HeroStatsStrip extends StatelessWidget {
             ],
           ),
           border: Border.all(color: p.borderAccent, width: 1.2),
-          boxShadow: [
-            ...p.panelShadow,
-            BoxShadow(
-              color: PortfolioPalette.accent.withValues(alpha: p.isDark ? 0.12 : 0.08),
-              blurRadius: 28,
-              offset: const Offset(0, 10),
-            ),
-          ],
+          boxShadow: p.panelShadow,
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(18),
@@ -68,7 +72,8 @@ class HeroStatsStrip extends StatelessWidget {
                         Container(
                           width: 1,
                           height: isSmall ? 36 : 44,
-                          margin: EdgeInsets.symmetric(horizontal: isSmall ? 8 : 14),
+                          margin:
+                              EdgeInsets.symmetric(horizontal: isSmall ? 8 : 14),
                           color: p.borderSubtle,
                         ),
                       if (isSmall)
@@ -78,6 +83,7 @@ class HeroStatsStrip extends StatelessWidget {
                             label: items[i].label,
                             icon: items[i].icon,
                             delay: Duration(milliseconds: 90 * i),
+                            scrollController: scrollController,
                           ),
                         )
                       else
@@ -86,6 +92,7 @@ class HeroStatsStrip extends StatelessWidget {
                           label: items[i].label,
                           icon: items[i].icon,
                           delay: Duration(milliseconds: 90 * i),
+                          scrollController: scrollController,
                         ),
                     ],
                   ],
@@ -95,7 +102,6 @@ class HeroStatsStrip extends StatelessWidget {
           ),
         ),
       ),
-      delay: const Duration(milliseconds: 170),
     );
   }
 }
@@ -106,12 +112,14 @@ class _StatCell extends StatefulWidget {
     required this.label,
     required this.icon,
     required this.delay,
+    this.scrollController,
   });
 
   final String value;
   final String label;
-  final IconData icon;
+  final FaIconData icon;
   final Duration delay;
+  final ScrollController? scrollController;
 
   @override
   State<_StatCell> createState() => _StatCellState();
@@ -123,19 +131,18 @@ class _StatCellState extends State<_StatCell> {
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    final isSmall = MediaQuery.sizeOf(context).width < 600;
+    final isSmall = ResponsiveHelper.of(context).isMobile;
 
-    return revealItem(
-      MouseRegion(
-        onEnter: (_) => setState(() => _hovering = true),
-        onExit: (_) => setState(() => _hovering = false),
-        child: AnimatedScale(
-          scale: _hovering ? 1.04 : 1,
-          duration: const Duration(milliseconds: 220),
-          curve: Curves.easeOutCubic,
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovering = true),
+      onExit: (_) => setState(() => _hovering = false),
+      child: AnimatedScale(
+          scale: _hovering ? 1.05 : 1,
+          duration: MotionTokens.hoverDuration,
+          curve: MotionTokens.hoverCurve,
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 220),
-            curve: Curves.easeOutCubic,
+            duration: MotionTokens.hoverDuration,
+            curve: MotionTokens.hoverCurve,
             padding: EdgeInsets.symmetric(
               horizontal: isSmall ? 6 : 10,
               vertical: isSmall ? 4 : 6,
@@ -143,36 +150,50 @@ class _StatCellState extends State<_StatCell> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: _hovering
-                  ? PortfolioPalette.accent.withValues(alpha: p.isDark ? 0.14 : 0.08)
+                  ? PortfolioPalette.accent
+                      .withValues(alpha: p.isDark ? 0.14 : 0.08)
                   : Colors.transparent,
+              boxShadow: _hovering
+                  ? [
+                      BoxShadow(
+                        color: PortfolioPalette.accent.withValues(alpha: 0.2),
+                        blurRadius: 14,
+                        offset: const Offset(0, 4),
+                      ),
+                    ]
+                  : null,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                FaIcon(
-                  widget.icon,
-                  size: isSmall ? 14 : 16,
-                  color: PortfolioPalette.accent.withValues(alpha: _hovering ? 1 : 0.75),
+                AnimatedRotation(
+                  turns: _hovering ? 0.02 : 0,
+                  duration: MotionTokens.hoverDuration,
+                  curve: MotionTokens.hoverCurve,
+                  child: FaIcon(
+                    widget.icon,
+                    size: isSmall ? 14 : 16,
+                    color: PortfolioPalette.accent
+                        .withValues(alpha: _hovering ? 1 : 0.75),
+                  ),
                 ),
                 SizedBox(height: isSmall ? 6 : 8),
-                ShaderMask(
-                  shaderCallback: (bounds) =>
-                      PortfolioPalette.accentGradientHorizontal.createShader(bounds),
-                  child: Text(
-                    widget.value,
-                    style: TextStyle(
-                      fontSize: isSmall ? 22 : 28,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.white,
-                      letterSpacing: 0.5,
-                      height: 1,
-                    ),
+                AnimatedStatValue(
+                  value: widget.value,
+                  style: TextStyle(
+                    fontSize: isSmall ? 20 : 28,
+                    fontWeight: FontWeight.w800,
+                    color: PortfolioPalette.accentBright,
+                    letterSpacing: 0.5,
+                    height: 1,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   widget.label,
                   textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: isSmall ? 10 : 12,
                     color: p.textMuted,
@@ -184,9 +205,6 @@ class _StatCellState extends State<_StatCell> {
             ),
           ),
         ),
-      ),
-      delay: widget.delay,
-      from: 12,
     );
   }
 }

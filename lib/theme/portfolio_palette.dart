@@ -45,15 +45,18 @@ class PortfolioPalette extends ThemeExtension<PortfolioPalette> {
   final double meshBlobAlpha;
   final bool isDark;
 
-  // Brand accents (shared across modes)
-  static const accent = Color(0xFF2563EB);
-  static const accentBright = Color(0xFF3B82F6);
-  static const accentDeep = Color(0xFF1D4ED8);
-  static const violet = Color(0xFF6366F1);
-  static const violetDeep = Color(0xFF4F46E5);
-  static const sky = Color(0xFF0EA5E9);
+  // Brand accents (shared across modes) — Midnight Navy + Electric Cyan + AI Violet
+  static const accent = Color(0xFF22D3EE);
+  static const accentBright = Color(0xFF67E8F9);
+  static const accentDeep = Color(0xFF0E7490);
+  static const violet = Color(0xFF8B5CF6);
+  static const violetDeep = Color(0xFF6D28D9);
+  static const sky = Color(0xFF38BDF8);
   static const teal = Color(0xFF14B8A6);
   static const gold = Color(0xFFB45309);
+
+  /// Dark navy text for use on bright cyan-filled surfaces (primary buttons).
+  static const onAccent = Color(0xFF0B1120);
 
   static const accentGradient = LinearGradient(
     begin: Alignment.topLeft,
@@ -68,13 +71,13 @@ class PortfolioPalette extends ThemeExtension<PortfolioPalette> {
   static const ctaGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [accent, accentDeep],
+    colors: [accent, accentBright],
   );
 
   static const aiGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [violet, violetDeep, accent],
+    colors: [violet, violetDeep],
   );
 
   static const photoRingGradient = LinearGradient(
@@ -87,69 +90,72 @@ class PortfolioPalette extends ThemeExtension<PortfolioPalette> {
   static const projectImageRadius = 12.0;
   static const projectImagePadding = 10.0;
 
-  /// Soft blue-gray light — calm, not harsh white.
+  /// Beryllium light — soft slate glass on airy white-blue base.
   static const light = PortfolioPalette(
-    bgDeep: Color(0xFFE4E9F2),
-    bgMid: Color(0xFFDCE3EE),
-    bgElevated: Color(0xFFD4DCE9),
-    surface: Color(0xFFEEF2F8),
-    surfaceRaised: Color(0xFFE8EDF5),
-    cardSurface: Color(0xFFF0F4FA),
-    imagePlaceholder: Color(0xFFD8E0EC),
-    textPrimary: Color(0xFF1E293B),
+    bgDeep: Color(0xFFF8FAFC),
+    bgMid: Color(0xFFF1F5F9),
+    bgElevated: Color(0xFFE2E8F0),
+    surface: Color(0xCCFFFFFF),
+    surfaceRaised: Color(0xE6FFFFFF),
+    cardSurface: Color(0xF2FFFFFF),
+    imagePlaceholder: Color(0xFFE2E8F0),
+    textPrimary: Color(0xFF0F172A),
     textSecondary: Color(0xFF475569),
     textMuted: Color(0xFF64748B),
-    borderSubtle: Color(0xFFC5D0E0),
-    borderAccent: Color(0x592563EB),
-    borderHover: Color(0x8C2563EB),
+    borderSubtle: Color(0x1A2563EB),
+    borderAccent: Color(0x402563EB),
+    borderHover: Color(0x662563EB),
     backgroundGradient: LinearGradient(
-      begin: Alignment(-0.15, -1),
-      end: Alignment(0.85, 1.15),
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
       colors: [
-        Color(0xFFE4E9F2),
-        Color(0xFFDCE3EE),
-        Color(0xFFD6E0EF),
-        Color(0xFFE2E8F0),
+        Color(0xFFF8FAFC),
+        Color(0xFFEFF6FF),
+        Color(0xFFF1F5F9),
+        Color(0xFFEDE9FE),
+        Color(0xFFF8FAFC),
       ],
-      stops: [0.0, 0.35, 0.7, 1.0],
+      stops: [0.0, 0.28, 0.55, 0.78, 1.0],
     ),
     panelShadow: [
       BoxShadow(
-        color: Color(0x0F0F172A),
-        blurRadius: 18,
-        offset: Offset(0, 5),
+        color: Color(0x142563EB),
+        blurRadius: 24,
+        offset: Offset(0, 8),
       ),
     ],
-    cardShadowColor: Color(0x0F0F172A),
-    cardShadowHoverColor: Color(0x242563EB),
-    meshBlobAlpha: 0.04,
+    cardShadowColor: Color(0x142563EB),
+    cardShadowHoverColor: Color(0x332563EB),
+    meshBlobAlpha: 0.06,
     isDark: false,
   );
 
+  /// Midnight Navy — premium dark base with electric cyan + AI violet accents.
   static const dark = PortfolioPalette(
-    bgDeep: Color(0xFF060B14),
-    bgMid: Color(0xFF0A1120),
-    bgElevated: Color(0xFF0F172A),
-    surface: Color(0xFF131C2E),
-    surfaceRaised: Color(0xFF1A2540),
-    cardSurface: Color(0xFF182338),
-    imagePlaceholder: Color(0xFF0E1628),
-    textPrimary: Color(0xFFF1F5F9),
+    bgDeep: Color(0xFF0B1120),
+    bgMid: Color(0xFF111827),
+    bgElevated: Color(0xFF141B2E),
+    surface: Color(0xCC0F172A),
+    surfaceRaised: Color(0xE6172239),
+    cardSurface: Color(0xFF0F172A),
+    imagePlaceholder: Color(0xFF0C1220),
+    textPrimary: Color(0xFFF8FAFC),
     textSecondary: Color(0xFF94A3B8),
     textMuted: Color(0xFF64748B),
-    borderSubtle: Color(0x12FFFFFF),
-    borderAccent: Color(0x474F8CFF),
-    borderHover: Color(0x734F8CFF),
+    borderSubtle: Color(0xFF1E293B),
+    borderAccent: Color(0x5522D3EE),
+    borderHover: Color(0xCC22D3EE),
     backgroundGradient: LinearGradient(
-      begin: Alignment(-0.15, -1),
-      end: Alignment(0.85, 1.15),
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
       colors: [
-        Color(0xFF060B14),
-        Color(0xFF0A1120),
-        Color(0xFF0D1528),
-        Color(0xFF080E1C),
+        Color(0xFF121B2E),
+        Color(0xFF0E1524),
+        Color(0xFF0B1120),
+        Color(0xFF0A0F1C),
+        Color(0xFF080C15),
       ],
-      stops: [0.0, 0.38, 0.72, 1.0],
+      stops: [0.0, 0.28, 0.55, 0.78, 1.0],
     ),
     panelShadow: [
       BoxShadow(
@@ -159,8 +165,8 @@ class PortfolioPalette extends ThemeExtension<PortfolioPalette> {
       ),
     ],
     cardShadowColor: Color(0x59000000),
-    cardShadowHoverColor: Color(0x294F8CFF),
-    meshBlobAlpha: 0.05,
+    cardShadowHoverColor: Color(0x4022D3EE),
+    meshBlobAlpha: 0.07,
     isDark: true,
   );
 

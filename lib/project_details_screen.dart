@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'widgets/fa_shim.dart';
 import 'package:animate_do/animate_do.dart';
 
 import 'ui_strings.dart';
 import 'data/portfolio_content.dart';
+import 'utils/responsive_helper.dart';
 import 'widgets/zoomable_image.dart';
 import 'widgets/github_repo_button.dart';
 
@@ -71,87 +72,133 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
 
   Color _techColor(String t) => _techColors[t] ?? const Color(0xFF58A6FF);
 
+  /// Credentials / notes only — no repeated button or APK instructions.
+  String? _compactTryNotes(PortfolioProject project) {
+    final guide = project.webSetupGuide?.trim();
+    if (guide == null || guide.isEmpty) return null;
+
+    final lines = guide
+        .split('\n')
+        .map((l) => l.trim())
+        .where((l) => l.isNotEmpty)
+        .where((l) {
+          final lower = l.toLowerCase();
+          if (lower.startsWith('**android apk**')) return false;
+          if (lower.startsWith('**live demo')) return false;
+          if (lower.startsWith('**live web')) return false;
+          if (lower.contains('tap **download apk**')) return false;
+          if (lower.contains('tap **open live demo**')) return false;
+          if (lower.startsWith('1. tap')) return false;
+          if (lower.startsWith('2. install')) return false;
+          if (lower.startsWith('3. sign in') && lower.contains('demo')) {
+            return false;
+          }
+          return true;
+        })
+        .map((l) => l.replaceAll(RegExp(r'\*\*'), ''))
+        .toList();
+
+    if (lines.isEmpty) return null;
+    return lines.join('\n');
+  }
+
   Widget _buildTrySection(BuildContext context) {
     final project = widget.project;
     if (!project.hasTrySection) return const SizedBox.shrink();
+    final r = ResponsiveHelper.of(context);
+    final pad = r.adaptivePadding.clamp(12.0, 20.0);
+    final notes = _compactTryNotes(project);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 16),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: const Color(0xFF388BFD).withValues(alpha: 0.08),
-            border: Border.all(
-              color: const Color(0xFF388BFD).withValues(alpha: 0.25),
-            ),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                UiStrings.tryThisProject,
-                style: TextStyle(
-                  color: _ghText,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              if (project.apkUrl != null) ...[
-                const SizedBox(height: 12),
-                FilledButton.icon(
-                  onPressed: () => _launch(context, project.apkUrl!),
-                  icon: const FaIcon(FontAwesomeIcons.android, size: 16),
-                  label: const Text(UiStrings.downloadApk),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: const Color(0xFF238636),
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 12,
-                    ),
-                  ),
-                ),
-              ],
-              if (project.webSetupGuide != null) ...[
-                const SizedBox(height: 16),
-                const Text(
-                  UiStrings.webSetupTitle,
-                  style: TextStyle(
-                    color: _ghText,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  project.webSetupGuide!,
-                  style: const TextStyle(
-                    color: _ghMuted,
-                    fontSize: 12,
-                    height: 1.65,
-                  ),
-                ),
-                if (project.githubUrl != null) ...[
-                  const SizedBox(height: 10),
-                  TextButton.icon(
-                    onPressed: () => _launch(context, project.githubUrl!),
-                    icon: const FaIcon(FontAwesomeIcons.github, size: 14),
-                    label: const Text(UiStrings.runWebFromGitHub),
-                    style: TextButton.styleFrom(
-                      foregroundColor: _ghBlue,
-                      padding: EdgeInsets.zero,
-                    ),
-                  ),
-                ],
-              ],
-            ],
-          ),
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(pad),
+      decoration: BoxDecoration(
+        color: const Color(0xFF388BFD).withValues(alpha: 0.08),
+        border: Border.all(
+          color: const Color(0xFF388BFD).withValues(alpha: 0.25),
         ),
-      ],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            UiStrings.tryThisProject,
+            style: TextStyle(
+              color: _ghText,
+              fontSize: r.adaptiveFont(15),
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          if (project.liveDemoUrl != null ||
+              project.apkUrl != null ||
+              project.playStoreUrl != null) ...[
+            SizedBox(height: r.adaptiveSpacing),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                if (project.liveDemoUrl != null)
+                  FilledButton.icon(
+                    onPressed: () => _launch(context, project.liveDemoUrl!),
+                    icon: const Icon(Icons.open_in_new, size: 16),
+                    label: const Text(UiStrings.openLiveDemo),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: const Color(0xFF388BFD),
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(48, 44),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 12,
+                      ),
+                    ),
+                  ),
+                if (project.playStoreUrl != null)
+                  FilledButton.icon(
+                    onPressed: () => _launch(context, project.playStoreUrl!),
+                    icon: const Icon(Icons.shop, size: 16),
+                    label: const Text(UiStrings.getOnGooglePlay),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: const Color(0xFF01875F),
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(48, 44),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 12,
+                      ),
+                    ),
+                  ),
+                if (project.apkUrl != null)
+                  FilledButton.icon(
+                    onPressed: () => _launch(context, project.apkUrl!),
+                    icon: const FaIcon(FontAwesomeIcons.android, size: 16),
+                    label: const Text(UiStrings.downloadApk),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: const Color(0xFF238636),
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(48, 44),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 12,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ],
+          if (notes != null) ...[
+            SizedBox(height: r.adaptiveSpacing),
+            Text(
+              notes,
+              style: TextStyle(
+                color: _ghMuted,
+                fontSize: r.adaptiveFont(12),
+                height: 1.65,
+              ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 
@@ -181,15 +228,27 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isWide = MediaQuery.of(context).size.width >= 960;
+    final r = ResponsiveHelper.of(context);
 
     return Scaffold(
       backgroundColor: _ghBg,
       appBar: _buildAppBar(context),
-      body: SingleChildScrollView(
-        child: isWide
-            ? _buildWideLayout(context)
-            : _buildNarrowLayout(context),
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.viewInsetsOf(context).bottom,
+              ),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                child: r.isWideLayout
+                    ? _buildWideLayout(context, r)
+                    : _buildNarrowLayout(context, r),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -218,97 +277,94 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
     );
   }
 
-  Widget _buildWideLayout(BuildContext context) {
+  Widget _buildWideLayout(BuildContext context, ResponsiveHelper r) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+      padding: EdgeInsets.symmetric(
+        horizontal: r.adaptivePadding + 8,
+        vertical: r.adaptiveSpacing + 4,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(flex: 7, child: _buildProjectPanel(context)),
-          const SizedBox(width: 24),
-          SizedBox(width: 280, child: _buildSidebar(context)),
+          Expanded(
+            flex: 7,
+            child: _buildProjectPanel(
+              context,
+              r,
+              showTrySection: false,
+              showGithubButton: false,
+            ),
+          ),
+          SizedBox(width: r.adaptiveSpacing + 4),
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: r.isDesktop ? 300 : 260,
+              minWidth: 220,
+            ),
+            child: _buildSidebar(context),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildNarrowLayout(BuildContext context) {
+  Widget _buildNarrowLayout(BuildContext context, ResponsiveHelper r) {
     return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSidebar(context),
-          const SizedBox(height: 20),
-          _buildProjectPanel(context),
-        ],
+      padding: EdgeInsets.all(r.adaptivePadding),
+      child: _buildProjectPanel(
+        context,
+        r,
+        showTrySection: true,
+        showGithubButton: true,
       ),
     );
   }
 
-  Widget _buildProjectPanel(BuildContext context) {
+  Widget _buildProjectPanel(
+    BuildContext context,
+    ResponsiveHelper r, {
+    required bool showTrySection,
+    required bool showGithubButton,
+  }) {
     final project = widget.project;
-    final readme = project.readme.trim();
     final features = project.features;
 
     return FadeInUp(
       duration: const Duration(milliseconds: 500),
       child: Container(
+        width: double.infinity,
         decoration: BoxDecoration(
           color: _ghSurface,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: _ghBorder),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(r.isMobile ? 16 : 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                project.title,
-                style: const TextStyle(
-                  color: _ghText,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w700,
-                  height: 1.3,
-                ),
-              ),
-              Container(
-                height: 1,
-                color: _ghBorder,
-                margin: const EdgeInsets.symmetric(vertical: 16),
-              ),
               if (project.screenshots.isNotEmpty) ...[
                 _buildScreenshotGallery(context),
-                const SizedBox(height: 28),
+                SizedBox(height: r.adaptiveSpacing),
               ],
-              const Text(
-                UiStrings.overview,
-                style: TextStyle(
-                  color: _ghText,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Container(
-                height: 1,
-                color: _ghBorder,
-                margin: const EdgeInsets.symmetric(vertical: 12),
-              ),
               Text(
-                readme,
-                style: const TextStyle(
+                project.summary,
+                style: TextStyle(
                   color: _ghMuted,
-                  fontSize: 14,
-                  height: 1.7,
+                  fontSize: r.adaptiveFont(14),
+                  height: 1.55,
                 ),
               ),
-              const SizedBox(height: 24),
-              const Text(
+              if (showTrySection && project.hasTrySection) ...[
+                SizedBox(height: r.adaptiveSpacing),
+                _buildTrySection(context),
+              ],
+              SizedBox(height: r.adaptiveSpacing + 4),
+              Text(
                 UiStrings.features,
                 style: TextStyle(
                   color: _ghText,
-                  fontSize: 20,
+                  fontSize: r.adaptiveFont(18),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -327,9 +383,9 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                       Expanded(
                         child: Text(
                           f,
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: _ghMuted,
-                            fontSize: 14,
+                            fontSize: r.adaptiveFont(14),
                             height: 1.5,
                           ),
                         ),
@@ -338,12 +394,12 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
-              const Text(
+              SizedBox(height: r.adaptiveSpacing + 4),
+              Text(
                 UiStrings.techStack,
                 style: TextStyle(
                   color: _ghText,
-                  fontSize: 20,
+                  fontSize: r.adaptiveFont(18),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -357,29 +413,17 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 runSpacing: 10,
                 children: project.tech.map((t) => _buildTechBadge(t)).toList(),
               ),
-              if (project.githubUrl != null) ...[
-                const SizedBox(height: 24),
-                OutlinedButton.icon(
-                  onPressed: () => _launch(context, project.githubUrl!),
-                  icon: const FaIcon(FontAwesomeIcons.github, size: 14),
-                  label: const Text(
-                    UiStrings.viewReadmeGitHub,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: _ghBlue,
-                    side: const BorderSide(color: _ghBorder),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
+              if (showGithubButton && project.githubUrl != null) ...[
+                SizedBox(height: r.adaptiveSpacing + 4),
+                SizedBox(
+                  width: double.infinity,
+                  child: GithubRepoButton(
+                    githubUrl: project.githubUrl,
+                    isPrivate: project.isGithubPrivate,
+                    outlined: false,
                   ),
                 ),
               ],
-              const SizedBox(height: 8),
             ],
           ),
         ),
@@ -394,80 +438,92 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
       return _buildSingleScreenshot(context, widget.project.screenshots.first);
     }
 
-    return Column(
-      children: [
-        SizedBox(
-          height: 380,
-          child: PageView.builder(
-            controller: _pageController,
-            onPageChanged: (i) => setState(() => _currentPage = i),
-            itemCount: widget.project.screenshots.length,
-            itemBuilder: (_, i) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: _buildSingleScreenshot(
-                context,
-                widget.project.screenshots[i],
-                galleryHeight: 380,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 12),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final r = ResponsiveHelper.fromWidth(constraints.maxWidth);
+        final galleryHeight = (constraints.maxWidth * 0.55)
+            .clamp(220.0, r.isMobile ? 280.0 : 380.0);
+
+        return Column(
           children: [
-            IconButton(
-              onPressed: _currentPage > 0
-                  ? () => _pageController.previousPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      )
-                  : null,
-              icon: const Icon(Icons.chevron_left, color: _ghMuted, size: 20),
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(),
-            ),
-            const SizedBox(width: 8),
-            ...List.generate(widget.project.screenshots.length, (i) {
-              final active = i == _currentPage;
-              return GestureDetector(
-                onTap: () => _pageController.animateToPage(
-                  i,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                ),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 250),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: active ? 20 : 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: active ? _ghBlue : _ghBorder,
-                    borderRadius: BorderRadius.circular(4),
+            SizedBox(
+              height: galleryHeight,
+              child: PageView.builder(
+                controller: _pageController,
+                onPageChanged: (i) => setState(() => _currentPage = i),
+                itemCount: widget.project.screenshots.length,
+                itemBuilder: (_, i) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: _buildSingleScreenshot(
+                    context,
+                    widget.project.screenshots[i],
+                    galleryHeight: galleryHeight,
                   ),
                 ),
-              );
-            }),
-            const SizedBox(width: 8),
-            IconButton(
-              onPressed: _currentPage < widget.project.screenshots.length - 1
-                  ? () => _pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      )
-                  : null,
-              icon: const Icon(Icons.chevron_right, color: _ghMuted, size: 20),
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(),
+              ),
             ),
-            const SizedBox(width: 8),
-            Text(
-              UiStrings.pageOf(_currentPage + 1, widget.project.screenshots.length),
-              style: const TextStyle(color: _ghMuted, fontSize: 12),
+            const SizedBox(height: 12),
+            Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 4,
+              children: [
+                IconButton(
+                  onPressed: _currentPage > 0
+                      ? () => _pageController.previousPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          )
+                      : null,
+                  icon: const Icon(Icons.chevron_left, color: _ghMuted, size: 20),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+                ),
+                ...List.generate(widget.project.screenshots.length, (i) {
+                  final active = i == _currentPage;
+                  return GestureDetector(
+                    onTap: () => _pageController.animateToPage(
+                      i,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    ),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 250),
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      width: active ? 20 : 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: active ? _ghBlue : _ghBorder,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                  );
+                }),
+                IconButton(
+                  onPressed: _currentPage < widget.project.screenshots.length - 1
+                      ? () => _pageController.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          )
+                      : null,
+                  icon:
+                      const Icon(Icons.chevron_right, color: _ghMuted, size: 20),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  UiStrings.pageOf(
+                    _currentPage + 1,
+                    widget.project.screenshots.length,
+                  ),
+                  style: const TextStyle(color: _ghMuted, fontSize: 12),
+                ),
+              ],
             ),
           ],
-        ),
-      ],
+        );
+      },
     );
   }
 
@@ -503,6 +559,11 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
               ? const BoxConstraints(maxHeight: 380)
               : null,
           decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFF0D1117), Color(0xFF161B22), Color(0xFF0D1117)],
+            ),
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: _ghBorder),
           ),
@@ -513,8 +574,13 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
               Image.asset(
                 imagePath,
                 fit: BoxFit.contain,
-                alignment: Alignment.topCenter,
+                alignment: Alignment.center,
                 width: double.infinity,
+                filterQuality: FilterQuality.medium,
+                cacheWidth: (MediaQuery.sizeOf(context).width *
+                        MediaQuery.devicePixelRatioOf(context))
+                    .clamp(400, 1400)
+                    .round(),
                 errorBuilder: (_, __, ___) => Container(
                   height: 200,
                   color: const Color(0xFF0D1117),
@@ -603,79 +669,9 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              border: Border.all(color: _ghBorder),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  UiStrings.about,
-                  style: TextStyle(
-                    color: _ghText,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  project.cardDescription.trim(),
-                  style: const TextStyle(
-                    color: _ghMuted,
-                    fontSize: 13,
-                    height: 1.6,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                const Divider(color: _ghBorder, height: 1),
-                const SizedBox(height: 16),
-                const Text(
-                  UiStrings.topics,
-                  style: TextStyle(
-                    color: _ghText,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Wrap(
-                  spacing: 6,
-                  runSpacing: 6,
-                  children: project.tech
-                      .map(
-                        (t) => Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 4),
-                          decoration: BoxDecoration(
-                            color:
-                                const Color(0xFF388BFD).withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                                color: const Color(0xFF388BFD)
-                                    .withValues(alpha: 0.3)),
-                          ),
-                          child: Text(
-                            t.toLowerCase().replaceAll('/', '-').replaceAll(' ', '-'),
-                            style: const TextStyle(
-                              color: _ghBlue,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ],
-            ),
-          ),
           _buildTrySection(context),
-          const SizedBox(height: 16),
-          if (project.githubUrl != null)
+          if (project.githubUrl != null) ...[
+            const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
               child: GithubRepoButton(
@@ -684,6 +680,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 outlined: false,
               ),
             ),
+          ],
         ],
       ),
     );
