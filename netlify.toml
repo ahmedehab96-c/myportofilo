@@ -16,6 +16,12 @@
   force = false
 
 [[redirects]]
+  from = "/demos/stepzone/*"
+  to = "/demos/stepzone/index.html"
+  status = 200
+  force = false
+
+[[redirects]]
   from = "/demos/mezo/*"
   to = "/demos/mezo/index.html"
   status = 200

@@ -497,11 +497,11 @@ StepZone is a premium Flutter eCommerce app for luxury footwear. It connects to 
       githubUrl: 'https://github.com/ahmedehab96-c/stepzone',
       isGithubPrivate: false,
       apkUrl: 'https://ahmedmyportofilo.netlify.app/apks/stepzone.apk',
-      webSetupGuide: '''**Android APK**
-1. Tap **Download APK** in this Try section
-2. Install on your phone (allow unknown sources if asked)
-3. Sign in with stepzone.demo@gmail.com / StepZone2026! or use Google
-4. Try coupon LUXE10 in the cart''',
+      liveDemoUrl: 'https://ahmedmyportofilo.netlify.app/demos/stepzone/',
+      webSetupGuide: '''**Web demo or Android APK**
+1. Open the **Live demo** link to try StepZone in your browser, or tap **Download APK** to install it
+2. Sign in with stepzone.demo@gmail.com / StepZone2026! or use Google
+3. Try coupon LUXE10 in the cart''',
     ),
   ];
 }

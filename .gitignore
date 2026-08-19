@@ -52,5 +52,8 @@ app.*.map.json
 # Built Mezo Flutter web admin (regenerate via flutter build web -t lib/admin/main_admin.dart)
 web/demos/mezo-admin/
 
+# Built StepZone Flutter web demo (regenerate from ~/Developer/stepzone: flutter build web --release)
+web/demos/stepzone/
+
 # Portfolio APKs (too large for git; uploaded directly to Netlify + GitHub Releases via scripts/)
 web/apks/

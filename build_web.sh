@@ -80,6 +80,13 @@ if [ -d web/demos/mezo-admin ] && [ -f web/demos/mezo-admin/index.html ]; then
   cp -R web/demos/mezo-admin build/web/demos/
 fi
 
+if [ -d web/demos/stepzone ] && [ -f web/demos/stepzone/index.html ]; then
+  echo "==> Syncing StepZone demo (Flutter web)"
+  rm -rf build/web/demos/stepzone
+  mkdir -p build/web/demos
+  cp -R web/demos/stepzone build/web/demos/
+fi
+
 if [ ! -f build/web/main.dart.js ]; then
   echo "ERROR: main.dart.js missing. Do NOT use plain 'flutter build web --release'." >&2
   exit 1
