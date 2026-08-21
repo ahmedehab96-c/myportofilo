@@ -7,10 +7,10 @@ class PortfolioKnowledge {
   PortfolioKnowledge._();
 
   static const fullName = 'Ahmed Ehab Mohammed';
-  static const role = 'Flutter Developer';
-  static const yearsOfExperience = '3+';
+  static const role = 'Full-Stack Mobile & Web Developer';
+  static const yearsOfExperience = '4+';
   static const tagline =
-      'Crafting beautiful and functional mobile experiences with a focus on user-centric design and clean code architecture';
+      'Crafting beautiful and functional mobile and web experiences with a focus on user-centric design and clean code architecture';
 
   static const email = 'ahmed96it96@gmail.com';
   static const phone = '+971 58 915 4605';
@@ -25,7 +25,7 @@ class PortfolioKnowledge {
       'https://ahmedmyportofilo.netlify.app/docs/ahmed-ehab-certificate.pdf';
 
   static const aboutParagraph1 =
-      'I am a Flutter developer with 3+ years of experience building responsive and feature-rich applications. I enjoy solving problems and creating user-friendly designs that provide seamless experiences across different platforms.';
+      'I am a full-stack mobile and web developer with 4+ years of experience building responsive and feature-rich applications. I work across Flutter/Dart for mobile and HTML, CSS, JavaScript, and React.js for web apps and admin dashboards, and I enjoy creating user-friendly designs that provide seamless experiences across platforms.';
 
   static const aboutParagraph2 =
       'My focus is on creating clean, efficient, and maintainable code while delivering exceptional user experiences. I continuously grow my skills with the help of AI tools — using Cursor and Claude to accelerate development, explore new patterns, and stay at the forefront of mobile development.';
@@ -71,9 +71,9 @@ class PortfolioKnowledge {
 I can answer detailed questions about every part of Ahmed Ehab's portfolio:
 
 👤 Hero & About
-• Full name, role (Flutter Developer), tagline, years of experience (3+)
-• Bio, highlights (Flutter, Dart, Firebase, GetX, REST API, Clean Architecture, UI/UX)
-• Stats: 3+ years, 20+ projects, 6+ technologies
+• Full name, role (Full-Stack Mobile & Web Developer), tagline, years of experience (4+)
+• Bio, highlights (Flutter, Dart, React.js, HTML, CSS, JavaScript, Firebase, GetX, REST API, Clean Architecture, UI/UX)
+• Stats: 4+ years, 20+ projects, 6+ technologies
 
 📱 Projects (7 apps — ask about any by name)
 • HRM NAWA TECH — multi-tenant HR SaaS (Filament + Flutter + live Render demo + APK)
@@ -388,12 +388,13 @@ Ask "What are your technical skills?" or "Do you know Laravel?" for details.''',
     FaqEntry(
       ['technical skills', 'flutter skills', 'dart skills', 'mobile development'],
       '''Technical Skills:
-• Flutter & Dart
-• Cross-platform apps (Android & iOS)
+• Flutter & Dart — cross-platform apps (Android & iOS)
+• Web development: HTML, CSS, JavaScript, React.js
+• Building web apps and admin dashboards with React.js
 • State management: BLoC, GetX, Riverpod
 • Custom widgets and UI components
 • Animations and responsive layouts
-• pub.dev packages integration''',
+• pub.dev / npm packages integration''',
     ),
     FaqEntry(
       [
