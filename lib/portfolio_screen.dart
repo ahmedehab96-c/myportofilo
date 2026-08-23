@@ -1363,12 +1363,6 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                                   ],
                                 ),
                               ),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: isSmallScreen ? 14 : 16,
-                                color:
-                                    Theme.of(context).colorScheme.primary,
-                              ),
                             ],
                           ),
                         ),
