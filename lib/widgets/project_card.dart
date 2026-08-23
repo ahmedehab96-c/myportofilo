@@ -89,14 +89,15 @@ class ProjectCard extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: TextButton.icon(
+                          child: TextButton(
                             onPressed: onTap,
-                            icon: Icon(
-                              Icons.arrow_forward,
-                              color: primary,
-                              size: 16,
+                            style: TextButton.styleFrom(
+                              alignment: Alignment.centerLeft,
+                              padding: const EdgeInsets.symmetric(vertical: 6),
+                              minimumSize: const Size(48, 36),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            label: Text(
+                            child: Text(
                               UiStrings.viewProject,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -104,12 +105,6 @@ class ProjectCard extends StatelessWidget {
                                 fontWeight: FontWeight.w600,
                                 fontSize: r.adaptiveFont(13),
                               ),
-                            ),
-                            style: TextButton.styleFrom(
-                              alignment: Alignment.centerLeft,
-                              padding: const EdgeInsets.symmetric(vertical: 6),
-                              minimumSize: const Size(48, 36),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
                           ),
                         ),
