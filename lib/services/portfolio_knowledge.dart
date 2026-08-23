@@ -25,7 +25,7 @@ class PortfolioKnowledge {
       'https://ahmedmyportofilo.netlify.app/docs/ahmed-ehab-certificate.pdf';
 
   static const aboutParagraph1 =
-      'I am a full-stack mobile and web developer with 4+ years of experience building responsive and feature-rich applications. I work across Flutter/Dart for mobile and HTML, CSS, JavaScript, and React.js for web apps and admin dashboards, and I enjoy creating user-friendly designs that provide seamless experiences across platforms.';
+      'I am a full-stack mobile and web developer with 4+ years of experience building responsive and feature-rich applications. Flutter/Dart is the core of my stack — I build complete, production-ready apps with it — and I extend that with React.js for admin dashboards and web additions, often enhanced with AI-powered features. I enjoy creating user-friendly designs that provide seamless experiences across platforms.';
 
   static const aboutParagraph2 =
       'My focus is on creating clean, efficient, and maintainable code while delivering exceptional user experiences. I continuously grow my skills with the help of AI tools — using Cursor and Claude to accelerate development, explore new patterns, and stay at the forefront of mobile development.';
@@ -388,12 +388,12 @@ Ask "What are your technical skills?" or "Do you know Laravel?" for details.''',
     FaqEntry(
       ['technical skills', 'flutter skills', 'dart skills', 'mobile development'],
       '''Technical Skills:
-• Flutter & Dart — cross-platform apps (Android & iOS)
-• Web development: HTML, CSS, JavaScript, React.js
-• Building web apps and admin dashboards with React.js
+• Flutter & Dart — my core stack for full, production-ready apps (Android & iOS)
 • State management: BLoC, GetX, Riverpod
 • Custom widgets and UI components
 • Animations and responsive layouts
+• React.js as an addition — for admin dashboards and web, often with AI-powered features
+• Web development: HTML, CSS, JavaScript, React.js
 • pub.dev / npm packages integration''',
     ),
     FaqEntry(

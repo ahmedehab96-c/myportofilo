@@ -126,12 +126,12 @@ class PortfolioProfileContent {
       ],
     ),
     ProfileSkillCategory(
-      category: 'Web Development',
+      category: 'Web Development (addition)',
       icon: FontAwesomeIcons.code,
       color: Color(0xFF61DAFB),
       skills: [
         'HTML, CSS, JavaScript',
-        'React.js for web apps and admin dashboards',
+        'React.js for admin dashboards and web, often with AI-powered features',
         'Responsive, component-based UI',
       ],
     ),
