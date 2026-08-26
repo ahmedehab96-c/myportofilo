@@ -3,7 +3,7 @@ class PortfolioContent {
   PortfolioContent._();
 
   /// Bump when assistant/portfolio data changes (shown in chat to verify web load).
-  static const assistantDataVersion = '3.7.0';
+  static const assistantDataVersion = '3.8.0';
 
   /// Project IDs shown large in the bento grid layout.
   static const bentoFeaturedIds = {'hrm', 'mezo'};
@@ -13,20 +13,22 @@ class PortfolioContent {
       id: 'hrm',
       title: 'HRM NAWA TECH',
       cardDescription:
-          'Multi-tenant HR SaaS — Filament admin, Flutter employee app, live Render demo.',
+          'Multi-tenant HR SaaS — Filament admin, React dashboard, Flutter employee app, live Render demo.',
       readme: '''
-HRM NAWA TECH is a full-stack multi-tenant HR platform built with Laravel Filament (admin) and Flutter (employee app).
+HRM NAWA TECH is a full-stack multi-tenant HR platform built with Laravel Filament (admin), a React SPA dashboard, and Flutter (employee app).
 
 **What it ships today**
 • Company self-registration + 14-day free trial
 • Plan employee caps (trial / starter / growth / enterprise)
 • Filament admin (AR/EN, RTL/LTR, dark mode)
+• React SPA dashboard (employees, departments, attendance, leave, payroll, recruitment, performance, reports, roles & permissions) consuming the same Sanctum-token API
 • Responsive Flutter employee UI (phone / tablet / desktop)
 • AI-assisted recruitment, leave, performance, and reports
 • Docker, queues, scheduler, `/api/health`, GitHub Actions CI
 
 **Live demo (Render)**
 • Admin: https://hrm-nawa-api.onrender.com/admin
+• React dashboard: https://hrm-nawa-api.onrender.com/dashboard
 • Demo admin: admin@demo.com / Admin12345!
 • Demo employee: emp01@demo.com / Employee12345!
 • API health: https://hrm-nawa-api.onrender.com/api/health
@@ -37,9 +39,9 @@ Source is private — email your GitHub username for collaborator access.''',
       screenshots: [
         'assets/images/hrm_screens.png',
       ],
-      summary: 'Multi-tenant HR SaaS — Filament admin, Flutter app, live demo.',
+      summary: 'Multi-tenant HR SaaS — Filament admin, React dashboard, Flutter app, live demo.',
       features: [
-        'Filament admin + Flutter employee app',
+        'Filament admin + React SPA dashboard + Flutter employee app',
         'Multi-tenant SaaS trial & plans',
         'Responsive phone / tablet / desktop layouts',
         'AI workflows + live public demo on Render',
@@ -50,6 +52,7 @@ Source is private — email your GitHub username for collaborator access.''',
         'Flutter',
         'Laravel',
         'Filament',
+        'React',
         'Sanctum',
         'REST API',
         'go_router',
@@ -60,6 +63,9 @@ Source is private — email your GitHub username for collaborator access.''',
         'hrm',
         'hrm nawa tech',
         'nawa tech hr',
+        'react',
+        'react dashboard',
+        'react spa',
         'saas',
         'multi-tenant',
         'trial',
@@ -88,7 +94,8 @@ Source is private — email your GitHub username for collaborator access.''',
 1. Tap **Open live demo** (or open https://hrm-nawa-api.onrender.com/admin)
 2. Admin: admin@demo.com / Admin12345!
 3. Employee: emp01@demo.com / Employee12345!
-4. API health: https://hrm-nawa-api.onrender.com/api/health
+4. React dashboard: https://hrm-nawa-api.onrender.com/dashboard (same demo accounts)
+5. API health: https://hrm-nawa-api.onrender.com/api/health
 
 Cold start on free Render may take 30–60s after idle.
 
@@ -455,10 +462,11 @@ StepZone is a premium Flutter eCommerce app for luxury footwear. It connects to 
 • Remote catalog and product images from Supabase Storage
 • Checkout with coupon RPCs and automated order status pipeline
 • Reviews on home, explore, wishlist, orders, and product details
-• Material 3 light/dark themes and English/Arabic RTL''',
-      cardImage: 'assets/images/stepzone_mockup.png',
+• Material 3 light/dark themes and English/Arabic RTL
+• React.js + Vite web storefront with Tap Payments (cards, Tabby, Tamara)''',
+      cardImage: 'assets/images/stepzone_mockup_v2.png',
       screenshots: [
-        'assets/images/stepzone_mockup.png',
+        'assets/images/stepzone_mockup_v2.png',
       ],
       summary: 'Luxury shoe store — Supabase, Google sign-in, coupons, AED pricing.',
       features: [
@@ -470,6 +478,7 @@ StepZone is a premium Flutter eCommerce app for luxury footwear. It connects to 
         'Supabase Storage product images',
         'AED pricing and EU shoe sizes',
         'Dark mode and Arabic RTL',
+        'React.js web storefront with Tap Payments checkout',
       ],
       tech: [
         'Flutter',
@@ -480,6 +489,9 @@ StepZone is a premium Flutter eCommerce app for luxury footwear. It connects to 
         'Google OAuth',
         'Clean Architecture',
         'Material 3',
+        'React.js',
+        'Vite',
+        'Tap Payments',
       ],
       keywords: [
         'stepzone',
@@ -493,6 +505,10 @@ StepZone is a premium Flutter eCommerce app for luxury footwear. It connects to 
         'coupons',
         'google sign in',
         'aed',
+        'react',
+        'react.js',
+        'vite',
+        'web storefront',
       ],
       githubUrl: 'https://github.com/ahmedehab96-c/stepzone',
       isGithubPrivate: false,

@@ -20,7 +20,7 @@ class PortfolioKnowledge {
   static const linkedInUrl =
       'https://www.linkedin.com/in/ahmed-ehab-ba8a63285';
   static const cvUrl =
-      'https://drive.google.com/file/d/1urs0hptHN-vwJoAcfW2wYL0IPkyVuGP3/view?usp=drivesdk';
+      'https://drive.google.com/file/d/1r6r5ScPVkKEE1Pqs0GWcPH89KC14gKn1/view?usp=drivesdk';
   static const dubaiCertificateUrl =
       'https://ahmedmyportofilo.netlify.app/docs/ahmed-ehab-certificate.pdf';
 
@@ -76,7 +76,7 @@ I can answer detailed questions about every part of Ahmed Ehab's portfolio:
 • Stats: 4+ years, 20+ projects, 6+ technologies
 
 📱 Projects (7 apps — ask about any by name)
-• HRM NAWA TECH — multi-tenant HR SaaS (Filament + Flutter + live Render demo + APK)
+• HRM NAWA TECH — multi-tenant HR SaaS (Filament + React dashboard + Flutter + live Render demo + APK)
 • Life OS — productivity app + Groq AI + Google Play
 • Mezo Food App — food delivery + Flutter web admin + Firebase + APK
 • IT Assist NAWA TECH — ITSM + Laravel + live Render admin + APK
@@ -374,7 +374,7 @@ Ask "What are your technical skills?" or "Do you know Laravel?" for details.''',
 • Demo: stepzone.demo@gmail.com / StepZone2026! | Coupons: LUXE10, KICKS20, WELCOME15
 • APK: https://ahmedmyportofilo.netlify.app/apks/stepzone.apk
 • GitHub (public): https://github.com/ahmedehab96-c/stepzone
-• Tech: Flutter, GetX, Supabase, PostgreSQL, Edge Functions''',
+• Tech: Flutter, GetX, Supabase, PostgreSQL, Edge Functions, React.js + Vite (web storefront), Tap Payments''',
     ),
     FaqEntry(
       ['navigation', 'menu', 'how to navigate', 'scroll sections'],
@@ -409,26 +409,30 @@ Ask "What are your technical skills?" or "Do you know Laravel?" for details.''',
         'hrm nawa tech',
         'tell me about hrm',
         'responsive hrm',
+        'react dashboard',
+        'hrm react',
       ],
       '''HRM NAWA TECH — multi-tenant HR SaaS with live demo:
 
-• Laravel Filament admin + Flutter employee app + REST API
+• Laravel Filament admin + React SPA dashboard + Flutter employee app + REST API
 • Company self-registration + 14-day free trial + plan caps
+• React dashboard covers employees, departments, attendance, leave, payroll, recruitment, performance, reports, roles & permissions — same Sanctum API as the mobile app
 • Responsive employee UI (phone / tablet / desktop)
 • AI-assisted recruitment, leave, performance, reports
 • Live demo: https://hrm-nawa-api.onrender.com/admin
+  React dashboard: https://hrm-nawa-api.onrender.com/dashboard
   Admin: admin@demo.com / Admin12345!
   Employee: emp01@demo.com / Employee12345!
 • API health: https://hrm-nawa-api.onrender.com/api/health
 • APK: https://ahmedmyportofilo.netlify.app/apks/hrm.apk
 • Source private — email GitHub username for access
 
-Stack: Laravel · Filament · Flutter · Sanctum · Docker.''',
+Stack: Laravel · Filament · React · Flutter · Sanctum · Docker.''',
     ),
     FaqEntry(
       ['backend', 'backend integration', 'api', 'database', 'firebase', 'supabase', 'laravel'],
       '''Backend Integration:
-• Laravel REST API — used in HRM NAWA TECH (Filament admin + Sanctum) and IT Assist NAWA TECH
+• Laravel REST API — used in HRM NAWA TECH (Filament admin + React dashboard + Sanctum) and IT Assist NAWA TECH
 • Firebase — Auth, Firestore, Cloud Messaging (Mezo + IT Assist)
 • Supabase — cloud backend for Life OS
 • HTTP/Dio for RESTful API calls in Flutter
@@ -551,6 +555,7 @@ For private-source projects, contact Ahmed at $email for collaboration or access
 
 • **HRM** — Open live demo (Render admin) + Download APK
   Admin: https://hrm-nawa-api.onrender.com/admin
+  React dashboard: https://hrm-nawa-api.onrender.com/dashboard
   APK: https://ahmedmyportofilo.netlify.app/apks/hrm.apk
 
 • **Mezo Food** — Open live demo (web admin) + Download APK

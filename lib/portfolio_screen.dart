@@ -684,7 +684,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
           width: photoWidth,
           palette: palette,
           bleedRight: isDesktop,
-          alignment: isDesktop ? Alignment.centerRight : Alignment.center,
+          alignment: isDesktop ? Alignment.topRight : Alignment.topCenter,
         );
 
         if (isDesktop) {
