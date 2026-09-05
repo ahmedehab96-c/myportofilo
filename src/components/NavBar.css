@@ -1,0 +1,116 @@
+.nav-bar-wrap {
+  padding: 8px 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-bar-shell {
+  position: relative;
+  width: 100%;
+  max-width: 980px;
+  border-radius: 18px;
+  background: rgba(11, 17, 32, 0.82);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  box-shadow: var(--panel-shadow), 0 8px 26px rgba(34, 211, 238, 0.16);
+  overflow: hidden;
+}
+
+.nav-bar-sheen {
+  position: absolute;
+  left: -40%;
+  right: -40%;
+  top: 0;
+  height: 2px;
+  background: var(--accent-gradient);
+  animation: nav-sheen 3.6s ease-in-out infinite alternate;
+}
+
+.nav-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+}
+
+.nav-bar-scroll {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-bar-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-bar-row {
+  position: relative;
+  display: flex;
+  width: max-content;
+}
+
+.nav-bar-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 12px;
+  background: var(--accent-gradient);
+  box-shadow: 0 4px 14px rgba(34, 211, 238, 0.4);
+  transition: left 380ms cubic-bezier(0.215, 0.61, 0.355, 1),
+    width 380ms cubic-bezier(0.215, 0.61, 0.355, 1), opacity 200ms ease;
+}
+
+.nav-pill {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.35px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  transition: color 260ms ease, background 260ms ease, border-color 260ms ease;
+}
+
+.nav-pill.highlighted {
+  color: var(--text-primary);
+  background: rgba(23, 34, 57, 0.65);
+  border-color: var(--border-hover);
+}
+
+.nav-pill.active {
+  color: #fff;
+  font-weight: 700;
+}
+
+.nav-bar-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.nav-ai-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: none;
+  background: var(--ai-gradient);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.28);
+  transition: transform 200ms cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 200ms ease;
+}
+
+.nav-ai-button.hovering {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(139, 92, 246, 0.46);
+}

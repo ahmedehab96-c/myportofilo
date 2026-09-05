@@ -1,0 +1,20 @@
+.glass-panel {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--panel-shadow);
+  overflow: hidden;
+}
+
+.glass-panel-accent {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: var(--accent-gradient);
+}
+
+.glass-panel-body {
+  padding: 24px;
+}

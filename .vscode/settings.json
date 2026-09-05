@@ -1,7 +1,3 @@
 {
-    "cmake.ignoreCMakeListsMissing": true,
-    "java.configuration.updateBuildConfiguration": "automatic",
-    "dart.runPubGetOnPubspecChanges": true,
-    "dart.flutterRunAdditionalArgs": [],
-    "dart.debugExtensionVersion": "3.0"
+  "editor.formatOnSave": true
 }

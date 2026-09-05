@@ -1,0 +1,22 @@
+// Semantic icon keys -> Font Awesome 6 Free classes (icons loaded via CDN).
+export const iconMap = {
+  phone: 'fa-solid fa-phone',
+  envelope: 'fa-solid fa-envelope',
+  robot: 'fa-solid fa-robot',
+  briefcase: 'fa-solid fa-briefcase',
+  folderOpen: 'fa-solid fa-folder-open',
+  code: 'fa-solid fa-code',
+  graduationCap: 'fa-solid fa-graduation-cap',
+  brain: 'fa-solid fa-brain',
+  database: 'fa-solid fa-database',
+  laravel: 'fa-brands fa-laravel',
+  lock: 'fa-solid fa-lock',
+  screwdriverWrench: 'fa-solid fa-screwdriver-wrench',
+  palette: 'fa-solid fa-palette',
+  lightbulb: 'fa-solid fa-lightbulb',
+  filePdf: 'fa-solid fa-file-pdf',
+  github: 'fa-brands fa-github',
+  linkedin: 'fa-brands fa-linkedin',
+  android: 'fa-brands fa-android',
+  circle: 'fa-solid fa-circle',
+};

@@ -2,26 +2,12 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Portfolio — local preview (recommended)",
+      "name": "Portfolio — Chrome (npm run dev)",
+      "type": "chrome",
       "request": "launch",
-      "type": "dart",
-      "program": "lib/main.dart",
-      "deviceId": "web-server",
-      "toolArgs": [
-        "--web-port=8080",
-        "--web-hostname=127.0.0.1"
-      ]
-    },
-    {
-      "name": "Portfolio — Chrome debug",
-      "request": "launch",
-      "type": "dart",
-      "program": "lib/main.dart",
-      "deviceId": "chrome",
-      "toolArgs": [
-        "--web-port=8080",
-        "--web-hostname=127.0.0.1"
-      ]
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/src",
+      "preLaunchTask": "npm: dev"
     }
   ]
 }

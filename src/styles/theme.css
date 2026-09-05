@@ -1,0 +1,86 @@
+:root {
+  --bg-deep: #0B1120;
+  --bg-mid: #111827;
+  --bg-elevated: #141B2E;
+  --surface: rgba(15, 23, 42, 0.8);
+  --surface-raised: rgba(23, 34, 57, 0.9);
+  --card-surface: #0F172A;
+  --image-placeholder: #0C1220;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border-subtle: #1E293B;
+  --border-accent: rgba(34, 211, 238, 0.33);
+  --border-hover: rgba(34, 211, 238, 0.8);
+  --panel-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  --card-shadow: rgba(0, 0, 0, 0.35);
+  --card-shadow-hover: rgba(34, 211, 238, 0.25);
+
+  --accent: #22D3EE;
+  --accent-bright: #67E8F9;
+  --accent-deep: #0E7490;
+  --violet: #8B5CF6;
+  --violet-deep: #6D28D9;
+  --sky: #38BDF8;
+  --teal: #14B8A6;
+  --gold: #B45309;
+  --on-accent: #0B1120;
+
+  --bg-gradient: linear-gradient(135deg, #121B2E 0%, #0E1524 28%, #0B1120 55%, #0A0F1C 78%, #080C15 100%);
+  --accent-gradient: linear-gradient(135deg, var(--accent), var(--violet));
+  --cta-gradient: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  --ai-gradient: linear-gradient(135deg, var(--violet), var(--violet-deep));
+
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.3);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 6px;
+}

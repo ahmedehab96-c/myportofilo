@@ -1,0 +1,14 @@
+.github-repo-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #2EA043;
+  background: #238636;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+}

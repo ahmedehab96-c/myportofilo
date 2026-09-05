@@ -1,14 +1,14 @@
 # Manual deploy only — build locally with ./scripts/deploy_netlify.sh
 # Git push does NOT trigger a Netlify build (ignore always skips CI).
 [build]
-  publish = "build/web"
+  publish = "dist"
   command = "echo 'Skipped — use ./scripts/deploy_netlify.sh for manual deploy'"
   ignore = "true"
 
 [build.environment]
   NETLIFY_DEPLOY = "1"
 
-# Nested Flutter admin SPA (before portfolio catch-all).
+# Nested built SPAs (before the portfolio catch-all).
 [[redirects]]
   from = "/demos/mezo-admin/*"
   to = "/demos/mezo-admin/index.html"
@@ -45,39 +45,7 @@
     Cache-Control = "no-cache, no-store, must-revalidate"
 
 [[headers]]
-  for = "/flutter_bootstrap.js"
-  [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
-
-[[headers]]
-  for = "/flutter.js"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/main.dart.js"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/main.dart.mjs"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/main.dart.wasm"
-  [headers.values]
-    Content-Type = "application/wasm"
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/*.wasm"
-  [headers.values]
-    Content-Type = "application/wasm"
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/canvaskit/*"
+  for = "/app/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
