@@ -1,12 +1,10 @@
-# Manual deploy only — build locally with ./scripts/deploy_netlify.sh
-# Git push does NOT trigger a Netlify build (ignore always skips CI).
+# Remote build on Netlify CI: builds automatically on every push to main.
 [build]
   publish = "dist"
-  command = "echo 'Skipped — use ./scripts/deploy_netlify.sh for manual deploy'"
-  ignore = "true"
+  command = "npm run build"
 
 [build.environment]
-  NETLIFY_DEPLOY = "1"
+  NODE_VERSION = "20"
 
 # Nested built SPAs (before the portfolio catch-all).
 [[redirects]]
