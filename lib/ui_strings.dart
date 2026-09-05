@@ -7,19 +7,26 @@ abstract final class UiStrings {
   static const navSkills = 'Skills';
   static const navProjects = 'Projects';
   static const navContact = 'Contact';
+  static const navServices = 'Services';
   static const navAI = 'AI Assistant';
   static const navAIShort = 'AI';
   static const heroTagline =
-      'Crafting beautiful & functional mobile experiences\nwith a focus on clean architecture and great UX.';
+      'I build modern mobile and web applications, scalable backend '
+      'systems, APIs, and AI-powered solutions using Flutter, React.js, '
+      'Laravel, and modern technologies.';
   static const yearsExp = 'Years Exp.';
   static const statProjects = 'Projects';
   static const statTechnologies = 'Technologies';
   static const viewProjects = 'View Projects';
+  static const hireMe = 'Hire Me';
   static const contactMe = 'Contact Me';
   static const aboutMe = 'About Me';
   static const educationTitle = 'Education & Certifications';
   static const skillsTitle = 'Skills & Expertise';
   static const skillsSubtitle = 'Technologies and tools I specialize in:';
+  static const servicesTitle = 'Services';
+  static const servicesSubtitle =
+      'What I can build for you, end to end.';
   static const featuredProjects = 'Projects';
   static const featuredProjectsSubtitle =
       'Selected apps and platforms I designed and built.';

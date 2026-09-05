@@ -86,6 +86,7 @@ Source is private — email your GitHub username for collaborator access.''',
         'rbac',
         'responsive',
       ],
+      categories: ['SaaS', 'Mobile', 'Web', 'Backend', 'AI'],
       githubUrl: 'https://github.com/ahmedehab96-c/hrm-nawa-tech',
       isGithubPrivate: true,
       apkUrl: 'https://ahmedmyportofilo.netlify.app/apks/hrm.apk',
@@ -147,6 +148,7 @@ The dashboard combines daily task planning, habit tracking, finance charts, goal
         'ai assistant',
         'responsive',
       ],
+      categories: ['Mobile', 'AI'],
       githubUrl: 'https://github.com/ahmedehab96-c/LifeOS',
       isGithubPrivate: false,
       playStoreUrl:
@@ -233,6 +235,7 @@ Mezo Food App (from project README) - food ordering and delivery with a customer
         'responsive',
         'rtl',
       ],
+      categories: ['Mobile', 'Web', 'Backend'],
       githubUrl: 'https://github.com/ahmedehab96-c/mezo-food-app',
       isGithubPrivate: true,
       apkUrl: 'https://ahmedmyportofilo.netlify.app/apks/mezo.apk',
@@ -320,6 +323,7 @@ A full-stack ITSM platform for companies to manage IT support requests, incident
         'responsive',
         'sla',
       ],
+      categories: ['SaaS', 'Mobile', 'Web', 'Backend', 'AI'],
       githubUrl: 'https://github.com/ahmedehab96-c/it-assist-nawa-tech',
       isGithubPrivate: true,
       apkUrl: 'https://ahmedmyportofilo.netlify.app/apks/itassist.apk',
@@ -388,6 +392,7 @@ Built with Clean Architecture, BLoC, go_router, Drift, just_audio, and Supabase.
         'achievements',
         'responsive',
       ],
+      categories: ['Mobile'],
       githubUrl: 'https://github.com/ahmedehab96-c/werdi',
       isGithubPrivate: false,
       playStoreUrl:
@@ -437,6 +442,7 @@ BankX Digital Banking is a Flutter mobile banking experience with splash, sign-i
         'flutter',
         'finance app',
       ],
+      categories: ['Mobile'],
       isGithubPrivate: true,
       apkUrl: 'https://ahmedmyportofilo.netlify.app/apks/bankx.apk',
       webSetupGuide: '''**Android APK**
@@ -510,6 +516,7 @@ StepZone is a premium Flutter eCommerce app for luxury footwear. It connects to 
         'vite',
         'web storefront',
       ],
+      categories: ['Mobile', 'Web', 'Backend'],
       githubUrl: 'https://github.com/ahmedehab96-c/stepzone',
       isGithubPrivate: false,
       apkUrl: 'https://ahmedmyportofilo.netlify.app/apks/stepzone.apk',
@@ -534,6 +541,7 @@ class PortfolioProject {
     required this.features,
     required this.tech,
     required this.keywords,
+    required this.categories,
     this.githubUrl,
     this.isGithubPrivate = true,
     this.apkUrl,
@@ -552,6 +560,8 @@ class PortfolioProject {
   final List<String> features;
   final List<String> tech;
   final List<String> keywords;
+  /// Project category tags: Mobile / Web / Backend / SaaS / AI.
+  final List<String> categories;
   final String? githubUrl;
   final bool isGithubPrivate;
   /// Hosted Android APK (prefer Netlify /apks/).

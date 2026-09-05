@@ -50,9 +50,12 @@ class PortfolioProfileContent {
   static List<String> aboutHighlights(Locale locale) => const [
         'Flutter',
         'Dart',
+        'React.js',
+        'Laravel',
         'Firebase',
         'GetX',
         'REST API',
+        'AI Integration',
         'Clean Architecture',
         'UI/UX',
       ];
@@ -113,9 +116,9 @@ class PortfolioProfileContent {
 
   static const _skillCategories = <ProfileSkillCategory>[
     ProfileSkillCategory(
-      category: 'Technical Skills',
-      icon: FontAwesomeIcons.code,
-      color: Color(0xFF0099FF),
+      category: 'Mobile Development',
+      icon: FontAwesomeIcons.flutter,
+      color: Color(0xFF54C5F8),
       skills: [
         'Flutter & Dart',
         'Cross-platform mobile development (Android & iOS)',
@@ -126,7 +129,7 @@ class PortfolioProfileContent {
       ],
     ),
     ProfileSkillCategory(
-      category: 'Web Development (addition)',
+      category: 'Web Development',
       icon: FontAwesomeIcons.code,
       color: Color(0xFF61DAFB),
       skills: [
@@ -136,7 +139,20 @@ class PortfolioProfileContent {
       ],
     ),
     ProfileSkillCategory(
-      category: 'Backend Integration',
+      category: 'Backend Development',
+      icon: FontAwesomeIcons.laravel,
+      color: Color(0xFFFF2D20),
+      skills: [
+        'RESTful API development with Laravel',
+        'Eloquent ORM & database migrations',
+        'MySQL database design and queries',
+        'Authentication with Laravel Sanctum / Passport',
+        'Role & permission management',
+        'API integration with Flutter and React.js frontends',
+      ],
+    ),
+    ProfileSkillCategory(
+      category: 'Cloud & Services',
       icon: FontAwesomeIcons.database,
       color: Color(0xFF00B0FF),
       skills: [
@@ -147,15 +163,16 @@ class PortfolioProfileContent {
       ],
     ),
     ProfileSkillCategory(
-      category: 'Laravel',
-      icon: FontAwesomeIcons.laravel,
-      color: Color(0xFFFF2D20),
+      category: 'AI Integration',
+      icon: FontAwesomeIcons.brain,
+      color: Color(0xFF8B5CF6),
       skills: [
-        'RESTful API development with Laravel',
-        'Eloquent ORM & database migrations',
-        'Authentication with Laravel Sanctum / Passport',
-        'Role & permission management',
-        'API integration with Flutter frontend',
+        'OpenAI-powered chat assistants (IT Assist NAWA TECH)',
+        'Groq-powered AI assistant with speech-to-text (Life OS)',
+        'AI-assisted workflows for recruitment, leave, performance & reports (HRM NAWA TECH)',
+        'Built this portfolio\'s own AI assistant and knowledge base',
+        'Training Diploma in Artificial Intelligence (ALBYAN Institute, ACTVET)',
+        'Prompt engineering — One Million Prompters certificate (Dubai Future Foundation)',
       ],
     ),
     ProfileSkillCategory(

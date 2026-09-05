@@ -5,6 +5,7 @@ import 'package:animate_do/animate_do.dart';
 
 import 'ui_strings.dart';
 import 'data/portfolio_content.dart';
+import 'theme/portfolio_palette.dart';
 import 'utils/responsive_helper.dart';
 import 'widgets/zoomable_image.dart';
 import 'widgets/github_repo_button.dart';
@@ -347,6 +348,16 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 _buildScreenshotGallery(context),
                 SizedBox(height: r.adaptiveSpacing),
               ],
+              if (project.categories.isNotEmpty) ...[
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: project.categories
+                      .map((c) => _buildCategoryPill(c))
+                      .toList(),
+                ),
+                SizedBox(height: r.adaptiveSpacing * 0.6),
+              ],
               Text(
                 project.summary,
                 style: TextStyle(
@@ -624,6 +635,27 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryPill(String category) {
+    final color = PortfolioPalette.categoryColor(category);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color.withValues(alpha: 0.45)),
+      ),
+      child: Text(
+        category,
+        style: TextStyle(
+          color: color,
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.3,
         ),
       ),
     );

@@ -18,6 +18,7 @@ import 'widgets/projects_bento_grid.dart';
 import 'widgets/section_block.dart';
 import 'data/portfolio_content.dart';
 import 'data/portfolio_profile_content.dart';
+import 'data/portfolio_services_content.dart';
 import 'services/portfolio_knowledge.dart';
 import 'theme/portfolio_palette.dart';
 import 'ui_strings.dart';
@@ -50,6 +51,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   final aboutKey = GlobalKey();
   final educationKey = GlobalKey();
   final skillsKey = GlobalKey();
+  final servicesKey = GlobalKey();
   final projectsKey = GlobalKey();
   final contactKey = GlobalKey();
 
@@ -57,7 +59,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   double _heroNameScrollOpacity = 1.0;
   final _sectionKeys = <GlobalKey>[];
 
-  static const _stickyNavHeight = 72.0;
+  static const _stickyNavHeight = 100.0;
 
   final spacing = 30.0;
   final dotSize = 2.0;
@@ -96,7 +98,9 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   @override
   void initState() {
     super.initState();
-    _sectionKeys.addAll([aboutKey, educationKey, skillsKey, projectsKey, contactKey]);
+    _sectionKeys.addAll(
+      [aboutKey, educationKey, skillsKey, servicesKey, projectsKey, contactKey],
+    );
     _scrollController.addListener(_onScrollChanged);
     _controller = AnimationController(
       vsync: this,
@@ -324,17 +328,24 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                       },
                     ),
                     ListTile(
-                      title: const Text(UiStrings.navProjects),
+                      title: const Text(UiStrings.navServices),
                       onTap: () {
                         Navigator.pop(context);
                         _scrollToSection(3);
                       },
                     ),
                     ListTile(
-                      title: const Text(UiStrings.navContact),
+                      title: const Text(UiStrings.navProjects),
                       onTap: () {
                         Navigator.pop(context);
                         _scrollToSection(4);
+                      },
+                    ),
+                    ListTile(
+                      title: const Text(UiStrings.navContact),
+                      onTap: () {
+                        Navigator.pop(context);
+                        _scrollToSection(5);
                       },
                     ),
                     ListTile(
@@ -392,6 +403,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                         _buildAbout(),
                         _buildEducation(),
                         _buildSkills(),
+                        _buildServices(),
                         _buildProjects(),
                         _buildContact(),
                         _buildResumeButton(),
@@ -558,23 +570,30 @@ class _PortfolioScreenState extends State<PortfolioScreen>
         );
 
         // Explicit InkWell CTAs — ElevatedButton+transparent bg paints empty on some phones.
-        Widget primaryCta({required bool fullWidth}) {
+        Widget heroCta({
+          required FaIconData icon,
+          required String label,
+          required bool primaryStyle,
+          required bool fullWidth,
+          required VoidCallback onTap,
+        }) {
+          final textColor =
+              primaryStyle ? PortfolioPalette.onAccent : palette.textPrimary;
           final child = Row(
             mainAxisSize: fullWidth ? MainAxisSize.max : MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              FaIcon(
-                FontAwesomeIcons.briefcase,
-                size: 18,
-                color: PortfolioPalette.onAccent,
-              ),
-              SizedBox(width: 10),
-              Text(
-                UiStrings.viewProjects,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: PortfolioPalette.onAccent,
+            children: [
+              FaIcon(icon, size: 16, color: textColor),
+              const SizedBox(width: 10),
+              Flexible(
+                child: Text(
+                  label,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: primaryStyle ? FontWeight.w700 : FontWeight.w600,
+                    color: textColor,
+                  ),
                 ),
               ),
             ],
@@ -582,19 +601,25 @@ class _PortfolioScreenState extends State<PortfolioScreen>
           return Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () => _scrollToSection(3),
+              onTap: onTap,
               borderRadius: BorderRadius.circular(14),
               child: Ink(
                 width: fullWidth ? double.infinity : null,
-                decoration: BoxDecoration(
-                  gradient: PortfolioPalette.ctaGradient,
-                  borderRadius: BorderRadius.circular(14),
-                  boxShadow: palette.accentGlow(alpha: 0.35, blur: 20),
-                ),
+                decoration: primaryStyle
+                    ? BoxDecoration(
+                        gradient: PortfolioPalette.ctaGradient,
+                        borderRadius: BorderRadius.circular(14),
+                        boxShadow: palette.accentGlow(alpha: 0.35, blur: 20),
+                      )
+                    : BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        border:
+                            Border.all(color: palette.borderAccent, width: 1.5),
+                      ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: fullWidth ? 20 : 28,
-                    vertical: 16,
+                    horizontal: fullWidth ? 16 : 24,
+                    vertical: 15,
                   ),
                   child: child,
                 ),
@@ -603,66 +628,106 @@ class _PortfolioScreenState extends State<PortfolioScreen>
           );
         }
 
-        Widget secondaryCta({required bool fullWidth}) {
-          final child = Row(
-            mainAxisSize: fullWidth ? MainAxisSize.max : MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FaIcon(
-                FontAwesomeIcons.envelope,
-                size: 16,
-                color: palette.textPrimary,
-              ),
-              const SizedBox(width: 10),
-              Text(
-                UiStrings.contactMe,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: palette.textPrimary,
-                ),
-              ),
-            ],
-          );
-          return Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () => _scrollToSection(4),
-              borderRadius: BorderRadius.circular(14),
-              child: Container(
-                width: fullWidth ? double.infinity : null,
-                padding: EdgeInsets.symmetric(
-                  horizontal: fullWidth ? 20 : 28,
-                  vertical: 16,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: palette.borderAccent, width: 1.5),
-                ),
-                child: child,
-              ),
+        final ctaSpecs = [
+          (
+            icon: FontAwesomeIcons.briefcase,
+            label: UiStrings.viewProjects,
+            primary: true,
+            onTap: () => _scrollToSection(4),
+          ),
+          (
+            icon: FontAwesomeIcons.envelope,
+            label: UiStrings.hireMe,
+            primary: true,
+            onTap: () => _launchUrl(
+              'mailto:${PortfolioKnowledge.email}?subject=Project%20Inquiry',
             ),
-          );
-        }
+          ),
+          (
+            icon: FontAwesomeIcons.phone,
+            label: UiStrings.contactMe,
+            primary: false,
+            onTap: () => _scrollToSection(5),
+          ),
+          (
+            icon: FontAwesomeIcons.filePdf,
+            label: UiStrings.downloadCv,
+            primary: false,
+            onTap: () => _launchUrl(PortfolioKnowledge.cvUrl),
+          ),
+        ];
 
         final ctaButtons = isSmall
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+            ? Wrap(
+                spacing: 12,
+                runSpacing: 12,
+                alignment: WrapAlignment.center,
                 children: [
-                  primaryCta(fullWidth: true),
-                  const SizedBox(height: 12),
-                  secondaryCta(fullWidth: true),
+                  for (final c in ctaSpecs)
+                    SizedBox(
+                      width: (constraints.maxWidth - 16 - 12) / 2,
+                      child: heroCta(
+                        icon: c.icon,
+                        label: c.label,
+                        primaryStyle: c.primary,
+                        fullWidth: true,
+                        onTap: c.onTap,
+                      ),
+                    ),
                 ],
               )
             : Wrap(
-                spacing: 16,
+                spacing: 14,
                 runSpacing: 12,
                 alignment: isDesktop ? WrapAlignment.start : WrapAlignment.center,
                 children: [
-                  primaryCta(fullWidth: false),
-                  secondaryCta(fullWidth: false),
+                  for (final c in ctaSpecs)
+                    heroCta(
+                      icon: c.icon,
+                      label: c.label,
+                      primaryStyle: c.primary,
+                      fullWidth: false,
+                      onTap: c.onTap,
+                    ),
                 ],
               );
+
+        const heroTechHighlights = [
+          'Flutter',
+          'React.js',
+          'Laravel',
+          'Firebase',
+          'Supabase',
+          'AI',
+          'REST APIs',
+        ];
+
+        final techStrip = Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          alignment: isDesktop ? WrapAlignment.start : WrapAlignment.center,
+          children: heroTechHighlights
+              .map(
+                (t) => Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: PortfolioPalette.accent.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: palette.borderAccent, width: 1),
+                  ),
+                  child: Text(
+                    t,
+                    style: const TextStyle(
+                      color: PortfolioPalette.accentBright,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              )
+              .toList(),
+        );
 
         final textColumn = Column(
           crossAxisAlignment:
@@ -673,6 +738,8 @@ class _PortfolioScreenState extends State<PortfolioScreen>
             nameWithCursor,
             const SizedBox(height: 12),
             tagline,
+            const SizedBox(height: 16),
+            techStrip,
             const SizedBox(height: 20),
             stats,
             const SizedBox(height: 20),
@@ -1165,6 +1232,118 @@ class _PortfolioScreenState extends State<PortfolioScreen>
     );
   }
 
+  Widget _buildServices() {
+    const services = PortfolioServicesContent.services;
+
+    return SectionBlock(
+      sectionKey: servicesKey,
+      scrollController: _scrollController,
+      delay: const Duration(milliseconds: 90),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSectionTitle(
+            UiStrings.servicesTitle,
+            subtitle: UiStrings.servicesSubtitle,
+          ),
+          const SizedBox(height: 20),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final cols = constraints.maxWidth > 900
+                  ? 3
+                  : constraints.maxWidth > 600
+                      ? 2
+                      : 1;
+              const gap = 18.0;
+              final itemWidth =
+                  (constraints.maxWidth - gap * (cols - 1)) / cols;
+
+              return Wrap(
+                spacing: gap,
+                runSpacing: gap,
+                children: services.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final service = entry.value;
+
+                  return SizedBox(
+                    width: itemWidth,
+                    child: PremiumHoverCard(
+                      glowColor: service.color,
+                      scrollController: _scrollController,
+                      entranceDelay: Duration(milliseconds: 70 * index),
+                      borderRadius: MotionTokens.cardRadius,
+                      floating: true,
+                      shellGlow: true,
+                      enableGlowPulse: true,
+                      builder: (context, state) {
+                        final isHovered = state.hovered;
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: palette.cardSurface,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: isHovered
+                                  ? service.color.withValues(alpha: 0.65)
+                                  : service.color.withValues(alpha: 0.28),
+                              width: 1.5,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: service.color.withValues(
+                                  alpha: isHovered ? 0.38 : 0.22,
+                                ),
+                                blurRadius: isHovered ? 38 : 28,
+                                spreadRadius: 1,
+                                offset: Offset(0, isHovered ? 18 : 12),
+                              ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(22),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AnimatedIconBadge(
+                                  icon: service.icon,
+                                  color: service.color,
+                                  size: 22,
+                                  boxSize: 46,
+                                  semanticLabel: service.title,
+                                ),
+                                const SizedBox(height: 16),
+                                Text(
+                                  service.title,
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    color: service.color,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  service.description,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    height: 1.55,
+                                    color: palette.textSecondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                }).toList(),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildProjects() {
     const projects = PortfolioContent.featuredProjects;
 
@@ -1518,6 +1697,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
       UiStrings.navAbout,
       UiStrings.navEducation,
       UiStrings.navSkills,
+      UiStrings.navServices,
       UiStrings.navProjects,
       UiStrings.navContact,
     ];

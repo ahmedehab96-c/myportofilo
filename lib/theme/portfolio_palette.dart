@@ -90,6 +90,18 @@ class PortfolioPalette extends ThemeExtension<PortfolioPalette> {
   static const projectImageRadius = 12.0;
   static const projectImagePadding = 10.0;
 
+  /// Shared color per project category tag (Mobile/Web/Backend/SaaS/AI).
+  static const categoryColors = <String, Color>{
+    'Mobile': accent,
+    'Web': sky,
+    'Backend': Color(0xFFFF2D20), // Laravel red
+    'SaaS': gold,
+    'AI': violet,
+  };
+
+  static Color categoryColor(String category) =>
+      categoryColors[category] ?? accent;
+
   /// Beryllium light — soft slate glass on airy white-blue base.
   static const light = PortfolioPalette(
     bgDeep: Color(0xFFF8FAFC),

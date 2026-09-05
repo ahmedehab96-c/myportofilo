@@ -63,6 +63,16 @@ class ProjectCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if (project.categories.isNotEmpty) ...[
+                      Wrap(
+                        spacing: 6,
+                        runSpacing: 6,
+                        children: project.categories
+                            .map((c) => _CategoryPill(category: c))
+                            .toList(),
+                      ),
+                      const SizedBox(height: 8),
+                    ],
                     Text(
                       project.title,
                       maxLines: 1,
@@ -219,6 +229,34 @@ class _ProjectPreview extends StatelessWidget {
               ],
             );
           },
+        ),
+      ),
+    );
+  }
+}
+
+class _CategoryPill extends StatelessWidget {
+  const _CategoryPill({required this.category});
+
+  final String category;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = PortfolioPalette.categoryColor(category);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color.withValues(alpha: 0.4)),
+      ),
+      child: Text(
+        category,
+        style: TextStyle(
+          color: color,
+          fontSize: 10,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.2,
         ),
       ),
     );

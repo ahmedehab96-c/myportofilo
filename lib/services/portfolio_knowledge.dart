@@ -7,10 +7,11 @@ class PortfolioKnowledge {
   PortfolioKnowledge._();
 
   static const fullName = 'Ahmed Ehab Mohammed';
-  static const role = 'Full-Stack Mobile & Web Developer';
+  static const role = 'Full-Stack Web & Mobile Developer';
   static const yearsOfExperience = '4+';
   static const tagline =
-      'Crafting beautiful and functional mobile and web experiences with a focus on user-centric design and clean code architecture';
+      'Building mobile and web applications, backend systems, APIs, and '
+      'AI-powered features with Flutter, React.js, and Laravel';
 
   static const email = 'ahmed96it96@gmail.com';
   static const phone = '+971 58 915 4605';
@@ -25,10 +26,10 @@ class PortfolioKnowledge {
       'https://ahmedmyportofilo.netlify.app/docs/ahmed-ehab-certificate.pdf';
 
   static const aboutParagraph1 =
-      'I am a full-stack mobile and web developer with 4+ years of experience building responsive and feature-rich applications. Flutter/Dart is the core of my stack — I build complete, production-ready apps with it — and I extend that with React.js for admin dashboards and web additions, often enhanced with AI-powered features. I enjoy creating user-friendly designs that provide seamless experiences across platforms.';
+      'I am a full-stack developer with 4+ years of experience building complete digital products end to end — frontend, mobile, backend, APIs, databases, and AI integration. Flutter/Dart is the core of my stack, where I build production-ready apps for Android, iOS, and web, and I extend that with React.js for admin dashboards and web storefronts, Laravel for REST APIs and business logic, and Firebase/Supabase for backend and database services.';
 
   static const aboutParagraph2 =
-      'My focus is on creating clean, efficient, and maintainable code while delivering exceptional user experiences. I continuously grow my skills with the help of AI tools — using Cursor and Claude to accelerate development, explore new patterns, and stay at the forefront of mobile development.';
+      'I also integrate AI directly into the products I build — from OpenAI-powered assistants to Groq-powered chat features — and hold an AI diploma alongside hands-on prompt-engineering training. My focus stays on clean, maintainable code and shipping real, deployed applications (live demos, Play Store apps, and hosted web dashboards) rather than just prototypes.';
 
   static const suggestedQuestions = [
   // About
@@ -71,8 +72,8 @@ class PortfolioKnowledge {
 I can answer detailed questions about every part of Ahmed Ehab's portfolio:
 
 👤 Hero & About
-• Full name, role (Full-Stack Mobile & Web Developer), tagline, years of experience (4+)
-• Bio, highlights (Flutter, Dart, React.js, HTML, CSS, JavaScript, Firebase, GetX, REST API, Clean Architecture, UI/UX)
+• Full name, role (Full-Stack Web & Mobile Developer), tagline, years of experience (4+)
+• Bio, highlights (Flutter, Dart, React.js, Laravel, HTML, CSS, JavaScript, Firebase, Supabase, GetX, REST API, AI Integration, Clean Architecture, UI/UX)
 • Stats: 4+ years, 20+ projects, 6+ technologies
 
 📱 Projects (7 apps — ask about any by name)
@@ -84,9 +85,9 @@ I can answer detailed questions about every part of Ahmed Ehab's portfolio:
 • BankX Digital Banking — fintech UI demo + APK
 • StepZone — luxury shoe eCommerce + Supabase + APK
 
-🛠 Skills (7 categories)
-• Technical Skills, Backend Integration, Laravel, Authentication
-• Tools & Platforms, UI/UX Skills, Soft Skills
+🛠 Skills (9 categories)
+• Mobile Development, Web Development, Backend Development, Cloud & Services, AI Integration
+• Authentication, Tools & Platforms, UI/UX Skills, Soft Skills
 
 🎓 Education & certifications (4 entries)
 • BSc IT Al-Mashriq University 2018
@@ -94,8 +95,8 @@ I can answer detailed questions about every part of Ahmed Ehab's portfolio:
 • One Million Prompters — Dubai Future Foundation / DCAI
 • AI Diploma — ALBYAN Institute Abu Dhabi (ACTVET, Excellent)
 
-💼 Services
-• Flutter apps, web dashboards, Firebase/Supabase, UI/UX, API & auth integration
+💼 Services (dedicated section)
+• Mobile App Development, Web Development, Backend Development, Full-Stack Development, AI Integration, API Integration
 
 📞 Contact & collaboration
 • Email, phone (+971), GitHub, LinkedIn, CV download, hiring, pricing, live demos, APK links
@@ -135,22 +136,24 @@ $aboutParagraph1
 $aboutParagraph2
 
 Hero stats: $yearsOfExperience years experience, 20+ projects, 6+ technologies
-About highlights: Flutter, Dart, Firebase, GetX, REST API, Clean Architecture, UI/UX
+About highlights: Flutter, Dart, Laravel, Firebase, GetX, REST API, AI Integration, Clean Architecture, UI/UX
 
-Portfolio sections: Hero, About Me, Education & Certifications, Skills & Expertise (7 categories), Projects (7 apps), Contact, Download CV, AI Assistant
+Portfolio sections: Hero, About Me, Education & Certifications, Skills & Expertise (9 categories), Services, Projects (7 apps), Contact, Download CV, AI Assistant
 
 Skills categories:
-1. Technical Skills — Flutter, Dart, BLoC/GetX/Riverpod, widgets, animations
-2. Backend Integration — Firebase, Supabase, REST, SQLite, Hive
-3. Laravel — REST API, Eloquent, Sanctum, RBAC, Flutter integration
-4. Authentication — email, Google/Facebook/Apple, RBAC
-5. Tools & Platforms — Git, VS Code, Android Studio, Cursor, Postman, Play Store
-6. UI/UX — Material/Cupertino, MVC/MVVM, themes, responsive design
-7. Soft Skills — problem-solving, agile, documentation, fast learning
+1. Mobile Development — Flutter, Dart, BLoC/GetX/Riverpod, widgets, animations
+2. Web Development — HTML, CSS, JavaScript, React.js
+3. Backend Development — Laravel REST API, Eloquent, Sanctum/Passport, RBAC
+4. Cloud & Services — Firebase, Supabase, SQLite/local storage
+5. AI Integration — OpenAI assistant (IT Assist), Groq AI (Life OS), AI-assisted HRM workflows, AI diploma
+6. Authentication — email, Google/Facebook/Apple, RBAC
+7. Tools & Platforms — Git, VS Code, Android Studio, Cursor, Postman, Play Store
+8. UI/UX — Material/Cupertino, MVC/MVVM, themes, responsive design
+9. Soft Skills — problem-solving, agile, documentation, fast learning
 
 Education: BSc IT Al-Mashriq University 2018; Udemy Flutter; One Million Prompters (Dubai); AI Diploma ALBYAN Abu Dhabi ACTVET Oct 2026 Excellent
 
-Services: Flutter mobile/web apps, Firebase/Supabase backends, UI/UX, API & auth integration
+Services (dedicated section): Mobile App Development, Web Development, Backend Development, Full-Stack Development, AI Integration, API Integration
 
 PROJECTS (${PortfolioContent.featuredProjects.length}):
 ''');
@@ -225,10 +228,11 @@ $aboutParagraph2''',
       ],
       '''This portfolio includes:
 
-• Header — name, role, and quick actions
+• Header — name, role, and quick actions (View Projects, Hire Me, Contact Me, Download CV)
 • About Me — background and approach
 • Education & Certifications
-• Skills & Expertise (7 categories)
+• Skills & Expertise (9 categories)
+• Services — what Ahmed can build for you
 • Projects (7 featured apps)
 • Contact information
 • Download CV button
@@ -297,15 +301,17 @@ View certificate (PDF): $dubaiCertificateUrl''',
 
     FaqEntry(
       ['skills', 'skills section', 'expertise', 'what skills', 'skill categories'],
-      '''Skills & Expertise — 7 categories on the portfolio:
+      '''Skills & Expertise — 9 categories on the portfolio:
 
-1️⃣ Technical Skills — Flutter & Dart, cross-platform, BLoC/GetX/Riverpod, widgets, animations
-2️⃣ Backend Integration — Firebase, Supabase, REST, SQLite, Hive, SharedPreferences
-3️⃣ Laravel — REST API, Eloquent, Sanctum/Passport, RBAC, Flutter integration
-4️⃣ Authentication — email/password, Google/Facebook/Apple sign-in, route guarding
-5️⃣ Tools & Platforms — Git/GitHub, VS Code, Android Studio, Cursor, Postman, Play Store
-6️⃣ UI/UX Skills — Material/Cupertino, MVC/MVVM, light/dark themes, responsive design
-7️⃣ Soft Skills — problem-solving, agile, time management, documentation, fast learning
+1️⃣ Mobile Development — Flutter & Dart, cross-platform, BLoC/GetX/Riverpod, widgets, animations
+2️⃣ Web Development — HTML, CSS, JavaScript, React.js
+3️⃣ Backend Development — Laravel REST API, Eloquent, Sanctum/Passport, RBAC
+4️⃣ Cloud & Services — Firebase, Supabase, SQLite/local storage
+5️⃣ AI Integration — OpenAI assistant, Groq AI, AI-assisted workflows, AI diploma
+6️⃣ Authentication — email/password, Google/Facebook/Apple sign-in, route guarding
+7️⃣ Tools & Platforms — Git/GitHub, VS Code, Android Studio, Cursor, Postman, Play Store
+8️⃣ UI/UX Skills — Material/Cupertino, MVC/MVVM, light/dark themes, responsive design
+9️⃣ Soft Skills — problem-solving, agile, time management, documentation, fast learning
 
 Ask "What are your technical skills?" or "Do you know Laravel?" for details.''',
     ),
@@ -316,11 +322,11 @@ Ask "What are your technical skills?" or "Do you know Laravel?" for details.''',
 • Role: $role
 • Experience: $yearsOfExperience years
 • Portfolio stats: 20+ projects, 6+ technologies
-• Tagline: Crafting beautiful & functional mobile experiences with clean architecture and great UX''',
+• Tagline: I build modern mobile and web applications, scalable backend systems, APIs, and AI-powered solutions using Flutter, React.js, Laravel, and modern technologies.''',
     ),
     FaqEntry(
       ['about highlights', 'tech stack summary', 'what technologies'],
-      'About highlights on the portfolio: Flutter, Dart, Firebase, GetX, REST API, Clean Architecture, UI/UX.',
+      'About highlights on the portfolio: Flutter, Dart, Laravel, Firebase, GetX, REST API, AI Integration, Clean Architecture, UI/UX.',
     ),
     FaqEntry(
       ['life os', 'lifeos', 'productivity app', 'groq', 'google play life'],
@@ -387,7 +393,7 @@ Ask "What are your technical skills?" or "Do you know Laravel?" for details.''',
     ),
     FaqEntry(
       ['technical skills', 'flutter skills', 'dart skills', 'mobile development'],
-      '''Technical Skills:
+      '''Mobile Development:
 • Flutter & Dart — my core stack for full, production-ready apps (Android & iOS)
 • State management: BLoC, GetX, Riverpod
 • Custom widgets and UI components
@@ -622,12 +628,13 @@ For a tailored quote, contact Ahmed:
     ),
     FaqEntry(
       ['services', 'what services', 'what do you offer', 'development services'],
-      '''Services Ahmed offers:
-• Flutter mobile apps (Android & iOS)
-• Flutter web portfolios and dashboards
-• Firebase / Supabase backend integration
-• UI/UX implementation and responsive design
-• API integration and authentication systems''',
+      '''Services Ahmed offers (see the Services section on the portfolio):
+• Mobile App Development — Flutter apps for Android and iOS
+• Web Development — modern responsive web apps with React.js
+• Backend Development — Laravel APIs, databases, authentication, business logic
+• Full-Stack Development — complete apps from frontend to backend
+• AI Integration — AI capabilities inside mobile and web applications
+• API Integration — REST APIs and third-party service integrations''',
     ),
   ];
 }
