@@ -2,16 +2,16 @@
 // portfolio (Mobile / Web / Backend / AI). No fabricated offerings.
 export const services = [
   {
-    title: 'Mobile App Development',
-    description: 'Flutter applications for Android and iOS, from UI to state management and release.',
-    icon: 'flutter',
-    color: '#54C5F8',
-  },
-  {
     title: 'Web Development',
     description: 'Modern, responsive web applications and dashboards built with React.js.',
     icon: 'code',
     color: '#61DAFB',
+  },
+  {
+    title: 'Mobile App Development',
+    description: 'Flutter applications for Android and iOS, from UI to state management and release.',
+    icon: 'flutter',
+    color: '#54C5F8',
   },
   {
     title: 'Backend Development',
@@ -27,7 +27,7 @@ export const services = [
   },
   {
     title: 'AI Integration',
-    description: 'Integrating AI-powered features — chat assistants and automation — into mobile and web applications.',
+    description: 'Integrating AI-powered features — chat assistants and automation — into web and mobile applications.',
     icon: 'brain',
     color: '#8B5CF6',
   },

@@ -5,7 +5,7 @@ export const tagline = PortfolioKnowledge.tagline;
 export const aboutParagraph1 = PortfolioKnowledge.aboutParagraph1;
 export const aboutParagraph2 = PortfolioKnowledge.aboutParagraph2;
 
-export const aboutHighlights = ['Flutter', 'Dart', 'Firebase', 'GetX', 'REST API', 'Clean Architecture', 'UI/UX'];
+export const aboutHighlights = ['Flutter', 'React.js', 'Dart', 'Firebase', 'Laravel', 'REST API', 'UI/UX'];
 
 export const educationEntries = [
   {
@@ -51,7 +51,19 @@ export const educationEntries = [
 /// icon: semantic key consumed by <FaIcon icon="..." />
 export const skillCategories = [
   {
-    category: 'Technical Skills',
+    category: 'Web Development',
+    icon: 'code',
+    color: '#61DAFB',
+    skills: [
+      'HTML',
+      'CSS',
+      'JavaScript',
+      'React.js for modern web applications and dashboards, often with AI-powered features',
+      'Responsive, component-based UI',
+    ],
+  },
+  {
+    category: 'Mobile Development',
     icon: 'code',
     color: '#0099FF',
     skills: [
@@ -61,16 +73,6 @@ export const skillCategories = [
       'Widget-based UI design & custom components',
       'Animations and responsive layouts',
       'Working with pub.dev packages',
-    ],
-  },
-  {
-    category: 'Web Development (addition)',
-    icon: 'code',
-    color: '#61DAFB',
-    skills: [
-      'HTML, CSS, JavaScript',
-      'React.js for admin dashboards and web, often with AI-powered features',
-      'Responsive, component-based UI',
     ],
   },
   {

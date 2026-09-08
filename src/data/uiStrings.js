@@ -11,8 +11,8 @@ export const UiStrings = {
   navAI: 'AI Assistant',
   navAIShort: 'AI',
   heroTagline:
-    'I build modern mobile and web applications, scalable backend ' +
-    'systems, APIs, and AI-powered solutions using Flutter, React.js, ' +
+    'I build modern web and mobile applications, scalable backend ' +
+    'systems, APIs, and AI-powered solutions using React.js, Flutter, ' +
     'Laravel, and modern technologies.',
   yearsExp: 'Years Exp.',
   statProjects: 'Projects',
@@ -74,7 +74,7 @@ export const UiStrings = {
   welcomeMessage: (version) =>
     "Hello! I am Ahmed Ehab's portfolio AI assistant.\n\n" +
     `Data version: ${version}\n\n` +
-    'I know everything on this site: About, Education, Skills (7 categories), ' +
+    'I know everything on this site: About, Education, Skills (8 categories), ' +
     'all 7 projects with demos/APKs, Contact, CV, and services.\n\n' +
     'Tap a suggested question below, or ask: "What can you help me with?"',
 };

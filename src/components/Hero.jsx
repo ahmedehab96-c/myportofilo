@@ -8,7 +8,7 @@ import './Hero.css';
 
 const HERO_FULL_NAME = 'AHMED EHAB MOHAMMED';
 
-const HERO_TECH_HIGHLIGHTS = ['Flutter', 'React.js', 'Laravel', 'Firebase', 'Supabase', 'AI', 'REST APIs'];
+const HERO_TECH_HIGHLIGHTS = ['React.js', 'Flutter', 'Laravel', 'Firebase', 'Supabase', 'AI', 'REST APIs'];
 
 export default function Hero({ onScrollToSection, onLaunch }) {
   const { text: displayedName, showCursor } = useTypewriter(HERO_FULL_NAME);
@@ -29,7 +29,7 @@ export default function Hero({ onScrollToSection, onLaunch }) {
     <section className="hero">
       <div className="hero-text-col">
         <div className="hero-badge">
-          <FaIcon icon="flutter" size={18} />
+          <FaIcon icon="webMobile" size={18} color="var(--accent)" />
           <span>{role}</span>
         </div>
 

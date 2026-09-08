@@ -19,4 +19,5 @@ export const iconMap = {
   linkedin: 'fa-brands fa-linkedin',
   android: 'fa-brands fa-android',
   circle: 'fa-solid fa-circle',
+  webMobile: 'fa-solid fa-laptop-mobile',
 };

@@ -1,10 +1,10 @@
 import { featuredProjects } from './portfolioContent';
 
 const fullName = 'Ahmed Ehab Mohammed';
-const role = 'Full-Stack Mobile & Web Developer';
+const role = 'Full-Stack Web & Mobile Developer';
 const yearsOfExperience = '4+';
 const tagline =
-  'Crafting beautiful and functional mobile and web experiences with a focus on user-centric design and clean code architecture';
+  'Crafting beautiful and functional web and mobile experiences with a focus on user-centric design and clean code architecture';
 
 const email = 'ahmed96it96@gmail.com';
 const phone = '+971 58 915 4605';
@@ -12,14 +12,14 @@ const github = 'github.com/ahmedehab96-c';
 const githubUrl = 'https://github.com/ahmedehab96-c';
 const linkedIn = 'Ahmed Ehab';
 const linkedInUrl = 'https://www.linkedin.com/in/ahmed-ehab-ba8a63285';
-const cvUrl = 'https://drive.google.com/file/d/1r6r5ScPVkKEE1Pqs0GWcPH89KC14gKn1/view?usp=drivesdk';
+const cvUrl = 'https://drive.google.com/file/d/1VZvq-RLD-uWE0sL7Zs_8E0-1v2BsScX-/view?usp=drive_link';
 const dubaiCertificateUrl = 'https://ahmedmyportofilo.netlify.app/docs/ahmed-ehab-certificate.pdf';
 
 const aboutParagraph1 =
-  'I am a full-stack mobile and web developer with 4+ years of experience building responsive and feature-rich applications. Flutter/Dart is the core of my stack — I build complete, production-ready apps with it — and I extend that with React.js for admin dashboards and web additions, often enhanced with AI-powered features. I enjoy creating user-friendly designs that provide seamless experiences across platforms.';
+  'I am a full-stack developer with more than 4 years of experience building responsive, feature-rich web and mobile applications — React.js for modern web apps and dashboards, and Flutter/Dart for cross-platform mobile apps, both backed by Laravel APIs and often enhanced with AI-powered features. I enjoy creating user-friendly designs that provide seamless experiences across platforms.';
 
 const aboutParagraph2 =
-  'My focus is on creating clean, efficient, and maintainable code while delivering exceptional user experiences. I continuously grow my skills with the help of AI tools — using Cursor and Claude to accelerate development, explore new patterns, and stay at the forefront of mobile development.';
+  'My focus is on creating clean, efficient, and maintainable code while delivering exceptional user experiences. I continuously grow my skills with the help of AI tools — using Cursor and Claude to accelerate development, explore new patterns, and stay at the forefront of web and mobile development.';
 
 const suggestedQuestions = [
   'Who are you?',
@@ -55,7 +55,7 @@ const suggestedQuestions = [
 const helpTopicsReply = `I can answer detailed questions about every part of Ahmed Ehab's portfolio:
 
 👤 Hero & About
-• Full name, role (Full-Stack Mobile & Web Developer), tagline, years of experience (4+)
+• Full name, role (Full-Stack Web & Mobile Developer), tagline, years of experience (4+)
 • Bio, highlights (Flutter, Dart, React.js, HTML, CSS, JavaScript, Firebase, GetX, REST API, Clean Architecture, UI/UX)
 • Stats: 4+ years, 20+ projects, 6+ technologies
 
@@ -68,9 +68,9 @@ const helpTopicsReply = `I can answer detailed questions about every part of Ahm
 • BankX Digital Banking — fintech UI demo + APK
 • StepZone — luxury shoe eCommerce + Supabase + APK
 
-🛠 Skills (7 categories)
-• Technical Skills, Backend Integration, Laravel, Authentication
-• Tools & Platforms, UI/UX Skills, Soft Skills
+🛠 Skills (8 categories)
+• Web Development, Mobile Development, Backend Integration, Laravel
+• Authentication, Tools & Platforms, UI/UX Skills, Soft Skills
 
 🎓 Education & certifications (4 entries)
 • BSc IT Al-Mashriq University 2018
@@ -121,18 +121,19 @@ ${aboutParagraph1}
 ${aboutParagraph2}
 
 Hero stats: ${yearsOfExperience} years experience, 20+ projects, 6+ technologies
-About highlights: Flutter, Dart, Firebase, GetX, REST API, Clean Architecture, UI/UX
+About highlights: Flutter, React.js, Dart, Firebase, Laravel, REST API, UI/UX
 
-Portfolio sections: Hero, About Me, Education & Certifications, Skills & Expertise (7 categories), Projects (7 apps), Contact, Download CV, AI Assistant
+Portfolio sections: Hero, About Me, Education & Certifications, Skills & Expertise (8 categories), Projects (7 apps), Contact, Download CV, AI Assistant
 
 Skills categories:
-1. Technical Skills — Flutter, Dart, BLoC/GetX/Riverpod, widgets, animations
-2. Backend Integration — Firebase, Supabase, REST, SQLite, Hive
-3. Laravel — REST API, Eloquent, Sanctum, RBAC, Flutter integration
-4. Authentication — email, Google/Facebook/Apple, RBAC
-5. Tools & Platforms — Git, VS Code, Android Studio, Cursor, Postman, Play Store
-6. UI/UX — Material/Cupertino, MVC/MVVM, themes, responsive design
-7. Soft Skills — problem-solving, agile, documentation, fast learning
+1. Web Development — HTML, CSS, JavaScript, React.js, responsive UI
+2. Mobile Development — Flutter, Dart, BLoC/GetX/Riverpod, widgets, animations
+3. Backend Integration — Firebase, Supabase, REST, SQLite, Hive
+4. Laravel — REST API, Eloquent, Sanctum, RBAC, Flutter integration
+5. Authentication — email, Google/Facebook/Apple, RBAC
+6. Tools & Platforms — Git, VS Code, Android Studio, Cursor, Postman, Play Store
+7. UI/UX — Material/Cupertino, MVC/MVVM, themes, responsive design
+8. Soft Skills — problem-solving, agile, documentation, fast learning
 
 Education: BSc IT Al-Mashriq University 2018; Udemy Flutter; One Million Prompters (Dubai); AI Diploma ALBYAN Abu Dhabi ACTVET Oct 2026 Excellent
 
@@ -168,11 +169,11 @@ const faqEntries = [
   [['about me', 'bio', 'background', 'tell me about yourself', 'summary'],
     `About ${fullName}:\n\n${aboutParagraph1}\n\n${aboutParagraph2}`],
   [['passion', 'why flutter', 'what motivates', 'focus'],
-    'Ahmed is passionate about Flutter, user-centric design, clean architecture, and building apps that work smoothly on mobile and web.'],
+    'Ahmed is passionate about full-stack development — React.js for web, Flutter for mobile — with user-centric design, clean architecture, and apps that work smoothly across platforms.'],
   [['location', 'where are you based', 'country', 'uae', 'dubai', 'abu dhabi'],
     'Contact number uses UAE country code (+971). Ahmed works as a Flutter developer and is open to remote collaboration. Reach out to confirm current location and availability.'],
   [['portfolio sections', 'sections in portfolio', 'what is on this site', 'website sections', 'pages on portfolio'],
-    `This portfolio includes:\n\n• Header — name, role, and quick actions\n• About Me — background and approach\n• Education & Certifications\n• Skills & Expertise (7 categories)\n• Projects (7 featured apps)\n• Contact information\n• Download CV button\n• AI Assistant (this chat)`],
+    `This portfolio includes:\n\n• Header — name, role, and quick actions\n• About Me — background and approach\n• Education & Certifications\n• Skills & Expertise (8 categories)\n• Projects (7 featured apps)\n• Contact information\n• Download CV button\n• AI Assistant (this chat)`],
   [['what can you help', 'what can i ask', 'help topics', 'list questions', 'supported questions', 'commands'],
     helpTopicsReply],
   [['education', 'qualifications', 'degrees', 'studied', 'academic'],
@@ -186,7 +187,7 @@ const faqEntries = [
   [['certificate', 'certification', 'dubai certificate', 'view certificate', 'one million prompters', 'prompt engineering', 'dubai future foundation'],
     `One Million Prompters — Certificate of Completion (Dubai):\n• Issued by Dubai Future Foundation & Dubai Centre for Artificial Intelligence\n• Prompt engineering for AI systems — Dubai Universal Blueprint for Artificial Intelligence\n• Listed under Education on the portfolio\n\nView certificate (PDF): ${dubaiCertificateUrl}`],
   [['skills', 'skills section', 'expertise', 'what skills', 'skill categories'],
-    'Skills & Expertise — 7 categories on the portfolio:\n\n1️⃣ Technical Skills — Flutter & Dart, cross-platform, BLoC/GetX/Riverpod, widgets, animations\n2️⃣ Backend Integration — Firebase, Supabase, REST, SQLite, Hive, SharedPreferences\n3️⃣ Laravel — REST API, Eloquent, Sanctum/Passport, RBAC, Flutter integration\n4️⃣ Authentication — email/password, Google/Facebook/Apple sign-in, route guarding\n5️⃣ Tools & Platforms — Git/GitHub, VS Code, Android Studio, Cursor, Postman, Play Store\n6️⃣ UI/UX Skills — Material/Cupertino, MVC/MVVM, light/dark themes, responsive design\n7️⃣ Soft Skills — problem-solving, agile, time management, documentation, fast learning\n\nAsk "What are your technical skills?" or "Do you know Laravel?" for details.'],
+    'Skills & Expertise — 8 categories on the portfolio:\n\n1️⃣ Web Development — HTML, CSS, JavaScript, React.js, responsive UI\n2️⃣ Mobile Development — Flutter & Dart, cross-platform, BLoC/GetX/Riverpod, widgets, animations\n3️⃣ Backend Integration — Firebase, Supabase, REST, SQLite, Hive, SharedPreferences\n4️⃣ Laravel — REST API, Eloquent, Sanctum/Passport, RBAC, Flutter integration\n5️⃣ Authentication — email/password, Google/Facebook/Apple sign-in, route guarding\n6️⃣ Tools & Platforms — Git/GitHub, VS Code, Android Studio, Cursor, Postman, Play Store\n7️⃣ UI/UX Skills — Material/Cupertino, MVC/MVVM, light/dark themes, responsive design\n8️⃣ Soft Skills — problem-solving, agile, time management, documentation, fast learning\n\nAsk "What are your technical skills?" or "Do you know Laravel?" for details.'],
   [['hero', 'header', 'stats', 'years of experience', 'how many projects', 'technologies count'],
     `Hero section highlights:\n• Name: ${fullName}\n• Role: ${role}\n• Experience: ${yearsOfExperience} years\n• Portfolio stats: 20+ projects, 6+ technologies\n• Tagline: Crafting beautiful & functional mobile experiences with clean architecture and great UX`],
   [['about highlights', 'tech stack summary', 'what technologies'],
@@ -204,9 +205,9 @@ const faqEntries = [
   [['stepzone', 'shoes', 'ecommerce', 'luxury shoes', 'online store'],
     'StepZone — luxury shoe eCommerce:\n• Supabase backend, Google sign-in, coupons, AED pricing, reviews\n• Demo: stepzone.demo@gmail.com / StepZone2026! | Coupons: LUXE10, KICKS20, WELCOME15\n• APK: https://ahmedmyportofilo.netlify.app/apks/stepzone.apk\n• GitHub (public): https://github.com/ahmedehab96-c/stepzone\n• Tech: Flutter, GetX, Supabase, PostgreSQL, Edge Functions, React.js + Vite (web storefront), Tap Payments'],
   [['navigation', 'menu', 'how to navigate', 'scroll sections'],
-    'Use the top navigation (or mobile menu) to jump to:\n• About — bio and highlights\n• Education — degrees and AI certificates\n• Skills — 7 skill categories\n• Projects — 7 featured apps with demos and APKs\n• Contact — email, phone, GitHub, LinkedIn'],
+    'Use the top navigation (or mobile menu) to jump to:\n• About — bio and highlights\n• Education — degrees and AI certificates\n• Skills — 8 skill categories\n• Projects — 7 featured apps with demos and APKs\n• Contact — email, phone, GitHub, LinkedIn'],
   [['technical skills', 'flutter skills', 'dart skills', 'mobile development'],
-    'Technical Skills:\n• Flutter & Dart — my core stack for full, production-ready apps (Android & iOS)\n• State management: BLoC, GetX, Riverpod\n• Custom widgets and UI components\n• Animations and responsive layouts\n• React.js as an addition — for admin dashboards and web, often with AI-powered features\n• Web development: HTML, CSS, JavaScript, React.js\n• pub.dev / npm packages integration'],
+    'Full-stack skills:\n• React.js — modern web apps and dashboards, often with AI-powered features\n• HTML, CSS, JavaScript for web development\n• Flutter & Dart — production-ready mobile apps (Android & iOS)\n• State management: BLoC, GetX, Riverpod\n• Custom widgets and UI components\n• Animations and responsive layouts\n• pub.dev / npm packages integration'],
   [['hrm saas', 'saas hrm', 'multi-tenant', 'hrm trial', 'filament', 'hrm demo', 'live hrm', 'hrm render', 'hrm nawa tech', 'tell me about hrm', 'responsive hrm', 'react dashboard', 'hrm react'],
     `HRM NAWA TECH — multi-tenant HR SaaS with live demo:\n\n• Laravel Filament admin + React SPA dashboard + Flutter employee app + REST API\n• Company self-registration + 14-day free trial + plan caps\n• React dashboard covers employees, departments, attendance, leave, payroll, recruitment, performance, reports, roles & permissions — same Sanctum API as the mobile app\n• Responsive employee UI (phone / tablet / desktop)\n• AI-assisted recruitment, leave, performance, reports\n• Live demo: https://hrm-nawa-api.onrender.com/admin\n  React dashboard: https://hrm-nawa-api.onrender.com/dashboard\n  Admin: admin@demo.com / Admin12345!\n  Employee: emp01@demo.com / Employee12345!\n• API health: https://hrm-nawa-api.onrender.com/api/health\n• APK: https://ahmedmyportofilo.netlify.app/apks/hrm.apk\n• Source private — email GitHub username for access\n\nStack: Laravel · Filament · React · Flutter · Sanctum · Docker.`],
   [['backend', 'backend integration', 'api', 'database', 'firebase', 'supabase', 'laravel'],
