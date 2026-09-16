@@ -75,6 +75,6 @@ export const UiStrings = {
     "Hello! I am Ahmed Ehab's portfolio AI assistant.\n\n" +
     `Data version: ${version}\n\n` +
     'I know everything on this site: About, Education, Skills (8 categories), ' +
-    'all 7 projects with demos/APKs, Contact, CV, and services.\n\n' +
+    'all 8 projects with demos/APKs, Contact, CV, and services.\n\n' +
     'Tap a suggested question below, or ask: "What can you help me with?"',
 };

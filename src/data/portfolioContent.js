@@ -377,6 +377,44 @@ No login required, start memorizing immediately.`,
 2. Sign in with stepzone.demo@gmail.com / StepZone2026! or use Google
 3. Try coupon LUXE10 in the cart`,
   },
+  {
+    id: 'premiumgym',
+    title: 'Premium Gym',
+    cardDescription:
+      'Multi-tenant gym-management SaaS — Laravel API, React admin dashboard, and a Flutter member app.',
+    readme: `Premium Gym is a full-stack gym-management platform built with a Laravel API, a React/TypeScript admin dashboard, and a Flutter member app sharing the same backend.
+
+**What it ships today**
+• Members, membership plans, attendance, and QR check-in
+• Trainers, training programs, personal training sessions, classes, and class scheduling
+• Equipment, facilities, and maintenance tracking
+• Finance: payments, invoices, expenses, and revenue/expense analytics
+• Staff roles & permissions, announcements, AI-assisted insights and report summaries
+• Flutter member app with its own auth (separate from the staff dashboard)
+• REST API secured with Sanctum, queue workers, and a scheduler
+
+Source is private — email your GitHub username for access.`,
+    cardImage: '/assets/images/premiumgym_screens.png',
+    screenshots: ['/assets/images/premiumgym_screens.png'],
+    summary: 'Multi-tenant gym-management SaaS — Laravel API, React dashboard, Flutter member app.',
+    features: [
+      'Laravel API + React admin dashboard + Flutter member app',
+      'Members, membership plans, attendance & QR check-in',
+      'Trainers, classes, training programs & scheduling',
+      'Finance: payments, invoices, expenses, revenue analytics',
+      'Equipment, facilities & maintenance tracking',
+      'AI-assisted insights and report summaries',
+    ],
+    tech: ['Flutter', 'Riverpod', 'Laravel', 'React', 'TypeScript', 'Vite', 'Sanctum', 'REST API'],
+    keywords: [
+      'gym', 'premium gym', 'gym system', 'gym management', 'gym saas', 'fitness app',
+      'membership', 'attendance', 'qr check-in', 'trainers', 'classes', 'personal training',
+      'equipment', 'facilities', 'finance', 'invoices', 'react dashboard', 'laravel', 'flutter',
+    ],
+    categories: ['SaaS', 'Mobile', 'Web', 'Backend', 'AI'],
+    githubUrl: 'https://github.com/ahmedehab96-c/gym-system',
+    isGithubPrivate: true,
+  },
 ];
 
 export function hasTrySection(project) {
