@@ -1,0 +1,1 @@
+import{k as e}from"./cn-DL0efh9L.js";import{t}from"./Select-DktlMhZH.js";var n=e();function r({label:e,value:r,onChange:i,options:a}){return(0,n.jsx)(`div`,{className:`min-w-[160px]`,children:(0,n.jsx)(t,{value:r,onChange:e=>i(e.target.value),options:[{label:`All ${e}`,value:`all`},...a]})})}export{r as t};

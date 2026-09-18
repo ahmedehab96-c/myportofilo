@@ -1,0 +1,1 @@
+import{_ as e}from"./index-BWlcT3Ya.js";var t={async memberGrowth(t=12,n){return(await e.get(`/analytics/member-growth`,{params:{months:t},signal:n})).data},async membershipDistribution(t){return(await e.get(`/analytics/membership-distribution`,{signal:t})).data},async trainerPerformance(t){return(await e.get(`/analytics/trainer-performance`,{signal:t})).data}};export{t};

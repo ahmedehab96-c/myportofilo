@@ -1,0 +1,1 @@
+import{_ as e}from"./index-BWlcT3Ya.js";var t={async overview(t){return(await e.get(`/finance/overview`,{signal:t})).data},async revenueOverTime(t=12,n){return(await e.get(`/finance/revenue-over-time`,{params:{months:t},signal:n})).data}};export{t};

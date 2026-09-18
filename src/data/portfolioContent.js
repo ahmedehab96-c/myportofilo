@@ -413,7 +413,21 @@ Source is private — email your GitHub username for access.`,
     ],
     categories: ['SaaS', 'Mobile', 'Web', 'Backend', 'AI'],
     githubUrl: 'https://github.com/ahmedehab96-c/gym-system',
-    isGithubPrivate: true,
+    isGithubPrivate: false,
+    liveDemoUrl: 'https://ahmedmyportofilo.netlify.app/demos/premiumgym/admin/login',
+    apkUrl: 'https://ahmedmyportofilo.netlify.app/apks/premiumgym.apk',
+    webSetupGuide: `**Live demo (no local setup required)**
+1. Tap **Open live demo** (or open https://ahmedmyportofilo.netlify.app/demos/premiumgym/admin/login)
+2. Staff/admin: ahmed.ehab@premiumgym.com / password
+3. API: https://premium-gym-api.onrender.com (free tier — first request after idle may take ~30–60s to wake up)
+
+**Android APK (member app)**
+1. Tap **Download APK** in this Try section
+2. Install on your phone (allow unknown sources if asked)
+3. Tap **Member**, sign in with: pbrekke@example.net / MemberDemo123!
+   (seed data resets on redeploy — if that login stops working, use the staff account above to set a new member password via Members → set-password)
+
+**Source:** public — https://github.com/ahmedehab96-c/gym-system`,
   },
 ];
 
