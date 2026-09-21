@@ -424,8 +424,7 @@ Source is private — email your GitHub username for access.`,
 **Android APK (member app)**
 1. Tap **Download APK** in this Try section
 2. Install on your phone (allow unknown sources if asked)
-3. Tap **Member**, sign in with: pbrekke@example.net / MemberDemo123!
-   (seed data resets on redeploy — if that login stops working, use the staff account above to set a new member password via Members → set-password)
+3. Tap **Member**, sign in with: member.demo@premiumgym.com / MemberDemo123!
 
 **Source:** public — https://github.com/ahmedehab96-c/gym-system`,
   },
@@ -479,8 +478,7 @@ Source is public.`,
 **Android APK (owner/tenant app)**
 1. Tap **Download APK** in this Try section
 2. Install on your phone (allow unknown sources if asked)
-3. Sign in with the owner demo account: demo@demo.com / password
-   (the in-app "demo account" hint shows an older password — use the one above)
+3. Sign in with the owner demo account: demo@demo.com / password (or tap **Fill demo** on the login screen)
 
 **Source:** public — https://github.com/ahmedehab96-c/property_asset_management_app`,
   },
