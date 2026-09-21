@@ -54,7 +54,7 @@ export function localReply(message) {
   const m = normalize(message);
 
   if (any(m, ['hello', 'hi', 'hey', 'good morning', 'good evening'])) {
-    return `Hello! I am ${PortfolioKnowledge.fullName}'s portfolio assistant.\n\nI know every section: About, Education, Skills, all 8 projects, Contact, CV, and services. Ask anything or say "What can you help me with?"`;
+    return `Hello! I am ${PortfolioKnowledge.fullName}'s portfolio assistant.\n\nI know every section: About, Education, Skills, all 9 projects, Contact, CV, and services. Ask anything or say "What can you help me with?"`;
   }
 
   if (any(m, ['thanks', 'thank you', 'thx', 'appreciate'])) {

@@ -429,6 +429,61 @@ Source is private — email your GitHub username for access.`,
 
 **Source:** public — https://github.com/ahmedehab96-c/gym-system`,
   },
+  {
+    id: 'propertymgmt',
+    title: 'Property Asset Management',
+    cardDescription:
+      'Property management platform — Laravel + Filament admin, a React dashboard, and a Flutter owner/tenant app, with a Gemini-powered AI assistant.',
+    readme: `Property Asset Management is a full-stack platform for managing properties, owners, tenants, and contracts. It ships three front ends on one Laravel API: a Filament admin panel, a React dashboard, and a Flutter mobile app for owners and tenants.
+
+**What it ships today**
+• Properties, owners, tenants, and contracts (renew, extend, cancel, payment schedules)
+• Payments — overdue, upcoming, statistics
+• Maintenance requests and mobile-submitted requests
+• Projects, tasks, and a calendar of events
+• Financial reports (property, tenant, contract) and dashboard analytics (occupancy, revenue, quick stats)
+• In-app conversations/messaging and notifications
+• AI assistant (Gemini) — chat, market analysis, tenant analysis, financial predictions, and image analysis for property photos
+• Arabic/English localization throughout the API and both front ends
+• Laravel Filament admin (\`/admin\`) + React dashboard (\`/dashboard\`), same Sanctum-token API as the mobile app
+
+Source is public.`,
+    cardImage: '/assets/images/propertymgmt_screens.png',
+    screenshots: ['/assets/images/propertymgmt_screens.png'],
+    summary: 'Property management platform — Laravel/Filament, React dashboard, Flutter owner/tenant app, AI assistant.',
+    features: [
+      'Laravel API + Filament admin + React dashboard + Flutter mobile app',
+      'Properties, owners, tenants, contracts, and payments',
+      'Maintenance requests, projects, tasks, and calendar',
+      'Financial reports and dashboard analytics (occupancy, revenue)',
+      'In-app messaging and notifications',
+      'Gemini-powered AI assistant — chat, market/tenant analysis, financial predictions',
+      'Arabic/English localization',
+    ],
+    tech: ['Flutter', 'Riverpod', 'Laravel', 'Filament', 'React', 'Vite', 'Sanctum', 'Gemini AI', 'REST API'],
+    keywords: [
+      'property management', 'real estate', 'properties', 'owners', 'tenants', 'contracts',
+      'leases', 'rent', 'maintenance requests', 'payments', 'react dashboard', 'filament',
+      'laravel', 'flutter', 'ai assistant', 'gemini', 'market analysis', 'financial predictions',
+    ],
+    categories: ['SaaS', 'Mobile', 'Web', 'Backend', 'AI'],
+    githubUrl: 'https://github.com/ahmedehab96-c/property_asset_management_app',
+    isGithubPrivate: false,
+    liveDemoUrl: 'https://property-asset-mgmt-api.onrender.com/dashboard/',
+    apkUrl: 'https://ahmedmyportofilo.netlify.app/apks/propertymgmt.apk',
+    webSetupGuide: `**Live demo (no local setup required)**
+1. Tap **Open live demo** (or open https://property-asset-mgmt-api.onrender.com/dashboard/)
+2. Admin: admin@demo.com / password
+3. Free tier — first request after idle may take ~30–60s to wake up
+
+**Android APK (owner/tenant app)**
+1. Tap **Download APK** in this Try section
+2. Install on your phone (allow unknown sources if asked)
+3. Sign in with the owner demo account: demo@demo.com / password
+   (the in-app "demo account" hint shows an older password — use the one above)
+
+**Source:** public — https://github.com/ahmedehab96-c/property_asset_management_app`,
+  },
 ];
 
 export function hasTrySection(project) {

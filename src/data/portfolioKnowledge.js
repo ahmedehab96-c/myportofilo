@@ -59,7 +59,7 @@ const helpTopicsReply = `I can answer detailed questions about every part of Ahm
 • Bio, highlights (Flutter, Dart, React.js, HTML, CSS, JavaScript, Firebase, GetX, REST API, Clean Architecture, UI/UX)
 • Stats: 4+ years, 20+ projects, 6+ technologies
 
-📱 Projects (8 apps — ask about any by name)
+📱 Projects (9 apps — ask about any by name)
 • HRM NAWA TECH — multi-tenant HR SaaS (Filament + React dashboard + Flutter + live Render demo + APK)
 • Life OS — productivity app + Groq AI + Google Play
 • Mezo Food App — food delivery + Flutter web admin + Firebase + APK
@@ -68,6 +68,7 @@ const helpTopicsReply = `I can answer detailed questions about every part of Ahm
 • BankX Digital Banking — fintech UI demo + APK
 • StepZone — luxury shoe eCommerce + Supabase + APK
 • Premium Gym — multi-tenant gym SaaS (Laravel + React dashboard + Flutter member app)
+• Property Asset Management — Laravel/Filament + React dashboard + Flutter owner/tenant app + AI assistant
 
 🛠 Skills (8 categories)
 • Web Development, Mobile Development, Backend Integration, Laravel
@@ -124,7 +125,7 @@ ${aboutParagraph2}
 Hero stats: ${yearsOfExperience} years experience, 20+ projects, 6+ technologies
 About highlights: Flutter, React.js, Dart, Firebase, Laravel, REST API, UI/UX
 
-Portfolio sections: Hero, About Me, Education & Certifications, Skills & Expertise (8 categories), Projects (8 apps), Contact, Download CV, AI Assistant
+Portfolio sections: Hero, About Me, Education & Certifications, Skills & Expertise (8 categories), Projects (9 apps), Contact, Download CV, AI Assistant
 
 Skills categories:
 1. Web Development — HTML, CSS, JavaScript, React.js, responsive UI
@@ -174,7 +175,7 @@ const faqEntries = [
   [['location', 'where are you based', 'country', 'uae', 'dubai', 'abu dhabi'],
     'Contact number uses UAE country code (+971). Ahmed works as a Flutter developer and is open to remote collaboration. Reach out to confirm current location and availability.'],
   [['portfolio sections', 'sections in portfolio', 'what is on this site', 'website sections', 'pages on portfolio'],
-    `This portfolio includes:\n\n• Header — name, role, and quick actions\n• About Me — background and approach\n• Education & Certifications\n• Skills & Expertise (8 categories)\n• Projects (8 featured apps)\n• Contact information\n• Download CV button\n• AI Assistant (this chat)`],
+    `This portfolio includes:\n\n• Header — name, role, and quick actions\n• About Me — background and approach\n• Education & Certifications\n• Skills & Expertise (8 categories)\n• Projects (9 featured apps)\n• Contact information\n• Download CV button\n• AI Assistant (this chat)`],
   [['what can you help', 'what can i ask', 'help topics', 'list questions', 'supported questions', 'commands'],
     helpTopicsReply],
   [['education', 'qualifications', 'degrees', 'studied', 'academic'],
@@ -207,14 +208,16 @@ const faqEntries = [
     'StepZone — luxury shoe eCommerce:\n• Supabase backend, Google sign-in, coupons, AED pricing, reviews\n• Demo: stepzone.demo@gmail.com / StepZone2026! | Coupons: LUXE10, KICKS20, WELCOME15\n• APK: https://ahmedmyportofilo.netlify.app/apks/stepzone.apk\n• GitHub (public): https://github.com/ahmedehab96-c/stepzone\n• Tech: Flutter, GetX, Supabase, PostgreSQL, Edge Functions, React.js + Vite (web storefront), Tap Payments'],
   [['premium gym', 'gym', 'gym system', 'gym management', 'gym saas', 'fitness app', 'gym app'],
     'Premium Gym — multi-tenant gym-management SaaS:\n• Laravel API + React/TypeScript admin dashboard + Flutter member app, same backend\n• Members, membership plans, attendance, QR check-in\n• Trainers, classes, training programs, class scheduling, personal training\n• Equipment, facilities, maintenance tracking\n• Finance: payments, invoices, expenses, revenue/expense analytics\n• Staff roles & permissions, announcements, AI-assisted insights and report summaries\n• Live demo: https://ahmedmyportofilo.netlify.app/demos/premiumgym/admin/login\n  Staff/admin: ahmed.ehab@premiumgym.com / password\n  API: https://premium-gym-api.onrender.com (free tier — first request after idle may take ~30–60s)\n• APK (member app): https://ahmedmyportofilo.netlify.app/apks/premiumgym.apk\n  Member demo: pbrekke@example.net / MemberDemo123! (resets on redeploy)\n• GitHub (public): https://github.com/ahmedehab96-c/gym-system\n• Tech: Laravel, Sanctum, React, TypeScript, Vite, Flutter, Riverpod'],
+  [['property asset management', 'property management', 'real estate app', 'properties', 'landlord app', 'tenant app', 'propertymgmt'],
+    'Property Asset Management — property management platform:\n• Laravel API + Filament admin + React dashboard + Flutter owner/tenant app, same backend\n• Properties, owners, tenants, contracts (renew/extend/cancel), payments\n• Maintenance requests, projects, tasks, calendar\n• Financial reports and dashboard analytics (occupancy, revenue)\n• In-app messaging and notifications\n• Gemini-powered AI assistant — chat, market analysis, tenant analysis, financial predictions, image analysis\n• Arabic/English localization\n• Live demo: https://property-asset-mgmt-api.onrender.com/dashboard/\n  Admin: admin@demo.com / password (free tier — first request after idle may take ~30–60s)\n• APK (owner/tenant app): https://ahmedmyportofilo.netlify.app/apks/propertymgmt.apk\n  Owner demo: demo@demo.com / password\n• GitHub (public): https://github.com/ahmedehab96-c/property_asset_management_app\n• Tech: Laravel, Filament, Sanctum, React, Flutter, Riverpod, Gemini AI'],
   [['navigation', 'menu', 'how to navigate', 'scroll sections'],
-    'Use the top navigation (or mobile menu) to jump to:\n• About — bio and highlights\n• Education — degrees and AI certificates\n• Skills — 8 skill categories\n• Projects — 8 featured apps with demos and APKs\n• Contact — email, phone, GitHub, LinkedIn'],
+    'Use the top navigation (or mobile menu) to jump to:\n• About — bio and highlights\n• Education — degrees and AI certificates\n• Skills — 8 skill categories\n• Projects — 9 featured apps with demos and APKs\n• Contact — email, phone, GitHub, LinkedIn'],
   [['technical skills', 'flutter skills', 'dart skills', 'mobile development'],
     'Full-stack skills:\n• React.js — modern web apps and dashboards, often with AI-powered features\n• HTML, CSS, JavaScript for web development\n• Flutter & Dart — production-ready mobile apps (Android & iOS)\n• State management: BLoC, GetX, Riverpod\n• Custom widgets and UI components\n• Animations and responsive layouts\n• pub.dev / npm packages integration'],
   [['hrm saas', 'saas hrm', 'multi-tenant', 'hrm trial', 'filament', 'hrm demo', 'live hrm', 'hrm render', 'hrm nawa tech', 'tell me about hrm', 'responsive hrm', 'react dashboard', 'hrm react'],
     `HRM NAWA TECH — multi-tenant HR SaaS with live demo:\n\n• Laravel Filament admin + React SPA dashboard + Flutter employee app + REST API\n• Company self-registration + 14-day free trial + plan caps\n• React dashboard covers employees, departments, attendance, leave, payroll, recruitment, performance, reports, roles & permissions — same Sanctum API as the mobile app\n• Responsive employee UI (phone / tablet / desktop)\n• AI-assisted recruitment, leave, performance, reports\n• Live demo: https://hrm-nawa-api.onrender.com/admin\n  React dashboard: https://hrm-nawa-api.onrender.com/dashboard\n  Admin: admin@demo.com / Admin12345!\n  Employee: emp01@demo.com / Employee12345!\n• API health: https://hrm-nawa-api.onrender.com/api/health\n• APK: https://ahmedmyportofilo.netlify.app/apks/hrm.apk\n• Source private — email GitHub username for access\n\nStack: Laravel · Filament · React · Flutter · Sanctum · Docker.`],
   [['backend', 'backend integration', 'api', 'database', 'firebase', 'supabase', 'laravel'],
-    'Backend Integration:\n• Laravel REST API — used in HRM NAWA TECH (Filament admin + React dashboard + Sanctum), IT Assist NAWA TECH, and Premium Gym (React dashboard + Flutter member app)\n• Firebase — Auth, Firestore, Cloud Messaging (Mezo + IT Assist)\n• Supabase — cloud backend for Life OS\n• HTTP/Dio for RESTful API calls in Flutter\n• SQLite for local offline storage\n• Local storage: SharedPreferences, flutter_secure_storage'],
+    'Backend Integration:\n• Laravel REST API — used in HRM NAWA TECH (Filament admin + React dashboard + Sanctum), IT Assist NAWA TECH, Premium Gym (React dashboard + Flutter member app), and Property Asset Management (Filament admin + React dashboard + Flutter owner/tenant app)\n• Firebase — Auth, Firestore, Cloud Messaging (Mezo + IT Assist)\n• Supabase — cloud backend for Life OS\n• HTTP/Dio for RESTful API calls in Flutter\n• SQLite for local offline storage\n• Local storage: SharedPreferences, flutter_secure_storage'],
   [['laravel', 'php backend', 'laravel api', 'eloquent', 'sanctum'],
     'Laravel Backend:\n• RESTful API development with Laravel\n• Eloquent ORM & database migrations\n• Authentication with Laravel Sanctum / Passport\n• Role & permission management\n• API integration with Flutter frontend'],
   [['authentication', 'auth', 'login', 'sign in', 'google sign', 'facebook login', 'apple sign'],
@@ -234,7 +237,7 @@ const faqEntries = [
   [['which project uses supabase', 'supabase projects'],
     'Supabase is used in: Life OS — as the cloud backend for data sync, combined with local SQLite for offline support.'],
   [['which project uses laravel', 'laravel projects', 'laravel backend'],
-    'Laravel is used as the server-side backend in: HRM NAWA TECH, IT Assist NAWA TECH, and Premium Gym. All use REST APIs consumed by Flutter (and React, for HRM and Premium Gym).'],
+    'Laravel is used as the server-side backend in: HRM NAWA TECH, IT Assist NAWA TECH, Premium Gym, and Property Asset Management. All use REST APIs consumed by Flutter (and React, for HRM, Premium Gym, and Property Asset Management).'],
   [['which project uses bloc', 'bloc projects', 'state management'],
     'BLoC (flutter_bloc) is used in: Life OS, Mezo Food App, and Werdi Quran App. HRM and IT Assist use simpler state approaches (http/Dio).'],
   [['which project uses provider', 'provider projects'],
