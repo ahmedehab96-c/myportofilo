@@ -46,6 +46,7 @@ export const UiStrings = {
   downloadApk: 'Download APK',
   getOnGooglePlay: 'Get on Google Play',
   openLiveDemo: 'Open live demo',
+  visitWebsite: 'Visit website',
   runWebFromGitHub: 'Open GitHub repo',
   webSetupTitle: 'How to try (step by step)',
   about: 'About',

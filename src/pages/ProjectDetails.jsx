@@ -40,8 +40,13 @@ function TrySection({ project }) {
   return (
     <div className="pd-try-section">
       <h4>{UiStrings.tryThisProject}</h4>
-      {(project.liveDemoUrl || project.apkUrl || project.playStoreUrl) && (
+      {(project.websiteUrl || project.liveDemoUrl || project.apkUrl || project.playStoreUrl) && (
         <div className="pd-try-buttons">
+          {project.websiteUrl && (
+            <a className="pd-try-btn website" href={project.websiteUrl} target="_blank" rel="noreferrer">
+              <span>🌐</span> {UiStrings.visitWebsite}
+            </a>
+          )}
           {project.liveDemoUrl && (
             <a className="pd-try-btn demo" href={project.liveDemoUrl} target="_blank" rel="noreferrer">
               <span>↗</span> {UiStrings.openLiveDemo}

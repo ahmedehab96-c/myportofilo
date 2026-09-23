@@ -239,6 +239,7 @@
   font-weight: 600;
 }
 
+.pd-try-btn.website { background: #6E40C9; }
 .pd-try-btn.demo { background: #388BFD; }
 .pd-try-btn.play { background: #01875F; }
 .pd-try-btn.apk { background: #238636; }

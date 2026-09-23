@@ -397,6 +397,7 @@ Source is private — email your GitHub username for access.`,
     cardImage: '/assets/images/premiumgym_screens.png',
     screenshots: [
       '/assets/images/premiumgym_screens.png',
+      '/assets/images/premiumgym_website.png',
       '/assets/images/premiumgym_welcome.png',
       '/assets/images/premiumgym_home.png',
     ],
@@ -418,19 +419,21 @@ Source is private — email your GitHub username for access.`,
     categories: ['SaaS', 'Mobile', 'Web', 'Backend', 'AI'],
     githubUrl: 'https://github.com/ahmedehab96-c/gym-system',
     isGithubPrivate: false,
+    websiteUrl: 'https://ahmedmyportofilo.netlify.app/demos/premiumgym/',
     liveDemoUrl: 'https://ahmedmyportofilo.netlify.app/demos/premiumgym/admin/login',
     apkUrl: 'https://ahmedmyportofilo.netlify.app/apks/premiumgym.apk',
-    webSetupGuide: `**Live demo (no local setup required)**
+    webSetupGuide: `**Public website (no login required)**
+1. Tap **Visit website** to browse the gym's public marketing site — home, programs, trainers, membership plans
+
+**Live demo — admin dashboard (no local setup required)**
 1. Tap **Open live demo** (or open https://ahmedmyportofilo.netlify.app/demos/premiumgym/admin/login)
 2. Staff/admin: ahmed.ehab@premiumgym.com / password
 3. API: https://premium-gym-api.onrender.com (free tier — first request after idle may take ~30–60s to wake up)
-   عربي: افتح رابط العرض الحي، وسجّل الدخول بحساب الموظف/الأدمن أعلاه. أول طلب بعد فترة خمول قد يأخذ 30-60 ثانية.
 
 **Android APK (member app)**
 1. Tap **Download APK** in this Try section
 2. Install on your phone (allow unknown sources if asked)
 3. Tap **Member**, sign in with: member.demo@premiumgym.com / MemberDemo123!
-   عربي: نزّل الـ APK وثبّته، ثم اختر "Member" وسجّل الدخول بحساب العضو التجريبي أعلاه.
 
 **Source:** public — https://github.com/ahmedehab96-c/gym-system`,
   },
@@ -484,20 +487,18 @@ Source is public.`,
 1. Tap **Open live demo** (or open https://property-asset-mgmt-api.onrender.com/dashboard/)
 2. Admin: admin@demo.com / password
 3. Free tier — first request after idle may take ~30–60s to wake up
-   عربي: افتح رابط العرض الحي وسجّل الدخول بحساب الأدمن أعلاه. أول طلب بعد فترة خمول قد يأخذ 30-60 ثانية.
 
 **Android APK (owner/tenant app)**
 1. Tap **Download APK** in this Try section
 2. Install on your phone (allow unknown sources if asked)
 3. Sign in with the owner demo account: demo@demo.com / password (or tap **Fill demo** on the login screen)
-   عربي: نزّل الـ APK وثبّته، ثم سجّل الدخول بحساب المالك التجريبي أعلاه (أو اضغط زر "Fill demo").
 
 **Source:** public — https://github.com/ahmedehab96-c/property_asset_management_app`,
   },
 ];
 
 export function hasTrySection(project) {
-  return Boolean(project.apkUrl || project.playStoreUrl || project.liveDemoUrl || project.webSetupGuide);
+  return Boolean(project.apkUrl || project.playStoreUrl || project.liveDemoUrl || project.websiteUrl || project.webSetupGuide);
 }
 
 export function assistantDetail(project) {
