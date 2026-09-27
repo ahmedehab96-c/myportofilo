@@ -1,0 +1,1 @@
+var e=/^[^\s@]+@[^\s@]+\.[^\s@]+$/,t=/^(\+?966|0)?5\d{8}$/;function n(t){return e.test(t.trim())}function r(e){return t.test(e.replace(/[\s-]/g,``))}function i(e){return typeof e==`string`?e.trim().length>0:!!e}function a(e){return typeof e==`string`&&e.length>=8}export{r as i,n,a as r,i as t};

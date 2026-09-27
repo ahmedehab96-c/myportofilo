@@ -495,6 +495,61 @@ Source is public.`,
 
 **Source:** public — https://github.com/ahmedehab96-c/property_asset_management_app`,
   },
+  {
+    id: 'dentalclinic',
+    title: 'Radiant Dental Care',
+    cardDescription:
+      'Bilingual dental clinic platform — public website, online booking, and role-based dashboards for patients, doctors, and admins.',
+    readme: `Radiant Dental Care is a bilingual (Arabic/English, RTL/LTR) dental clinic platform: a public marketing site with online booking, plus separate dashboards for patients, doctors, and admins, all on one React frontend backed by a Laravel API.
+
+**What it ships today**
+• Public site — services, doctors, blog, before/after gallery, FAQs, testimonials, AR/EN switch
+• Online booking — as a guest or as a logged-in patient
+• Patient dashboard — view/cancel appointments, edit profile, notifications
+• Doctor dashboard — today's schedule, stats, confirm/complete/cancel own appointments, profile
+• Admin dashboard — manage appointments, doctors, services, blog, gallery, testimonials, FAQs, users
+• In-app notification bell for every role, plus queued email notifications
+• REST API secured with Sanctum
+
+Frontend source is public. Backend API source is public — separate repo.`,
+    cardImage: '/assets/images/dentalclinic_website.png',
+    screenshots: [
+      '/assets/images/dentalclinic_website.png',
+      '/assets/images/dentalclinic_admin.png',
+      '/assets/images/dentalclinic_doctor.png',
+      '/assets/images/dentalclinic_patient.png',
+    ],
+    summary: 'Bilingual dental clinic platform — React + Laravel, public site, booking, and role-based dashboards.',
+    features: [
+      'React 19 frontend + Laravel API, Sanctum-secured',
+      'Public site: services, doctors, blog, gallery, FAQs, testimonials',
+      'Online booking as guest or logged-in patient',
+      'Patient dashboard — appointments, profile, notifications',
+      'Doctor dashboard — schedule, stats, confirm/complete/cancel appointments',
+      'Admin dashboard — full content and appointment management',
+      'Arabic/English, RTL/LTR throughout',
+    ],
+    tech: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion', 'Laravel', 'Sanctum', 'MySQL', 'REST API'],
+    keywords: [
+      'dental clinic', 'dentist', 'clinic management', 'appointment booking', 'healthcare',
+      'patient portal', 'doctor dashboard', 'admin dashboard', 'bilingual', 'arabic', 'rtl',
+      'react', 'laravel', 'sanctum',
+    ],
+    categories: ['SaaS', 'Web', 'Backend'],
+    githubUrl: 'https://github.com/ahmedehab96-c/dental-clinic',
+    isGithubPrivate: false,
+    liveDemoUrl: 'https://ahmedmyportofilo.netlify.app/demos/dental-clinic/',
+    webSetupGuide: `**Live demo (no local setup required)**
+1. Tap **Open live demo** — this is the full public site; browse freely, no login needed
+2. API free tier — first request after idle may take ~30–60s to wake up
+
+**Demo accounts (all use password: password)**
+1. Admin: admin@radiantdental.care / password — lands on the admin dashboard
+2. Doctor: doctor@radiantdental.care / password — lands on the doctor dashboard
+3. Patient: patient@example.com / password — lands on the patient dashboard
+
+**Source:** public — frontend https://github.com/ahmedehab96-c/dental-clinic, API https://github.com/ahmedehab96-c/dental-clinic-api`,
+  },
 ];
 
 export function hasTrySection(project) {

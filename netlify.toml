@@ -38,6 +38,12 @@
   force = false
 
 [[redirects]]
+  from = "/demos/dental-clinic/*"
+  to = "/demos/dental-clinic/index.html"
+  status = 200
+  force = false
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
