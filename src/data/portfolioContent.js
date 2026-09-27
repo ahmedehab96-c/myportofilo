@@ -32,7 +32,11 @@ export const featuredProjects = [
 
 Source is private — email your GitHub username for collaborator access.`,
     cardImage: '/assets/images/hrm_screens.png',
-    screenshots: ['/assets/images/hrm_screens.png'],
+    screenshots: [
+      '/assets/images/hrm_screens.png',
+      '/assets/images/hrm_welcome.png',
+      '/assets/images/hrm_home.png',
+    ],
     summary: 'Multi-tenant HR SaaS — Filament admin, React dashboard, Flutter app, live demo.',
     features: [
       'Filament admin + React SPA dashboard + Flutter employee app',
@@ -58,8 +62,7 @@ Source is private — email your GitHub username for collaborator access.`,
 1. Tap **Open live demo** (or open https://hrm-nawa-api.onrender.com/admin)
 2. Admin: admin@demo.com / Admin12345!
 3. Employee: emp01@demo.com / Employee12345!
-4. React dashboard: https://hrm-nawa-api.onrender.com/dashboard (same demo accounts)
-5. API health: https://hrm-nawa-api.onrender.com/api/health
+4. API health: https://hrm-nawa-api.onrender.com/api/health
 
 Cold start on free Render may take 30–60s after idle.
 
@@ -210,7 +213,11 @@ A full-stack ITSM platform for companies to manage IT support requests, incident
 
 **Android APK:** https://ahmedmyportofilo.netlify.app/apks/itassist.apk`,
     cardImage: '/assets/images/itassist_screens.png',
-    screenshots: ['/assets/images/itassist_screens.png'],
+    screenshots: [
+      '/assets/images/itassist_screens.png',
+      '/assets/images/itassist_welcome.png',
+      '/assets/images/itassist_home.png',
+    ],
     summary: 'ITSM SaaS — Flutter mobile, Laravel API, live admin, tickets & AI.',
     features: [
       'Tickets, service requests, change requests, incidents',
