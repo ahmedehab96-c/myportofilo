@@ -265,8 +265,8 @@ A full-stack ITSM platform for companies to manage IT support requests, incident
 Core flows: animated splash and onboarding, home dashboard with daily goals, ayah-by-ayah memorization with repetition and playback speed, smart revision sessions, voice recitation (tasmee3) with recording and speech-to-text feedback, Mushaf browsing, search/tafsir/bookmarks, ayah-by-ayah audio with multiple reciters, achievements, and daily reminder notifications.
 
 Built with Clean Architecture, BLoC, go_router, Drift, just_audio, and Supabase. Material 3 themes and responsive layout for phones and tablets.`,
-    cardImage: '/assets/images/werdi_showcase.png',
-    screenshots: ['/assets/images/werdi_showcase.png'],
+    cardImage: '/assets/images/werdi_showcase_v2.png',
+    screenshots: ['/assets/images/werdi_showcase_v2.png'],
     summary: 'Quran app — memorization, tasmee3, Mushaf, ayah audio, no login.',
     features: [
       'No login — open and start instantly',
