@@ -1,6 +1,6 @@
 // Single source of truth for portfolio content and AI assistant knowledge.
 
-export const assistantDataVersion = '3.8.0';
+export const assistantDataVersion = '3.9.0';
 
 /// Project IDs shown large in the bento grid layout.
 export const bentoFeaturedIds = new Set(['hrm', 'mezo']);
@@ -72,6 +72,56 @@ Cold start on free Render may take 30–60s after idle.
 3. Sign in with the demo employee account above
 
 **Source:** private — email your GitHub username for access.`,
+  },
+  {
+    id: 'volterra',
+    title: 'VOLTERRA',
+    cardDescription:
+      'Premium automotive showroom — cinematic motion, model showcase, live paint configurator and request flow.',
+    readme: `VOLTERRA is an interactive automotive web experience combining React, cinematic motion design and a vehicle configurator into a premium digital showroom for a fictional luxury marque.
+
+**Highlights**
+• Cinematic hero with line-by-line headline reveal and studio-lit vehicle cards that tilt in 3D under the pointer
+• Model range (X, GT, S) with a detail page per model, driven by one data source
+• Four-step configurator: model, live paint recolouring, wheels and interior, estimated price, saved selections
+• Validated request form with a polished success state
+• Animated performance figures, interactive hotspots and masked image reveals
+• Responsive from 390px to 1440px, reduced-motion support, code-split routes and responsive WebP images`,
+    cardImage: '/assets/images/volterra/01-hero.jpg',
+    screenshots: [
+      '/assets/images/volterra/01-hero.jpg',
+      '/assets/images/volterra/04-models.jpg',
+      '/assets/images/volterra/05-model-detail.jpg',
+      '/assets/images/volterra/06-configurator.jpg',
+      '/assets/images/volterra/02-performance.jpg',
+      '/assets/images/volterra/03-design.jpg',
+      '/assets/images/volterra/07-final-cta.jpg',
+      '/assets/images/volterra/08-mobile-hero.jpg',
+    ],
+    summary: 'Luxury automotive showroom — cinematic motion, configurator, live paint preview.',
+    features: [
+      'Cinematic hero and masked image reveals',
+      'Model showcase with a detail page per model',
+      'Four-step vehicle configurator with estimated price',
+      'Live paint recolouring of studio photography',
+      'Selections saved across visits',
+      'Validated request form with success state',
+      'Animated performance figures and interactive hotspots',
+      'Responsive, reduced-motion aware, code-split routes',
+    ],
+    tech: ['React.js', 'TypeScript', 'Vite', 'Framer Motion', 'Tailwind CSS', 'Lucide React'],
+    keywords: [
+      'volterra', 'automotive', 'car', 'cars', 'showroom', 'configurator', 'luxury', 'landing page',
+      'react', 'react.js', 'typescript', 'framer motion', 'tailwind', 'animation', 'vite',
+    ],
+    categories: ['Web'],
+    githubUrl: undefined,
+    isGithubPrivate: true,
+    liveDemoUrl: 'https://volterra-showroom.netlify.app',
+    webSetupGuide: `**Live web demo**
+1. Open the **Live demo** link — no sign-in needed
+2. Explore the models, then open **Configure** and try different paints, wheels and interiors
+3. Send a request from the form to see the confirmation flow`,
   },
   {
     id: 'lifeos',
