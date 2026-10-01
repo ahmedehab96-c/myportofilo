@@ -12,7 +12,7 @@ const github = 'github.com/ahmedehab96-c';
 const githubUrl = 'https://github.com/ahmedehab96-c';
 const linkedIn = 'Ahmed Ehab';
 const linkedInUrl = 'https://www.linkedin.com/in/ahmed-ehab-ba8a63285';
-const cvUrl = 'https://drive.google.com/file/d/1VZvq-RLD-uWE0sL7Zs_8E0-1v2BsScX-/view?usp=drive_link';
+const cvUrl = 'https://drive.google.com/file/d/1ymRz-ustMZwbI-RujfKsiqMvJzLmFcKx/view?usp=drivesdk';
 const dubaiCertificateUrl = 'https://ahmedmyportofilo.netlify.app/docs/ahmed-ehab-certificate.pdf';
 
 const aboutParagraph1 =
