@@ -115,8 +115,8 @@ Cold start on free Render may take 30–60s after idle.
       'react', 'react.js', 'typescript', 'framer motion', 'tailwind', 'animation', 'vite',
     ],
     categories: ['Web'],
-    githubUrl: undefined,
-    isGithubPrivate: true,
+    githubUrl: 'https://github.com/ahmedehab96-c/volterra',
+    isGithubPrivate: false,
     liveDemoUrl: 'https://volterra-showroom.netlify.app',
     webSetupGuide: `**Live web demo**
 1. Open the **Live demo** link — no sign-in needed
