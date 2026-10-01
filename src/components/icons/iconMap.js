@@ -3,6 +3,8 @@ export const iconMap = {
   phone: 'fa-solid fa-phone',
   envelope: 'fa-solid fa-envelope',
   robot: 'fa-solid fa-robot',
+  bars: 'fa-solid fa-bars',
+  xmark: 'fa-solid fa-xmark',
   briefcase: 'fa-solid fa-briefcase',
   folderOpen: 'fa-solid fa-folder-open',
   code: 'fa-solid fa-code',
