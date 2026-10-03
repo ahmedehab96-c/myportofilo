@@ -1,6 +1,6 @@
 // Single source of truth for portfolio content and AI assistant knowledge.
 
-export const assistantDataVersion = '3.9.0';
+export const assistantDataVersion = '3.10.0';
 
 /// Project IDs shown large in the bento grid layout.
 export const bentoFeaturedIds = new Set(['hrm', 'mezo']);
@@ -77,51 +77,59 @@ Cold start on free Render may take 30–60s after idle.
     id: 'volterra',
     title: 'VOLTERRA',
     cardDescription:
-      'Premium automotive showroom — cinematic motion, model showcase, live paint configurator and request flow.',
-    readme: `VOLTERRA is an interactive automotive web experience combining React, cinematic motion design and a vehicle configurator into a premium digital showroom for a fictional luxury marque.
+      'Bilingual (Arabic/English) automotive showroom — interactive 3D cars, live configurator, Laravel API and admin CMS.',
+    readme: `VOLTERRA is an interactive automotive web experience: a premium digital showroom for a fictional luxury marque, built as a full stack project with a React front end and a Laravel REST API.
 
 **Highlights**
-• Cinematic hero with line-by-line headline reveal and studio-lit vehicle cards that tilt in 3D under the pointer
-• Model range (X, GT, S) with a detail page per model, driven by one data source
-• Four-step configurator: model, live paint recolouring, wheels and interior, estimated price, saved selections
-• Validated request form with a polished success state
-• Animated performance figures, interactive hotspots and masked image reveals
-• Responsive from 390px to 1440px, reduced-motion support, code-split routes and responsive WebP images`,
-    cardImage: '/assets/images/volterra/01-hero.jpg',
+• Arabic-first bilingual UI: RTL/LTR switching, AR/EN toggle saved per browser, every text translated
+• Interactive 3D cars (360° drag/touch, idle auto-rotation) with studio-photo fallback
+• Four-step configurator with live paint recolouring and server-calculated prices
+• Information requests saved through the API, with email notification to the team
+• Admin CMS (Sanctum): models, image gallery uploads, configurator options and prices, inquiry statuses and notes
+• Cached public catalog, rate limiting, soft deletes and 37 Laravel feature tests
+
+**Repositories**
+• Front end: github.com/ahmedehab96-c/volterra
+• Back end: github.com/ahmedehab96-c/volterra-api`,
+    cardImage: '/assets/images/volterra/01-hero-ar.jpg',
     screenshots: [
-      '/assets/images/volterra/01-hero.jpg',
-      '/assets/images/volterra/04-models.jpg',
-      '/assets/images/volterra/05-model-detail.jpg',
-      '/assets/images/volterra/06-configurator.jpg',
-      '/assets/images/volterra/02-performance.jpg',
-      '/assets/images/volterra/03-design.jpg',
-      '/assets/images/volterra/07-final-cta.jpg',
-      '/assets/images/volterra/08-mobile-hero.jpg',
+      '/assets/images/volterra/01-hero-ar.jpg',
+      '/assets/images/volterra/02-hero-en.jpg',
+      '/assets/images/volterra/04-models-ar.jpg',
+      '/assets/images/volterra/05-model-detail-ar.jpg',
+      '/assets/images/volterra/06-configurator-ar.jpg',
+      '/assets/images/volterra/07-configurator-en.jpg',
+      '/assets/images/volterra/03-performance-ar.jpg',
+      '/assets/images/volterra/09-admin-dashboard.jpg',
+      '/assets/images/volterra/10-admin-inquiry.jpg',
+      '/assets/images/volterra/08-mobile-ar.jpg',
     ],
-    summary: 'Luxury automotive showroom — cinematic motion, configurator, live paint preview.',
+    summary: 'Bilingual luxury car showroom — 3D viewer, configurator, Laravel API and admin CMS.',
     features: [
-      'Cinematic hero and masked image reveals',
-      'Model showcase with a detail page per model',
-      'Four-step vehicle configurator with estimated price',
-      'Live paint recolouring of studio photography',
-      'Selections saved across visits',
-      'Validated request form with success state',
-      'Animated performance figures and interactive hotspots',
+      'Arabic-first bilingual UI with RTL/LTR switching',
+      'Interactive 360° 3D car viewer with photo fallback',
+      'Four-step configurator with live paint recolouring',
+      'Server-side pricing as the single source of truth',
+      'Inquiry form saved via API with email notification',
+      'Admin CMS: models, gallery uploads, options, inquiries',
+      'Sanctum auth, rate limiting, caching, soft deletes',
       'Responsive, reduced-motion aware, code-split routes',
     ],
-    tech: ['React.js', 'TypeScript', 'Vite', 'Framer Motion', 'Tailwind CSS', 'Lucide React'],
+    tech: ['React.js', 'TypeScript', 'Vite', 'Tailwind CSS', 'Framer Motion', 'model-viewer (3D)', 'Laravel', 'PHP', 'MySQL', 'Sanctum', 'REST API'],
     keywords: [
-      'volterra', 'automotive', 'car', 'cars', 'showroom', 'configurator', 'luxury', 'landing page',
-      'react', 'react.js', 'typescript', 'framer motion', 'tailwind', 'animation', 'vite',
+      'volterra', 'automotive', 'car', 'cars', 'showroom', 'configurator', 'luxury', '3d', 'three.js', 'model viewer',
+      'arabic', 'rtl', 'bilingual', 'i18n', 'react', 'react.js', 'typescript', 'framer motion', 'tailwind', 'vite',
+      'laravel', 'php', 'mysql', 'sanctum', 'rest api', 'admin', 'cms', 'dashboard',
     ],
-    categories: ['Web'],
+    categories: ['Web', 'Backend'],
     githubUrl: 'https://github.com/ahmedehab96-c/volterra',
     isGithubPrivate: false,
     liveDemoUrl: 'https://volterra-showroom.netlify.app',
     webSetupGuide: `**Live web demo**
-1. Open the **Live demo** link — no sign-in needed
-2. Explore the models, then open **Configure** and try different paints, wheels and interiors
-3. Send a request from the form to see the confirmation flow`,
+1. Open the **Live demo** link — no sign-in needed (the demo runs on local data)
+2. Switch between **AR** and **EN** in the navigation bar
+3. Explore the models, then open **Configure** to try paints, wheels and interiors and send a request
+4. The Laravel API and admin dashboard run locally — see the volterra-api repository`,
   },
   {
     id: 'lifeos',
