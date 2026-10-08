@@ -1,0 +1,1 @@
+import{Q as e,Z as t}from"./index-Kky4engW.js";import{t as n}from"./cvService-UlFb-aRl.js";var r={list:(n,r)=>t.get(`/jobs`,e(n),r),get:e=>t.get(`/jobs/${e}`)};r.match=(e,r)=>t.post(`/jobs/${e}/match`,{cv_id:r},{timeout:n});export{r as t};

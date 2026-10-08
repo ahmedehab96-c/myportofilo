@@ -44,6 +44,12 @@
   force = false
 
 [[redirects]]
+  from = "/demos/hireflow/*"
+  to = "/demos/hireflow/index.html"
+  status = 200
+  force = false
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

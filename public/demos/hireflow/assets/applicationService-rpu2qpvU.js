@@ -1,0 +1,1 @@
+import{$ as e,Q as t,Z as n}from"./index-Kky4engW.js";var r={list:(e,r)=>n.get(`/applications`,t(e),r),get:e=>n.get(`/applications/${e}`),create:e=>n.post(`/applications`,e),update:(e,t)=>n.put(`/applications/${e}`,t),remove:e=>n.delete(`/applications/${e}`)};r.all=()=>e(`/applications`,{per_page:50});export{r as t};

@@ -615,6 +615,64 @@ Frontend source is public. Backend API source is public — separate repo.`,
 
 **Source:** public — frontend https://github.com/ahmedehab96-c/dental-clinic, API https://github.com/ahmedehab96-c/dental-clinic-api`,
   },
+  {
+    id: 'hireflow',
+    title: 'HireFlow',
+    cardDescription:
+      'AI-powered career management platform — job board, application tracker, AI CV analyzer, AI interview coach, and an admin dashboard.',
+    readme: `HireFlow is an AI-powered career management platform: one workspace for a job search. Candidates get a job board, an application tracker, an AI CV analyzer, AI job matching, and an AI interview coach. Admins manage companies, jobs, and skills, and see platform analytics.
+
+**What it ships today**
+• Public job board with search and filters
+• Application tracking through 7 stages (saved → applied → interview → technical interview → offer → rejected / hired)
+• AI CV analyzer — upload a PDF, get a score out of 100, skills, strengths, weaknesses, missing keywords
+• AI job matching — compares a CV against a job's requirements for a match score and next steps
+• AI interview coach — HR, technical, behavioral, or mixed mock interviews with per-answer feedback and a final report
+• Admin dashboard — platform analytics, companies, jobs, skills, and a user directory
+• In-app notifications and a personal activity timeline
+• Laravel API secured with Sanctum bearer tokens (no cookies)
+
+Note: the AI features (CV analyzer, job matching, interview coach) need a paid AI provider key, which isn't wired into this free public demo — those endpoints return "unavailable" here. Everything else (job board, applications, admin dashboard) runs on real seeded data.
+
+Source is public — two repos, frontend and API.`,
+    cardImage: '/assets/images/hireflow_landing.png',
+    screenshots: [
+      '/assets/images/hireflow_landing.png',
+      '/assets/images/hireflow_candidate.png',
+      '/assets/images/hireflow_admin.png',
+    ],
+    summary: 'AI-powered career platform — job board, application tracker, AI CV analyzer, AI interview coach, admin dashboard.',
+    features: [
+      'React 19 frontend + Laravel API, Sanctum bearer-token auth',
+      'Public job board with search and filters',
+      'Application tracking through 7 pipeline stages',
+      'AI CV analyzer, AI job matching, AI interview coach',
+      'Admin dashboard — analytics, companies, jobs, skills, users',
+      'In-app notifications and activity timeline',
+    ],
+    tech: ['React', 'Vite', 'Tailwind CSS', 'React Router', 'Axios', 'Laravel', 'Sanctum', 'MySQL', 'Anthropic AI SDK'],
+    keywords: [
+      'hireflow', 'career platform', 'job board', 'recruitment', 'applicant tracking',
+      'ATS', 'cv analyzer', 'resume analyzer', 'interview coach', 'ai interview',
+      'job matching', 'admin dashboard', 'react', 'laravel', 'sanctum',
+    ],
+    categories: ['SaaS', 'Web', 'Backend', 'AI'],
+    githubUrl: 'https://github.com/ahmedehab96-c/hireflow-web',
+    isGithubPrivate: false,
+    liveDemoUrl: 'https://ahmedmyportofilo.netlify.app/demos/hireflow/',
+    webSetupGuide: `**Live demo (no local setup required)**
+1. Tap **Open live demo** — browse the public job board freely, no login needed
+2. API free tier — first request after idle may take ~30–60s to wake up
+
+**Demo accounts (all use password: Password123)**
+1. Candidate: candidate1@hireflow.test — applications, CV analyzer, interview coach
+2. Admin: admin@hireflow.test — analytics, companies, jobs, skills, users
+3. The login page has one-click buttons for both seeded accounts — no typing needed
+
+**AI features:** CV analyzer, job matching, and the interview coach need a paid AI provider key that isn't included in this free public demo — those specific actions return "unavailable" here. Everything else (job board, applications, admin dashboard) runs on real data.
+
+**Source:** public — frontend https://github.com/ahmedehab96-c/hireflow-web, API https://github.com/ahmedehab96-c/hireflow-api`,
+  },
 ];
 
 export function hasTrySection(project) {
