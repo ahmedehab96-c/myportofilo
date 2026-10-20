@@ -33,17 +33,6 @@
   }
 }
 
-@keyframes eyebrow-in {
-  from {
-    opacity: 0;
-    transform: translateX(-12px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 @keyframes float-y {
   0%, 100% { translate: 0 0; }
   50% { translate: 0 -8px; }
@@ -81,7 +70,6 @@
   .reveal,
   .reveal.in-view,
   .reveal.in-view .stagger > *,
-  .reveal.in-view .section-header::before,
   .reveal.in-view .section-header-title,
   .reveal.in-view .section-header-subtitle {
     opacity: 1;

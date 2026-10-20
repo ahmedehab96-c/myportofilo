@@ -77,7 +77,7 @@ export default function Hero({ onScrollToSection, onLaunch }) {
 
       <div className="hero-photo-col" {...tilt}>
         <div className="hero-photo-frame tilt-3d">
-          <img className="hero-photo" src="/assets/images/ahmed_profile.png" alt={PortfolioKnowledge.fullName} />
+          <img className="hero-photo" src="/assets/images/ahmed_profile_cutout.webp" alt={PortfolioKnowledge.fullName} />
         </div>
       </div>
     </section>

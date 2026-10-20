@@ -207,7 +207,7 @@
   position: absolute;
   inset: 22px -18px -18px 22px;
   border-radius: 24px;
-  background: linear-gradient(140deg, #dcd8fb, #efe3f7 55%, #f8e6d6);
+  background: linear-gradient(140deg, #c9c3fa, #e4d6f6 55%, #f6dcc6);
   transform: translateZ(-30px);
 }
 
@@ -218,8 +218,12 @@
   object-fit: cover;
   object-position: center 15%;
   border-radius: 24px;
-  background: #0b0b0d;
-  box-shadow: 0 30px 60px -30px rgba(27, 26, 36, 0.45);
+  /* Studio backdrop behind the cutout: soft key light over a deep indigo wash. */
+  background:
+    radial-gradient(60% 42% at 50% 30%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 70%),
+    radial-gradient(90% 60% at 85% 100%, rgba(244, 196, 160, 0.55), rgba(244, 196, 160, 0) 70%),
+    linear-gradient(165deg, #b9b2fb 0%, #7d72f0 45%, #4a3fc9 100%);
+  box-shadow: 0 30px 60px -30px rgba(61, 51, 184, 0.55);
   transform: translateZ(20px);
 }
 
@@ -247,7 +251,7 @@
     aspect-ratio: 1;
     border-radius: 50%;
     object-position: center 8%;
-    box-shadow: 0 12px 24px -14px rgba(27, 26, 36, 0.5);
+    box-shadow: 0 12px 24px -14px rgba(61, 51, 184, 0.55);
   }
 
   .hero-tagline {

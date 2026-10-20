@@ -28,7 +28,6 @@
   z-index: 1;
   max-width: var(--content-width);
   margin: 0 auto;
-  counter-reset: section;
 }
 
 section[id] {

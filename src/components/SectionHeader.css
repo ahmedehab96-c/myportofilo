@@ -2,20 +2,6 @@
   margin-bottom: 44px;
 }
 
-/* Numbered eyebrow (01, 02, …) driven by the section counter. */
-.section-header::before {
-  content: counter(section, decimal-leading-zero);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  color: var(--accent);
-}
-
 .section-header-title {
   margin: 0;
   font-family: var(--font-display);
@@ -42,13 +28,9 @@
   }
 }
 
-/* Eyebrow, title and subtitle enter in sequence once the section reveals. */
+/* Title and subtitle enter in sequence once the section reveals. */
 .section-header-title {
   transform-origin: 50% 100%;
-}
-
-.reveal.in-view .section-header::before {
-  animation: eyebrow-in 600ms var(--ease-out) 60ms backwards;
 }
 
 .reveal.in-view .section-header-title {

@@ -1,32 +1,32 @@
 {
-    "name": "myportofilo",
-    "short_name": "myportofilo",
+    "name": "Ahmed Ehab — Portfolio",
+    "short_name": "Ahmed Ehab",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#faf8f5",
     "theme_color": "#faf8f5",
-    "description": "A new Flutter project.",
+    "description": "Full-Stack Web & Mobile Developer portfolio.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
         {
-            "src": "icons/Icon-192.png",
+            "src": "icons/Icon-192.png?v=2",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "icons/Icon-512.png",
+            "src": "icons/Icon-512.png?v=2",
             "sizes": "512x512",
             "type": "image/png"
         },
         {
-            "src": "icons/Icon-maskable-192.png",
+            "src": "icons/Icon-maskable-192.png?v=2",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "icons/Icon-maskable-512.png",
+            "src": "icons/Icon-maskable-512.png?v=2",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
