@@ -1,76 +1,82 @@
 .education-list {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-
-.education-card {
-  background: var(--card-surface);
-  border-radius: 20px;
-  border: 1.5px solid;
-  padding: 24px;
-}
-
-.education-card-head {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.education-card-title-wrap {
-  flex: 1;
-  min-width: 0;
-}
-
-.education-card-title {
+  list-style: none;
   margin: 0;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: 0.5px;
+  padding: 0;
+  max-width: 720px;
 }
 
-.education-card-subtitle {
-  margin: 6px 0 0;
+.education-item {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.education-item:first-child {
+  padding-top: 0;
+}
+
+.education-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.education-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+.education-subtitle {
+  margin: 4px 0 0;
   font-size: 15px;
   color: var(--text-secondary);
-  font-style: italic;
-  line-height: 1.4;
 }
 
-.education-card-detail {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 16px;
-}
-
-.education-detail-label {
-  font-size: 12px;
-  color: var(--text-muted);
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.education-detail-value {
+.education-meta {
+  margin: 12px 0 0;
   font-size: 14px;
-  line-height: 1.6;
 }
 
-.education-cert-btn {
+.education-meta div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 8px;
+}
+
+.education-meta dt {
+  color: var(--text-muted);
+}
+
+.education-meta dt::after {
+  content: ':';
+}
+
+.education-meta dd {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.education-desc {
+  margin: 12px 0 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.education-cert {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 18px;
-  padding: 12px 18px;
-  border-radius: 12px;
-  background: transparent;
-  border: 1.5px solid;
-  font-weight: 600;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--accent);
   font-size: 14px;
-  transition: background 200ms ease;
 }
 
-.education-cert-btn:hover {
-  background: rgba(255, 255, 255, 0.04);
+.education-cert:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }

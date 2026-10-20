@@ -6,23 +6,21 @@ import './CtaBanners.css';
 
 export function ResumeButton({ onLaunch }) {
   return (
-    <div className="cta-banner-wrap">
+    <div className="cta-row">
       <button type="button" className="resume-btn" onClick={() => onLaunch(PortfolioKnowledge.cvUrl)}>
-        <FaIcon icon="filePdf" size={22} color="var(--on-accent)" />
+        <FaIcon icon="filePdf" size={14} />
         <span>{UiStrings.downloadCv}</span>
       </button>
+      <AIChatLink />
     </div>
   );
 }
 
-export function AIChatBanner() {
+function AIChatLink() {
   return (
-    <div className="cta-banner-wrap">
-      <Link to="/ai" className="ai-chat-btn">
-        <FaIcon icon="robot" size={24} color="#fff" />
-        <span>{UiStrings.chatWithAI}</span>
-      </Link>
-    </div>
+    <Link to="/ai" className="ai-chat-link">
+      {UiStrings.chatWithAI} <span aria-hidden="true">→</span>
+    </Link>
   );
 }
 
@@ -30,7 +28,7 @@ export function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="portfolio-footer">
-      <p>© {year} Ahmed&apos;s Portfolio</p>
+      <p>© {year} {PortfolioKnowledge.fullName}</p>
     </footer>
   );
 }

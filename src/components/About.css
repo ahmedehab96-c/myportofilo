@@ -1,32 +1,21 @@
 .about-paragraph {
   margin: 0 0 16px;
-  font-size: 17px;
+  font-size: 16px;
+  line-height: 1.75;
   color: var(--text-secondary);
-  line-height: 1.8;
-}
-
-.about-paragraph:last-of-type {
-  margin-bottom: 20px;
 }
 
 .about-highlights {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
+  margin-top: 24px;
 }
 
 .about-chip {
-  padding: 7px 14px;
-  border-radius: 20px;
-  background: rgba(34, 211, 238, 0.1);
+  padding: 3px 10px;
+  border-radius: 4px;
   border: 1px solid var(--border-accent);
-  color: var(--accent-bright);
+  color: var(--text-secondary);
   font-size: 13px;
-  font-weight: 600;
-}
-
-@media (max-width: 599px) {
-  .about-paragraph {
-    font-size: 15px;
-  }
 }

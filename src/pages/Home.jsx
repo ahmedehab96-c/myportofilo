@@ -8,7 +8,7 @@ import Skills from '../components/Skills';
 import Services from '../components/Services';
 import Projects from '../components/Projects';
 import Contact from '../components/Contact';
-import { ResumeButton, AIChatBanner, Footer } from '../components/CtaBanners';
+import { ResumeButton, Footer } from '../components/CtaBanners';
 import './Home.css';
 
 function launchUrl(url) {
@@ -76,7 +76,6 @@ export default function Home() {
         <Projects sectionRef={sectionRefs.current[4]} onOpenGithub={openGithub} />
         <Contact sectionRef={sectionRefs.current[5]} />
         <ResumeButton onLaunch={launchUrl} />
-        <AIChatBanner />
         <Footer />
       </main>
     </div>

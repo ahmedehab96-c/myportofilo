@@ -1,4 +1,3 @@
-import { useReveal } from '../hooks/useReveal';
 import Section from './Section';
 import SectionHeader from './SectionHeader';
 import FaIcon from './icons/FaIcon';
@@ -12,37 +11,32 @@ const CONTACTS = [
   { icon: 'linkedin', label: 'LinkedIn', value: 'Ahmed Ehab', url: 'https://www.linkedin.com/in/ahmed-ehab-ba8a63285' },
 ];
 
-function ContactRow({ contact, delay }) {
-  const { ref, className } = useReveal(delay);
-
+function ContactRow({ contact }) {
   return (
-    <a
-      ref={ref}
-      href={contact.url}
-      target={contact.url.startsWith('http') ? '_blank' : undefined}
-      rel="noreferrer"
-      className={`contact-row ${className}`}
-    >
-      <span className="contact-icon">
-        <FaIcon icon={contact.icon} size={22} color="var(--accent)" />
-      </span>
-      <span className="contact-text">
+    <li>
+      <a
+        href={contact.url}
+        target={contact.url.startsWith('http') ? '_blank' : undefined}
+        rel="noreferrer"
+        className="contact-row"
+      >
+        <FaIcon icon={contact.icon} size={15} color="var(--text-muted)" />
         <span className="contact-label">{contact.label}</span>
         <span className="contact-value">{contact.value}</span>
-      </span>
-    </a>
+      </a>
+    </li>
   );
 }
 
 export default function Contact({ sectionRef }) {
   return (
-    <Section id="contact" sectionRef={sectionRef} delay={120}>
+    <Section id="contact" sectionRef={sectionRef}>
       <SectionHeader title={UiStrings.getInTouch} subtitle={UiStrings.getInTouchSubtitle} />
-      <div className="contact-list">
-        {CONTACTS.map((contact, i) => (
-          <ContactRow key={contact.label} contact={contact} delay={80 * i} />
+      <ul className="contact-list">
+        {CONTACTS.map((contact) => (
+          <ContactRow key={contact.label} contact={contact} />
         ))}
-      </div>
+      </ul>
     </Section>
   );
 }

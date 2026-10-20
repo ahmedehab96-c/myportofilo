@@ -17,7 +17,7 @@ export default function GithubRepoButton({ githubUrl, isPrivate }) {
 
   return (
     <button type="button" className="github-repo-btn" onClick={onClick}>
-      <FaIcon icon={isPrivate ? 'lock' : 'github'} size={16} color="#fff" />
+      <FaIcon icon={isPrivate ? 'lock' : 'github'} size={14} />
       <span>{isPrivate ? UiStrings.privateOnGithub : UiStrings.viewOnGithub}</span>
     </button>
   );

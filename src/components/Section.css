@@ -1,9 +1,10 @@
 .section-block {
-  padding: 20px 28px 12px;
+  padding: 64px 24px;
+  border-top: 1px solid var(--border-subtle);
 }
 
 @media (max-width: 599px) {
   .section-block {
-    padding: 20px 16px 12px;
+    padding: 48px 16px;
   }
 }

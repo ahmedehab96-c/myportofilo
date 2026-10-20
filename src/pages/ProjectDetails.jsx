@@ -4,7 +4,6 @@ import FaIcon from '../components/icons/FaIcon';
 import GithubRepoButton from '../components/GithubRepoButton';
 import { useWindowWidth } from '../hooks/useWindowWidth';
 import { findProjectById, hasTrySection as hasTry } from '../data/portfolioContent';
-import { categoryColor, techColor } from '../theme/palette';
 import { UiStrings } from '../data/uiStrings';
 import './ProjectDetails.css';
 
@@ -39,27 +38,27 @@ function TrySection({ project }) {
 
   return (
     <div className="pd-try-section">
-      <h4>{UiStrings.tryThisProject}</h4>
+      <h2>{UiStrings.tryThisProject}</h2>
       {(project.websiteUrl || project.liveDemoUrl || project.apkUrl || project.playStoreUrl) && (
         <div className="pd-try-buttons">
           {project.websiteUrl && (
             <a className="pd-try-btn website" href={project.websiteUrl} target="_blank" rel="noreferrer">
-              <span>🌐</span> {UiStrings.visitWebsite}
+              {UiStrings.visitWebsite} <span aria-hidden="true">↗</span>
             </a>
           )}
           {project.liveDemoUrl && (
             <a className="pd-try-btn demo" href={project.liveDemoUrl} target="_blank" rel="noreferrer">
-              <span>↗</span> {UiStrings.openLiveDemo}
+              {UiStrings.openLiveDemo} <span aria-hidden="true">↗</span>
             </a>
           )}
           {project.playStoreUrl && (
             <a className="pd-try-btn play" href={project.playStoreUrl} target="_blank" rel="noreferrer">
-              <span>▶</span> {UiStrings.getOnGooglePlay}
+              {UiStrings.getOnGooglePlay}
             </a>
           )}
           {project.apkUrl && (
             <a className="pd-try-btn apk" href={project.apkUrl} target="_blank" rel="noreferrer">
-              <FaIcon icon="android" size={16} color="#fff" /> {UiStrings.downloadApk}
+              <FaIcon icon="android" size={14} /> {UiStrings.downloadApk}
             </a>
           )}
         </div>
@@ -77,13 +76,19 @@ function ScreenshotGallery({ screenshots, onOpen }) {
     <div className="pd-gallery">
       <button type="button" className="pd-screenshot" onClick={() => onOpen(screenshots[page])}>
         <img src={screenshots[page]} alt="" loading="lazy" />
-        <span className="pd-zoom-hint">🔍 {UiStrings.viewFull}</span>
+        <span className="pd-zoom-hint">{UiStrings.viewFull}</span>
       </button>
       {screenshots.length > 1 && (
         <div className="pd-gallery-nav">
           <button type="button" disabled={page === 0} onClick={() => setPage((p) => p - 1)}>‹</button>
           {screenshots.map((_, i) => (
-            <span key={i} className={`pd-dot ${i === page ? 'active' : ''}`} onClick={() => setPage(i)} />
+            <button
+              type="button"
+              key={i}
+              className={`pd-dot ${i === page ? 'active' : ''}`}
+              onClick={() => setPage(i)}
+              aria-label={`Screenshot ${i + 1}`}
+            />
           ))}
           <button type="button" disabled={page === screenshots.length - 1} onClick={() => setPage((p) => p + 1)}>›</button>
           <span className="pd-page-of">{UiStrings.pageOf(page + 1, screenshots.length)}</span>
@@ -132,46 +137,33 @@ export default function ProjectDetails() {
   return (
     <div className="pd-page">
       <header className="pd-appbar">
-        <Link to="/" className="pd-back">←</Link>
-        <span className="pd-appbar-title">{project.title}</span>
+        <Link to="/" className="pd-back">← Ahmed Ehab</Link>
       </header>
 
       <div className={`pd-body ${isWide ? 'wide' : 'narrow'}`}>
         <div className="pd-main">
-          <ScreenshotGallery screenshots={project.screenshots} onOpen={setLightbox} />
-
           {project.categories.length > 0 && (
-            <div className="pd-categories">
-              {project.categories.map((c) => (
-                <span
-                  key={c}
-                  className="pd-category-pill"
-                  style={{ color: categoryColor(c), borderColor: `${categoryColor(c)}73`, background: `${categoryColor(c)}1F` }}
-                >
-                  {c}
-                </span>
-              ))}
-            </div>
+            <p className="pd-categories">{project.categories.join(' · ')}</p>
           )}
 
+          <h1 className="pd-title">{project.title}</h1>
           <p className="pd-summary">{project.summary}</p>
+
+          <ScreenshotGallery screenshots={project.screenshots} onOpen={setLightbox} />
 
           {!isWide && <TrySection project={project} />}
 
-          <h4 className="pd-heading">{UiStrings.features}</h4>
+          <h2 className="pd-heading">{UiStrings.features}</h2>
           <ul className="pd-features">
             {project.features.map((f) => (
-              <li key={f}><span className="pd-bullet">•</span>{f}</li>
+              <li key={f}>{f}</li>
             ))}
           </ul>
 
-          <h4 className="pd-heading">{UiStrings.techStack}</h4>
+          <h2 className="pd-heading">{UiStrings.techStack}</h2>
           <div className="pd-tech-badges">
             {project.tech.map((t) => (
-              <span key={t} className="pd-tech-badge" style={{ color: techColor(t), borderColor: `${techColor(t)}66`, background: `${techColor(t)}1A` }}>
-                <span className="pd-tech-dot" style={{ background: techColor(t) }} />
-                {t}
-              </span>
+              <span key={t} className="pd-tech-badge">{t}</span>
             ))}
           </div>
 

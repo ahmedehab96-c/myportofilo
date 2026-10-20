@@ -1,14 +1,16 @@
 .github-repo-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 12px;
+  gap: 8px;
+  padding: 9px 14px;
   border-radius: 6px;
-  border: 1px solid #2EA043;
-  background: #238636;
-  color: #fff;
+  border: 1px solid var(--border-hover);
+  background: transparent;
+  color: var(--text-primary);
   font-size: 14px;
-  font-weight: 600;
+  transition: background 150ms ease;
+}
+
+.github-repo-btn:hover {
+  background: var(--bg-elevated);
 }
