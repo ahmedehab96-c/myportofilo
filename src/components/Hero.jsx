@@ -4,6 +4,7 @@ import { UiStrings } from '../data/uiStrings';
 import { PortfolioKnowledge } from '../data/portfolioKnowledge';
 import { role } from '../data/portfolioProfileContent';
 import { useTypewriter } from '../hooks/useTypewriter';
+import { useTilt } from '../hooks/useTilt';
 import './Hero.css';
 
 const HERO_TECH_HIGHLIGHTS = ['React.js', 'Flutter', 'Laravel', 'Firebase', 'Supabase', 'AI', 'REST APIs'];
@@ -24,6 +25,8 @@ function TypedName({ name }) {
 }
 
 export default function Hero({ onScrollToSection, onLaunch }) {
+  const tilt = useTilt();
+
   return (
     <section className="hero">
       <div className="hero-text-col">
@@ -72,8 +75,8 @@ export default function Hero({ onScrollToSection, onLaunch }) {
         />
       </div>
 
-      <div className="hero-photo-col">
-        <div className="hero-photo-frame">
+      <div className="hero-photo-col" {...tilt}>
+        <div className="hero-photo-frame tilt-3d">
           <img className="hero-photo" src="/assets/images/ahmed_profile.png" alt={PortfolioKnowledge.fullName} />
         </div>
       </div>

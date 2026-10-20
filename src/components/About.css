@@ -43,3 +43,21 @@
     font-size: 18px;
   }
 }
+
+.reveal.in-view .glass-panel {
+  animation: reveal-side 900ms var(--ease-out) 120ms backwards;
+}
+
+.about-chip {
+  transition: border-color 200ms ease, color 200ms ease, background 200ms ease, translate 250ms var(--ease-out);
+}
+
+.about-chip:hover {
+  translate: 0 -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal.in-view .glass-panel {
+    animation: none;
+  }
+}

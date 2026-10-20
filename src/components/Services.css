@@ -8,6 +8,7 @@
 }
 
 .service-item {
+  perspective: 600px;
   padding: 32px 28px;
   border-right: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
@@ -27,7 +28,31 @@
 }
 
 .service-item:hover .icon-badge {
-  transform: translateY(-3px) rotate(-6deg);
+  transform: translateZ(24px) rotateY(-14deg) rotate(-6deg);
+  box-shadow: 0 10px 20px -10px rgba(81, 70, 217, 0.45);
+}
+
+.service-item .icon-badge {
+  transition: transform 400ms var(--ease-out), box-shadow 400ms var(--ease-out);
+  animation: float-y 6s ease-in-out infinite;
+}
+
+.service-item:nth-child(2n) .icon-badge { animation-delay: -2s; }
+.service-item:nth-child(3n) .icon-badge { animation-delay: -4s; }
+
+.service-title,
+.service-desc {
+  transition: translate 300ms var(--ease-out);
+}
+
+.service-item:hover .service-title {
+  translate: 0 -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-item .icon-badge {
+    animation: none;
+  }
 }
 
 .service-title {

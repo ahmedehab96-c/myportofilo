@@ -1,6 +1,7 @@
 import Section from './Section';
 import SectionHeader from './SectionHeader';
 import FaIcon from './icons/FaIcon';
+import { useTilt } from '../hooks/useTilt';
 import { UiStrings } from '../data/uiStrings';
 import './Contact.css';
 
@@ -12,13 +13,16 @@ const CONTACTS = [
 ];
 
 function ContactRow({ contact }) {
+  const tilt = useTilt();
+
   return (
     <li>
       <a
         href={contact.url}
         target={contact.url.startsWith('http') ? '_blank' : undefined}
         rel="noreferrer"
-        className="contact-row"
+        className="contact-row tilt-3d"
+        {...tilt}
       >
         <span className="contact-icon">
           <FaIcon icon={contact.icon} size={16} />

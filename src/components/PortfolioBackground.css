@@ -11,8 +11,14 @@
 .pb-orb {
   position: absolute;
   border-radius: 50%;
-  will-change: transform;
+  will-change: transform, translate;
 }
+
+/* Scroll parallax uses `translate` so it layers on top of the drift keyframes. */
+.pb-orb-a { translate: 0 calc(var(--scroll, 0) * -0.12px); }
+.pb-orb-b { translate: 0 calc(var(--scroll, 0) * -0.06px); }
+.pb-orb-c { translate: 0 calc(var(--scroll, 0) * -0.09px); }
+.pb-dots { translate: 0 calc(var(--scroll, 0) * -0.03px); }
 
 .pb-orb-a {
   top: -22vmax;

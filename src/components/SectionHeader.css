@@ -41,3 +41,20 @@
     font-size: 16px;
   }
 }
+
+/* Eyebrow, title and subtitle enter in sequence once the section reveals. */
+.section-header-title {
+  transform-origin: 50% 100%;
+}
+
+.reveal.in-view .section-header::before {
+  animation: eyebrow-in 600ms var(--ease-out) 60ms backwards;
+}
+
+.reveal.in-view .section-header-title {
+  animation: heading-in 900ms var(--ease-out) 120ms backwards;
+}
+
+.reveal.in-view .section-header-subtitle {
+  animation: reveal-in 800ms var(--ease-out) 260ms backwards;
+}

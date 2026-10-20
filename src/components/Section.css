@@ -24,3 +24,15 @@
     margin-bottom: 0;
   }
 }
+
+/* Whole sections only fade and rise; headings and cards inside carry the 3D. */
+.section-block.reveal.in-view {
+  animation-name: section-in;
+}
+
+@keyframes section-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}

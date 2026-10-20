@@ -198,3 +198,29 @@
     padding: 0 16px;
   }
 }
+
+@keyframes nav-in {
+  from {
+    opacity: 0;
+    transform: perspective(600px) translateY(-10px) rotateX(-25deg);
+  }
+}
+
+.nav-brand,
+.nav-links,
+.nav-hamburger {
+  animation: nav-in 700ms var(--ease-out) backwards;
+}
+
+.nav-links,
+.nav-hamburger {
+  animation-delay: 120ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-brand,
+  .nav-links,
+  .nav-hamburger {
+    animation: none;
+  }
+}

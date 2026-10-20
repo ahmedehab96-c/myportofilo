@@ -10,10 +10,11 @@ export default function Projects({ sectionRef, onOpenGithub }) {
     <Section id="projects" sectionRef={sectionRef}>
       <SectionHeader title={UiStrings.featuredProjects} subtitle={UiStrings.featuredProjectsSubtitle} />
       <div className="projects-grid">
-        {featuredProjects.map((project) => (
+        {featuredProjects.map((project, i) => (
           <ProjectCard
             key={project.id}
             project={project}
+            index={i}
             featured={bentoFeaturedIds.has(project.id)}
             onOpenGithub={onOpenGithub}
           />

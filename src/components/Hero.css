@@ -96,6 +96,7 @@
 }
 
 .hero-tech li {
+  transition: translate 250ms var(--ease-out), border-color 200ms ease, color 200ms ease;
   padding: 4px 11px;
   border-radius: 999px;
   border: 1px solid var(--border-subtle);
@@ -181,6 +182,12 @@
   background-size: 100% 1px;
 }
 
+.hero-tech li:hover {
+  translate: 0 -2px;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 /* Portrait */
 
 .hero-photo-col {
@@ -188,7 +195,11 @@
 }
 
 .hero-photo-frame {
+  --tilt: 10deg;
   position: relative;
+  transform-style: preserve-3d;
+  transition: transform 500ms var(--ease-out);
+  animation: float-y 7s ease-in-out 1.2s infinite;
 }
 
 .hero-photo-frame::before {
@@ -197,6 +208,7 @@
   inset: 22px -18px -18px 22px;
   border-radius: 24px;
   background: linear-gradient(140deg, #dcd8fb, #efe3f7 55%, #f8e6d6);
+  transform: translateZ(-30px);
 }
 
 .hero-photo {
@@ -208,6 +220,7 @@
   border-radius: 24px;
   background: #0b0b0d;
   box-shadow: 0 30px 60px -30px rgba(27, 26, 36, 0.45);
+  transform: translateZ(20px);
 }
 
 @media (max-width: 899px) {
@@ -271,7 +284,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero-text-col > *,
-  .hero-photo-col {
+  .hero-photo-col,
+  .hero-photo-frame {
     animation: none;
   }
 }

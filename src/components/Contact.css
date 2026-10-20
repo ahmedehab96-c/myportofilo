@@ -8,6 +8,7 @@
 }
 
 .contact-row {
+  --tilt: 6deg;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -15,7 +16,7 @@
   border: 1px solid var(--border-subtle);
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.75);
-  transition: border-color 200ms ease, box-shadow 250ms var(--ease-out), translate 250ms var(--ease-out);
+  transition: border-color 200ms ease, box-shadow 250ms var(--ease-out), translate 250ms var(--ease-out), transform 400ms var(--ease-out);
 }
 
 .contact-row:hover {
@@ -34,6 +35,11 @@
   background: var(--accent-soft);
   color: var(--accent);
   flex-shrink: 0;
+  transition: transform 300ms var(--ease-out);
+}
+
+.contact-row:hover .contact-icon {
+  transform: translateY(-2px) rotate(-6deg) scale(1.06);
 }
 
 .contact-text {

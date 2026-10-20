@@ -1,7 +1,7 @@
 @keyframes reveal-in {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: perspective(1200px) translate3d(0, 28px, -30px) rotateX(7deg);
   }
   to {
     opacity: 1;
@@ -9,17 +9,59 @@
   }
 }
 
+/* Swings in from the side, used for timelines and panels. */
+@keyframes reveal-side {
+  from {
+    opacity: 0;
+    transform: perspective(1200px) translate3d(-24px, 0, -30px) rotateY(10deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Headings stand up from their baseline. */
+@keyframes heading-in {
+  from {
+    opacity: 0;
+    transform: perspective(700px) translateY(14px) rotateX(32deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes eyebrow-in {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes float-y {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -8px; }
+}
+
+/* `backwards` (not `both`) so hover/tilt transforms take over once revealed. */
 .reveal {
   opacity: 0;
 }
 
 .reveal.in-view {
-  animation: reveal-in 800ms var(--ease-out) both;
+  opacity: 1;
+  animation: reveal-in 800ms var(--ease-out) backwards;
 }
 
 /* Children of a revealed section follow in a short cascade. */
 .reveal.in-view .stagger > * {
-  animation: reveal-in 700ms var(--ease-out) both;
+  animation: reveal-in 700ms var(--ease-out) backwards;
 }
 
 .reveal.in-view .stagger > *:nth-child(2) { animation-delay: 70ms; }
@@ -28,12 +70,26 @@
 .reveal.in-view .stagger > *:nth-child(5) { animation-delay: 280ms; }
 .reveal.in-view .stagger > *:nth-child(n + 6) { animation-delay: 340ms; }
 
+/* Shared pointer tilt (see useTilt); each component sets its own --tilt. */
+.tilt-3d {
+  transform: perspective(1000px)
+    rotateX(calc(var(--py, 0) * var(--tilt, 6deg) * -1))
+    rotateY(calc(var(--px, 0) * var(--tilt, 6deg)));
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal.in-view,
-  .reveal.in-view .stagger > * {
+  .reveal.in-view .stagger > *,
+  .reveal.in-view .section-header::before,
+  .reveal.in-view .section-header-title,
+  .reveal.in-view .section-header-subtitle {
     opacity: 1;
     animation: none !important;
+  }
+
+  .tilt-3d {
+    transform: none !important;
   }
 
   *,

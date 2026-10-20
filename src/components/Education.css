@@ -111,3 +111,41 @@
   border-color: var(--accent);
   transform: translateY(-1px);
 }
+
+.education-list::before {
+  transform-origin: top;
+}
+
+.reveal.in-view .education-list::before {
+  animation: rail-draw 1400ms var(--ease-out) 150ms backwards;
+}
+
+.reveal.in-view .education-list.stagger > * {
+  animation-name: reveal-side;
+}
+
+.education-item {
+  transition: translate 300ms var(--ease-out);
+}
+
+.education-item:hover {
+  translate: 4px 0;
+}
+
+.education-item::before {
+  transition: background 200ms ease, box-shadow 300ms var(--ease-out);
+}
+
+.education-item:hover::before {
+  box-shadow: 0 0 0 5px var(--accent-soft);
+}
+
+@keyframes rail-draw {
+  from { transform: scaleY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal.in-view .education-list::before {
+    animation: none;
+  }
+}

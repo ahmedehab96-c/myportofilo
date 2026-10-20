@@ -5,11 +5,12 @@
 }
 
 .skill-group {
+  --tilt: 7deg;
   padding: 24px 22px;
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.72);
-  transition: border-color 250ms ease, box-shadow 250ms var(--ease-out), translate 250ms var(--ease-out);
+  transition: border-color 250ms ease, box-shadow 250ms var(--ease-out), translate 250ms var(--ease-out), transform 400ms var(--ease-out);
 }
 
 .skill-group:hover {
@@ -38,6 +39,14 @@
   font-size: 14px;
   line-height: 1.55;
   color: var(--text-secondary);
+}
+
+.skill-group-list li {
+  transition: translate 250ms var(--ease-out), color 200ms ease;
+}
+
+.skill-group:hover .skill-group-list li {
+  translate: 3px 0;
 }
 
 .skill-group-list li::before {
