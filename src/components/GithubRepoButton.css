@@ -3,14 +3,14 @@
   align-items: center;
   gap: 8px;
   padding: 9px 14px;
-  border-radius: 6px;
-  border: 1px solid var(--border-hover);
-  background: transparent;
+  border-radius: 10px;
+  border: 1px solid var(--border-accent);
+  background: var(--surface);
   color: var(--text-primary);
   font-size: 14px;
   transition: background 150ms ease;
 }
 
 .github-repo-btn:hover {
-  background: var(--bg-elevated);
+  border-color: var(--border-hover);
 }

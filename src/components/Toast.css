@@ -7,11 +7,11 @@
   max-width: min(420px, calc(100vw - 32px));
   padding: 14px 20px;
   border-radius: 12px;
-  background: #172239;
+  background: var(--text-primary);
   border: 1px solid var(--border-accent);
-  color: var(--text-primary);
+  color: var(--bg-deep);
   font-size: 14px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 16px 40px -16px rgba(27, 26, 36, 0.5);
   animation: toast-in 200ms ease-out;
 }
 

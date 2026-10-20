@@ -8,7 +8,7 @@ export default function Skills({ sectionRef }) {
   return (
     <Section id="skills" sectionRef={sectionRef}>
       <SectionHeader title={UiStrings.skillsTitle} subtitle={UiStrings.skillsSubtitle} />
-      <div className="skills-grid">
+      <div className="skills-grid stagger">
         {skillCategories.map((category) => (
           <div className="skill-group" key={category.category}>
             <h3 className="skill-group-title">{category.category}</h3>

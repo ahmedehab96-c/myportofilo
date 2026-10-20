@@ -7,12 +7,12 @@ import './About.css';
 
 export default function About({ sectionRef }) {
   return (
-    <Section id="about" sectionRef={sectionRef}>
+    <Section id="about" sectionRef={sectionRef} className="split">
       <SectionHeader title={UiStrings.aboutMe} />
       <GlassPanel>
-        <p className="about-paragraph">{aboutParagraph1}</p>
+        <p className="about-paragraph lead">{aboutParagraph1}</p>
         <p className="about-paragraph">{aboutParagraph2}</p>
-        <div className="about-highlights">
+        <div className="about-highlights stagger">
           {aboutHighlights.map((h) => (
             <span className="about-chip" key={h}>{h}</span>
           ))}

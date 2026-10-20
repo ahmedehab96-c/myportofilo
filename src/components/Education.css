@@ -1,29 +1,53 @@
+/* Vertical timeline */
 .education-list {
+  position: relative;
   list-style: none;
   margin: 0;
-  padding: 0;
-  max-width: 720px;
+  padding: 0 0 0 28px;
+}
+
+.education-list::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--accent), var(--border-accent) 40%, transparent);
 }
 
 .education-item {
-  padding: 24px 0;
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.education-item:first-child {
-  padding-top: 0;
+  position: relative;
+  padding: 0 0 40px;
 }
 
 .education-item:last-child {
-  border-bottom: none;
   padding-bottom: 0;
+}
+
+.education-item::before {
+  content: '';
+  position: absolute;
+  left: -28px;
+  top: 7px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--bg-deep);
+  transition: background 200ms ease;
+}
+
+.education-item:hover::before {
+  background: var(--accent);
 }
 
 .education-title {
   margin: 0;
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 600;
   line-height: 1.4;
+  letter-spacing: -0.01em;
   color: var(--text-primary);
 }
 
@@ -34,6 +58,9 @@
 }
 
 .education-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
   margin: 12px 0 0;
   font-size: 14px;
 }
@@ -41,7 +68,7 @@
 .education-meta div {
   display: flex;
   flex-wrap: wrap;
-  gap: 0 8px;
+  gap: 0 6px;
 }
 
 .education-meta dt {
@@ -59,24 +86,28 @@
 
 .education-desc {
   margin: 12px 0 0;
+  max-width: 640px;
   font-size: 15px;
-  line-height: 1.65;
+  line-height: 1.7;
   color: var(--text-secondary);
 }
 
 .education-cert {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 12px;
-  padding: 0;
-  border: none;
-  background: none;
+  gap: 7px;
+  margin-top: 14px;
+  padding: 7px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--surface);
   color: var(--accent);
   font-size: 14px;
+  font-weight: 500;
+  transition: border-color 200ms ease, transform 200ms var(--ease-out);
 }
 
 .education-cert:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  border-color: var(--accent);
+  transform: translateY(-1px);
 }

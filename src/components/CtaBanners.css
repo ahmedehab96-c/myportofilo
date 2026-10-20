@@ -2,39 +2,83 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 16px 28px;
-  padding: 0 24px 64px;
+  justify-content: space-between;
+  gap: 20px 32px;
+  margin: 0 24px 72px;
+  padding: 40px 44px;
+  border-radius: 24px;
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(139, 92, 246, 0.35), transparent 55%),
+    linear-gradient(135deg, #3f35c4, #5146d9 60%, #6a4fe0);
+  color: #fff;
+  box-shadow: 0 30px 60px -30px rgba(81, 70, 217, 0.55);
+}
+
+.cta-row-text h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.cta-row-text p {
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 16px;
+}
+
+.cta-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
 }
 
 .resume-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 18px;
-  border: 1px solid var(--accent);
-  border-radius: 6px;
-  background: var(--accent);
-  color: var(--on-accent);
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--accent-deep);
   font-size: 15px;
-  font-weight: 500;
-  transition: background 150ms ease;
+  font-weight: 600;
+  box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.35);
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
 }
 
 .resume-btn:hover {
-  background: var(--accent-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -12px rgba(0, 0, 0, 0.4);
 }
 
 .ai-chat-link {
-  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
   font-size: 15px;
+  font-weight: 500;
 }
 
-.ai-chat-link:hover {
-  color: var(--text-primary);
+.ai-chat-link span {
+  transition: transform 250ms var(--ease-out);
+}
+
+.ai-chat-link:hover span {
+  transform: translateX(4px);
 }
 
 .portfolio-footer {
-  padding: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding: 28px 24px 36px;
   border-top: 1px solid var(--border-subtle);
 }
 
@@ -46,9 +90,17 @@
 
 @media (max-width: 599px) {
   .cta-row {
-    padding: 0 16px 48px;
+    margin: 0 16px 56px;
+    padding: 28px 24px;
+    border-radius: 20px;
   }
+
+  .resume-btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
   .portfolio-footer {
-    padding: 24px 16px;
+    padding: 24px 16px 32px;
   }
 }

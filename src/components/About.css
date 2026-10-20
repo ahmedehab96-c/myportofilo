@@ -1,21 +1,45 @@
 .about-paragraph {
-  margin: 0 0 16px;
-  font-size: 16px;
-  line-height: 1.75;
+  margin: 0 0 18px;
+  font-size: 17px;
+  line-height: 1.8;
   color: var(--text-secondary);
+}
+
+.about-paragraph.lead {
+  font-size: 21px;
+  line-height: 1.6;
+  color: var(--text-primary);
 }
 
 .about-highlights {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 24px;
+  margin-top: 28px;
 }
 
 .about-chip {
-  padding: 3px 10px;
-  border-radius: 4px;
-  border: 1px solid var(--border-accent);
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface);
   color: var(--text-secondary);
   font-size: 13px;
+  font-weight: 500;
+  transition: border-color 200ms ease, color 200ms ease, background 200ms ease;
+}
+
+.about-chip:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+@media (max-width: 599px) {
+  .about-paragraph {
+    font-size: 16px;
+  }
+  .about-paragraph.lead {
+    font-size: 18px;
+  }
 }

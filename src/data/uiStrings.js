@@ -34,6 +34,7 @@ export const UiStrings = {
   viewProject: 'View project',
   getInTouch: 'Get in Touch',
   getInTouchSubtitle: 'Open to work — feel free to reach out anytime.',
+  ctaTitle: 'Have a project in mind?',
   phone: 'Phone',
   email: 'Email',
   downloadCv: 'Download CV',

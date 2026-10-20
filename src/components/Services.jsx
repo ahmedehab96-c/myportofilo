@@ -9,7 +9,7 @@ export default function Services({ sectionRef }) {
   return (
     <Section id="services" sectionRef={sectionRef}>
       <SectionHeader title={UiStrings.servicesTitle} subtitle={UiStrings.servicesSubtitle} />
-      <div className="services-grid">
+      <div className="services-grid stagger">
         {services.map((service) => (
           <div className="service-item" key={service.title}>
             <AnimatedIconBadge icon={service.icon} />

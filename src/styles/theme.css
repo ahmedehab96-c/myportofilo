@@ -1,41 +1,44 @@
 :root {
-  --bg-deep: #111214;
-  --bg-mid: #16171a;
-  --bg-elevated: #1b1c20;
-  --surface: #16171a;
-  --surface-raised: #1b1c20;
-  --card-surface: #16171a;
-  --image-placeholder: #1b1c20;
-  --text-primary: #ececed;
-  --text-secondary: #a3a3ab;
-  --text-muted: #74747c;
-  --border-subtle: #26272b;
-  --border-accent: #2f3035;
-  --border-hover: #45464d;
-  --panel-shadow: none;
-  --card-shadow: transparent;
-  --card-shadow-hover: transparent;
+  --bg-deep: #faf8f5;
+  --bg-mid: #f4f1ec;
+  --bg-elevated: #efebe4;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --card-surface: #ffffff;
+  --image-placeholder: #f1eef8;
+  --text-primary: #1b1a24;
+  --text-secondary: #4f4d5e;
+  --text-muted: #7d7a8c;
+  --border-subtle: #e9e4dc;
+  --border-accent: #ddd7cd;
+  --border-hover: #c9c2b6;
+  --panel-shadow: 0 1px 2px rgba(40, 32, 20, 0.04), 0 8px 24px -12px rgba(40, 32, 20, 0.12);
+  --card-shadow: rgba(40, 32, 20, 0.06);
+  --card-shadow-hover: rgba(79, 70, 229, 0.16);
 
-  --accent: #7dbf9e;
-  --accent-bright: #9ad3b6;
-  --accent-deep: #4d8a6c;
-  --violet: var(--accent);
-  --violet-deep: var(--accent-deep);
+  --accent: #5146d9;
+  --accent-bright: #6a5ff0;
+  --accent-deep: #3d33b8;
+  --accent-soft: #eeecfd;
+  --violet: #8b5cf6;
+  --violet-deep: #6d42d9;
   --sky: var(--accent);
   --teal: var(--accent);
   --gold: var(--accent);
-  --on-accent: #0e1a14;
+  --on-accent: #ffffff;
 
   --bg-gradient: var(--bg-deep);
-  --accent-gradient: var(--accent);
+  --accent-gradient: linear-gradient(120deg, var(--accent), var(--violet));
   --cta-gradient: var(--accent);
-  --ai-gradient: var(--bg-elevated);
+  --ai-gradient: var(--accent-soft);
 
-  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --content-width: 1040px;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --content-width: 1120px;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
 
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 * {
@@ -73,7 +76,7 @@ img {
 }
 
 ::selection {
-  background: rgba(125, 191, 158, 0.3);
+  background: rgba(81, 70, 217, 0.18);
 }
 
 ::-webkit-scrollbar {
@@ -85,7 +88,7 @@ img {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-subtle);
+  background: var(--border-hover);
   border-radius: 6px;
 }
 

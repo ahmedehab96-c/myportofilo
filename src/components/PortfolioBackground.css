@@ -2,6 +2,68 @@
   position: fixed;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
   pointer-events: none;
   background: var(--bg-deep);
+}
+
+/* Radial gradients instead of filter: blur keep the GPU cost low. */
+.pb-orb {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.pb-orb-a {
+  top: -22vmax;
+  left: -12vmax;
+  width: 62vmax;
+  height: 62vmax;
+  background: radial-gradient(circle, rgba(124, 116, 240, 0.16), rgba(124, 116, 240, 0) 65%);
+  animation: pb-drift-a 38s ease-in-out infinite alternate;
+}
+
+.pb-orb-b {
+  top: 18vh;
+  right: -24vmax;
+  width: 58vmax;
+  height: 58vmax;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.1), rgba(167, 139, 250, 0) 65%);
+  animation: pb-drift-b 46s ease-in-out infinite alternate;
+}
+
+.pb-orb-c {
+  bottom: -30vmax;
+  left: 20vw;
+  width: 60vmax;
+  height: 60vmax;
+  background: radial-gradient(circle, rgba(244, 196, 160, 0.18), rgba(244, 196, 160, 0) 65%);
+  animation: pb-drift-c 52s ease-in-out infinite alternate;
+}
+
+.pb-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(27, 26, 36, 0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 70%);
+  mask-image: linear-gradient(to bottom, #000, transparent 70%);
+}
+
+@keyframes pb-drift-a {
+  to { transform: translate3d(8vw, 6vh, 0) scale(1.08); }
+}
+
+@keyframes pb-drift-b {
+  to { transform: translate3d(-10vw, 8vh, 0) scale(0.94); }
+}
+
+@keyframes pb-drift-c {
+  to { transform: translate3d(6vw, -10vh, 0) scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pb-orb {
+    animation: none;
+  }
 }

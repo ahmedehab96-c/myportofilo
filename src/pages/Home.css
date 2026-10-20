@@ -8,8 +8,19 @@
   top: 0;
   z-index: 20;
   padding-top: env(safe-area-inset-top);
-  background: var(--bg-deep);
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid rgba(233, 228, 220, 0.8);
+}
+
+/* Blur lives on a pseudo-element: backdrop-filter on the header itself would
+   trap the fixed-position mobile drawer inside it. */
+.home-nav-sticky::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(250, 248, 245, 0.78);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  backdrop-filter: saturate(160%) blur(14px);
 }
 
 .home-content {
@@ -17,8 +28,9 @@
   z-index: 1;
   max-width: var(--content-width);
   margin: 0 auto;
+  counter-reset: section;
 }
 
 section[id] {
-  scroll-margin-top: 64px;
+  scroll-margin-top: 72px;
 }

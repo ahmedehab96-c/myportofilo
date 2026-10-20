@@ -7,11 +7,17 @@ import './CtaBanners.css';
 export function ResumeButton({ onLaunch }) {
   return (
     <div className="cta-row">
-      <button type="button" className="resume-btn" onClick={() => onLaunch(PortfolioKnowledge.cvUrl)}>
-        <FaIcon icon="filePdf" size={14} />
-        <span>{UiStrings.downloadCv}</span>
-      </button>
-      <AIChatLink />
+      <div className="cta-row-text">
+        <h2>{UiStrings.ctaTitle}</h2>
+        <p>{UiStrings.getInTouchSubtitle}</p>
+      </div>
+      <div className="cta-row-actions">
+        <button type="button" className="resume-btn" onClick={() => onLaunch(PortfolioKnowledge.cvUrl)}>
+          <FaIcon icon="filePdf" size={14} />
+          <span>{UiStrings.downloadCv}</span>
+        </button>
+        <AIChatLink />
+      </div>
     </div>
   );
 }

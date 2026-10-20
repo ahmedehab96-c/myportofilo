@@ -20,9 +20,14 @@ function ContactRow({ contact }) {
         rel="noreferrer"
         className="contact-row"
       >
-        <FaIcon icon={contact.icon} size={15} color="var(--text-muted)" />
-        <span className="contact-label">{contact.label}</span>
-        <span className="contact-value">{contact.value}</span>
+        <span className="contact-icon">
+          <FaIcon icon={contact.icon} size={16} />
+        </span>
+        <span className="contact-text">
+          <span className="contact-label">{contact.label}</span>
+          <span className="contact-value">{contact.value}</span>
+        </span>
+        <span className="contact-arrow" aria-hidden="true">↗</span>
       </a>
     </li>
   );
@@ -30,9 +35,9 @@ function ContactRow({ contact }) {
 
 export default function Contact({ sectionRef }) {
   return (
-    <Section id="contact" sectionRef={sectionRef}>
+    <Section id="contact" sectionRef={sectionRef} className="split">
       <SectionHeader title={UiStrings.getInTouch} subtitle={UiStrings.getInTouchSubtitle} />
-      <ul className="contact-list">
+      <ul className="contact-list stagger">
         {CONTACTS.map((contact) => (
           <ContactRow key={contact.label} contact={contact} />
         ))}
