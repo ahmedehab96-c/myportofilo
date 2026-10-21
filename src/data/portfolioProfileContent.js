@@ -126,6 +126,17 @@ export const skillCategories = [
     ],
   },
   {
+    category: 'IT Support',
+    icon: 'desktop',
+    color: '#0091EA',
+    skills: [
+      'Computer hardware & software troubleshooting',
+      'Printer & scanner setup and maintenance',
+      'Microsoft Office 365 administration & support',
+      'Networking — LAN/Wi-Fi setup and troubleshooting',
+    ],
+  },
+  {
     category: 'Soft Skills',
     icon: 'lightbulb',
     color: '#0288D1',

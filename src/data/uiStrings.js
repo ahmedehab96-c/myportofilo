@@ -87,7 +87,7 @@ export const UiStrings = {
   welcomeMessage: (version) =>
     "Hello! I am Ahmed Ehab's portfolio AI assistant.\n\n" +
     `Data version: ${version}\n\n` +
-    'I know everything on this site: About, Education, Skills (8 categories), ' +
+    'I know everything on this site: About, Education, Skills (9 categories), ' +
     'all 9 projects with demos/APKs, Contact, CV, and services.\n\n' +
     'Tap a suggested question below, or ask: "What can you help me with?"',
 };

@@ -70,9 +70,9 @@ const helpTopicsReply = `I can answer detailed questions about every part of Ahm
 • Premium Gym — multi-tenant gym SaaS (Laravel + React dashboard + Flutter member app)
 • Property Asset Management — Laravel/Filament + React dashboard + Flutter owner/tenant app + AI assistant
 
-🛠 Skills (8 categories)
+🛠 Skills (9 categories)
 • Web Development, Mobile Development, Backend Integration, Laravel
-• Authentication, Tools & Platforms, UI/UX Skills, Soft Skills
+• Authentication, Tools & Platforms, UI/UX Skills, IT Support, Soft Skills
 
 🎓 Education & certifications (4 entries)
 • BSc IT Al-Mashriq University 2018
@@ -125,7 +125,7 @@ ${aboutParagraph2}
 Hero stats: ${yearsOfExperience} years experience, 20+ projects, 6+ technologies
 About highlights: Flutter, React.js, Dart, Firebase, Laravel, REST API, UI/UX
 
-Portfolio sections: Hero, About Me, Education & Certifications, Skills & Expertise (8 categories), Projects (9 apps), Contact, Download CV, AI Assistant
+Portfolio sections: Hero, About Me, Education & Certifications, Skills & Expertise (9 categories), Projects (9 apps), Contact, Download CV, AI Assistant
 
 Skills categories:
 1. Web Development — HTML, CSS, JavaScript, React.js, responsive UI
@@ -135,7 +135,8 @@ Skills categories:
 5. Authentication — email, Google/Facebook/Apple, RBAC
 6. Tools & Platforms — Git, VS Code, Android Studio, Cursor, Postman, Play Store
 7. UI/UX — Material/Cupertino, MVC/MVVM, themes, responsive design
-8. Soft Skills — problem-solving, agile, documentation, fast learning
+8. IT Support — computers, printers, scanners, Office 365, networking
+9. Soft Skills — problem-solving, agile, documentation, fast learning
 
 Education: BSc IT Al-Mashriq University 2018; Udemy Flutter; One Million Prompters (Dubai); AI Diploma ALBYAN Abu Dhabi ACTVET Oct 2026 Excellent
 
@@ -175,7 +176,7 @@ const faqEntries = [
   [['location', 'where are you based', 'country', 'uae', 'dubai', 'abu dhabi'],
     'Contact number uses UAE country code (+971). Ahmed works as a Flutter developer and is open to remote collaboration. Reach out to confirm current location and availability.'],
   [['portfolio sections', 'sections in portfolio', 'what is on this site', 'website sections', 'pages on portfolio'],
-    `This portfolio includes:\n\n• Header — name, role, and quick actions\n• About Me — background and approach\n• Education & Certifications\n• Skills & Expertise (8 categories)\n• Projects (9 featured apps)\n• Contact information\n• Download CV button\n• AI Assistant (this chat)`],
+    `This portfolio includes:\n\n• Header — name, role, and quick actions\n• About Me — background and approach\n• Education & Certifications\n• Skills & Expertise (9 categories)\n• Projects (9 featured apps)\n• Contact information\n• Download CV button\n• AI Assistant (this chat)`],
   [['what can you help', 'what can i ask', 'help topics', 'list questions', 'supported questions', 'commands'],
     helpTopicsReply],
   [['education', 'qualifications', 'degrees', 'studied', 'academic'],
@@ -189,7 +190,7 @@ const faqEntries = [
   [['certificate', 'certification', 'dubai certificate', 'view certificate', 'one million prompters', 'prompt engineering', 'dubai future foundation'],
     `One Million Prompters — Certificate of Completion (Dubai):\n• Issued by Dubai Future Foundation & Dubai Centre for Artificial Intelligence\n• Prompt engineering for AI systems — Dubai Universal Blueprint for Artificial Intelligence\n• Listed under Education on the portfolio\n\nView certificate (PDF): ${dubaiCertificateUrl}`],
   [['skills', 'skills section', 'expertise', 'what skills', 'skill categories'],
-    'Skills & Expertise — 8 categories on the portfolio:\n\n1️⃣ Web Development — HTML, CSS, JavaScript, React.js, responsive UI\n2️⃣ Mobile Development — Flutter & Dart, cross-platform, BLoC/GetX/Riverpod, widgets, animations\n3️⃣ Backend Integration — Firebase, Supabase, REST, SQLite, Hive, SharedPreferences\n4️⃣ Laravel — REST API, Eloquent, Sanctum/Passport, RBAC, Flutter integration\n5️⃣ Authentication — email/password, Google/Facebook/Apple sign-in, route guarding\n6️⃣ Tools & Platforms — Git/GitHub, VS Code, Android Studio, Cursor, Postman, Play Store\n7️⃣ UI/UX Skills — Material/Cupertino, MVC/MVVM, light/dark themes, responsive design\n8️⃣ Soft Skills — problem-solving, agile, time management, documentation, fast learning\n\nAsk "What are your technical skills?" or "Do you know Laravel?" for details.'],
+    'Skills & Expertise — 9 categories on the portfolio:\n\n1️⃣ Web Development — HTML, CSS, JavaScript, React.js, responsive UI\n2️⃣ Mobile Development — Flutter & Dart, cross-platform, BLoC/GetX/Riverpod, widgets, animations\n3️⃣ Backend Integration — Firebase, Supabase, REST, SQLite, Hive, SharedPreferences\n4️⃣ Laravel — REST API, Eloquent, Sanctum/Passport, RBAC, Flutter integration\n5️⃣ Authentication — email/password, Google/Facebook/Apple sign-in, route guarding\n6️⃣ Tools & Platforms — Git/GitHub, VS Code, Android Studio, Cursor, Postman, Play Store\n7️⃣ UI/UX Skills — Material/Cupertino, MVC/MVVM, light/dark themes, responsive design\n8️⃣ IT Support — computers, printers, scanners, Office 365, networking\n9️⃣ Soft Skills — problem-solving, agile, time management, documentation, fast learning\n\nAsk "What are your technical skills?" or "Do you know Laravel?" for details.'],
   [['hero', 'header', 'stats', 'years of experience', 'how many projects', 'technologies count'],
     `Hero section highlights:\n• Name: ${fullName}\n• Role: ${role}\n• Experience: ${yearsOfExperience} years\n• Portfolio stats: 20+ projects, 6+ technologies\n• Tagline: Crafting beautiful & functional mobile experiences with clean architecture and great UX`],
   [['about highlights', 'tech stack summary', 'what technologies'],
