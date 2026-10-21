@@ -1,10 +1,5 @@
 import { PortfolioKnowledge } from './portfolioKnowledge';
 
-export const role = PortfolioKnowledge.role;
-export const tagline = PortfolioKnowledge.tagline;
-export const aboutParagraph1 = PortfolioKnowledge.aboutParagraph1;
-export const aboutParagraph2 = PortfolioKnowledge.aboutParagraph2;
-
 export const aboutHighlights = ['Flutter', 'React.js', 'Dart', 'Firebase', 'Laravel', 'REST API', 'UI/UX'];
 
 export const educationEntries = [

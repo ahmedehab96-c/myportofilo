@@ -128,8 +128,8 @@ export default function ProjectDetails() {
   if (!project) {
     return (
       <div className="pd-page pd-not-found">
-        <p>Project not found.</p>
-        <Link to="/">← Back to portfolio</Link>
+        <p>{UiStrings.projectNotFound}</p>
+        <Link to="/"><span className="flip-rtl">←</span> {UiStrings.backToPortfolio}</Link>
       </div>
     );
   }
@@ -137,7 +137,7 @@ export default function ProjectDetails() {
   return (
     <div className="pd-page">
       <header className="pd-appbar">
-        <Link to="/" className="pd-back">← Ahmed Ehab</Link>
+        <Link to="/" className="pd-back"><span className="flip-rtl">←</span> {UiStrings.brandName}</Link>
       </header>
 
       <div className={`pd-body ${isWide ? 'wide' : 'narrow'}`}>

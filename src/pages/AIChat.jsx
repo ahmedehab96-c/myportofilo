@@ -46,7 +46,7 @@ export default function AIChat() {
   return (
     <div className="ai-chat-page">
       <header className="ai-chat-appbar">
-        <Link to="/" className="ai-chat-back">←</Link>
+        <Link to="/" className="ai-chat-back"><span className="flip-rtl">←</span></Link>
         <FaIcon icon="robot" size={20} color="var(--violet)" />
         <span>{UiStrings.aiAssistant}</span>
       </header>

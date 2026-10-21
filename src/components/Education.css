@@ -3,13 +3,14 @@
   position: relative;
   list-style: none;
   margin: 0;
-  padding: 0 0 0 28px;
+  padding: 0;
+  padding-inline-start: 28px;
 }
 
 .education-list::before {
   content: '';
   position: absolute;
-  left: 5px;
+  inset-inline-start: 5px;
   top: 8px;
   bottom: 8px;
   width: 1px;
@@ -28,7 +29,7 @@
 .education-item::before {
   content: '';
   position: absolute;
-  left: -28px;
+  inset-inline-start: -28px;
   top: 7px;
   width: 11px;
   height: 11px;
@@ -137,7 +138,11 @@
 }
 
 .education-item:hover::before {
-  box-shadow: 0 0 0 5px var(--accent-soft);
+  box-shadow: 0 0 0 5px var(--accent-soft), 0 0 16px var(--accent);
+}
+
+[dir='rtl'] .education-item:hover {
+  translate: -4px 0;
 }
 
 @keyframes rail-draw {

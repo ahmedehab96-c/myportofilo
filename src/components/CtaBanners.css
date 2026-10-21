@@ -8,17 +8,19 @@
   padding: 40px 44px;
   border-radius: 24px;
   background:
-    radial-gradient(120% 140% at 100% 0%, rgba(139, 92, 246, 0.35), transparent 55%),
-    linear-gradient(135deg, #3f35c4, #5146d9 60%, #6a4fe0);
+    radial-gradient(90% 120% at 100% 0%, rgba(245, 185, 122, 0.28), transparent 55%),
+    radial-gradient(80% 120% at 0% 100%, rgba(139, 92, 246, 0.45), transparent 60%),
+    linear-gradient(135deg, #241c7a, #4a3bd0 55%, #5b4be0);
+  border: 1px solid rgba(176, 167, 255, 0.3);
   color: #fff;
-  box-shadow: 0 30px 60px -30px rgba(81, 70, 217, 0.55);
+  box-shadow: 0 40px 90px -40px rgba(110, 95, 255, 0.85);
 }
 
 .cta-row-text h2 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(24px, 3vw, 32px);
-  font-weight: 500;
+  font-size: clamp(26px, 3.2vw, 36px);
+  font-weight: 600;
   letter-spacing: -0.015em;
   line-height: 1.2;
 }

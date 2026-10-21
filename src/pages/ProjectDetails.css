@@ -78,7 +78,7 @@
   border: 1px solid var(--border-subtle);
   border-radius: 20px;
   overflow: hidden;
-  background: linear-gradient(160deg, #eceafc, #f4eff8 60%, #f8f1ea);
+  background: linear-gradient(160deg, #161936, #10122a 60%, #1a1530);
   box-shadow: var(--panel-shadow);
   cursor: zoom-in;
 }
@@ -145,7 +145,7 @@
 .pd-page-of {
   color: var(--text-muted);
   font-size: 12px;
-  margin-left: 8px;
+  margin-inline-start: 8px;
 }
 
 .pd-heading {
@@ -157,7 +157,7 @@
 
 .pd-features {
   margin: 12px 0 0;
-  padding-left: 20px;
+  padding-inline-start: 20px;
   max-width: 640px;
 }
 
@@ -236,7 +236,7 @@
 
 .pd-try-btn:first-child {
   border-color: var(--accent);
-  background: var(--accent);
+  background: var(--btn-gradient);
   color: var(--on-accent);
 }
 

@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import FaIcon from './icons/FaIcon';
 import { UiStrings } from '../data/uiStrings';
 import { useWindowWidth } from '../hooks/useWindowWidth';
+import { useLanguage } from '../i18n/language';
 import './NavBar.css';
 
 const MOBILE_BREAKPOINT = 768;
 
-const NAV_ITEMS = [
+// Read at render time so the labels follow the active language.
+const navItems = () => [
   UiStrings.navAbout,
   UiStrings.navEducation,
   UiStrings.navSkills,
@@ -15,13 +17,27 @@ const NAV_ITEMS = [
   UiStrings.navContact,
 ];
 
-export { NAV_ITEMS };
+function LanguageToggle() {
+  const { lang, toggleLanguage } = useLanguage();
+  return (
+    <button
+      type="button"
+      className="nav-lang"
+      onClick={toggleLanguage}
+      aria-label={UiStrings.switchLanguage}
+      lang={lang === 'ar' ? 'en' : 'ar'}
+    >
+      <FaIcon icon="globe" size={13} />
+      {UiStrings.languageToggle}
+    </button>
+  );
+}
 
 function Brand() {
   return (
     <button type="button" className="nav-brand" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
       <span className="nav-brand-mark" aria-hidden="true">A</span>
-      Ahmed Ehab
+      {UiStrings.brandName}
     </button>
   );
 }
@@ -35,11 +51,11 @@ function MobileDrawer({ open, onClose, activeIndex, onSelect, onOpenAi }) {
         aria-hidden={!open}
       />
       <div className={`nav-drawer ${open ? 'open' : ''}`} role="dialog" aria-modal="true">
-        <button type="button" className="nav-drawer-close" onClick={onClose} aria-label="Close menu">
+        <button type="button" className="nav-drawer-close" onClick={onClose} aria-label={UiStrings.closeMenu}>
           <FaIcon icon="xmark" size={18} />
         </button>
         <div className="nav-drawer-items">
-          {NAV_ITEMS.map((label, i) => (
+          {navItems().map((label, i) => (
             <button
               key={label}
               type="button"
@@ -83,15 +99,18 @@ export default function NavBar({ activeIndex, onSelect, onOpenAi }) {
     return (
       <nav className="nav-bar">
         <Brand />
-        <button
+        <div className="nav-mobile-actions">
+          <LanguageToggle />
+          <button
           type="button"
           className="nav-hamburger"
           onClick={() => setDrawerOpen(true)}
-          aria-label="Open menu"
+          aria-label={UiStrings.openMenu}
           aria-expanded={drawerOpen}
         >
           <FaIcon icon="bars" size={18} />
-        </button>
+          </button>
+        </div>
         <MobileDrawer
           open={drawerOpen}
           onClose={() => setDrawerOpen(false)}
@@ -107,7 +126,7 @@ export default function NavBar({ activeIndex, onSelect, onOpenAi }) {
     <nav className="nav-bar">
       <Brand />
       <div className="nav-links">
-        {NAV_ITEMS.map((label, i) => (
+        {navItems().map((label, i) => (
           <button
             key={label}
             type="button"
@@ -120,6 +139,7 @@ export default function NavBar({ activeIndex, onSelect, onOpenAi }) {
         <button type="button" className="nav-link nav-link-ai" onClick={onOpenAi}>
           {UiStrings.navAI}
         </button>
+        <LanguageToggle />
       </div>
     </nav>
   );

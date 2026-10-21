@@ -99,7 +99,7 @@
 }
 
 .ai-bubble.user {
-  background: var(--accent);
+  background: var(--btn-gradient);
   border-bottom-right-radius: 4px;
 }
 
@@ -177,7 +177,7 @@
   height: 46px;
   border-radius: 8px;
   border: none;
-  background: var(--accent);
+  background: var(--btn-gradient);
   color: var(--on-accent);
   font-size: 18px;
   flex-shrink: 0;

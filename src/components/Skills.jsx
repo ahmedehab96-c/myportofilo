@@ -13,7 +13,7 @@ export default function Skills({ sectionRef }) {
       <SectionHeader title={UiStrings.skillsTitle} subtitle={UiStrings.skillsSubtitle} />
       <div className="skills-grid stagger">
         {skillCategories.map((category) => (
-          <div className="skill-group tilt-3d" key={category.category} {...tilt}>
+          <div className="skill-group tilt-3d glow-card" key={category.category} {...tilt}>
             <h3 className="skill-group-title">{category.category}</h3>
             <ul className="skill-group-list">
               {category.skills.map((skill) => (

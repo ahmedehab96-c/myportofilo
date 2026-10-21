@@ -9,13 +9,13 @@
   padding: 24px 22px;
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.72);
+  background: var(--glass);
   transition: border-color 250ms ease, box-shadow 250ms var(--ease-out), translate 250ms var(--ease-out), transform 400ms var(--ease-out);
 }
 
 .skill-group:hover {
   border-color: var(--border-accent);
-  box-shadow: var(--panel-shadow);
+  box-shadow: 0 30px 60px -30px rgba(110, 95, 255, 0.45);
   translate: 0 -3px;
 }
 
@@ -34,7 +34,7 @@
 
 .skill-group-list li {
   position: relative;
-  padding-left: 16px;
+  padding-inline-start: 16px;
   margin-bottom: 8px;
   font-size: 14px;
   line-height: 1.55;
@@ -52,13 +52,14 @@
 .skill-group-list li::before {
   content: '';
   position: absolute;
-  left: 0;
+  inset-inline-start: 0;
   top: 0.62em;
   width: 5px;
   height: 5px;
   border-radius: 50%;
   background: var(--accent);
-  opacity: 0.55;
+  box-shadow: 0 0 8px var(--accent);
+  opacity: 0.8;
 }
 
 @media (max-width: 1023px) {
@@ -76,4 +77,8 @@
   .skill-group {
     padding: 20px;
   }
+}
+
+[dir='rtl'] .skill-group:hover .skill-group-list li {
+  translate: -3px 0;
 }

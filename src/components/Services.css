@@ -3,20 +3,20 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   border: 1px solid var(--border-subtle);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.72);
+  background: var(--glass);
   overflow: hidden;
 }
 
 .service-item {
   perspective: 600px;
   padding: 32px 28px;
-  border-right: 1px solid var(--border-subtle);
+  border-inline-end: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
   transition: background 250ms ease;
 }
 
 .service-item:nth-child(3n) {
-  border-right: none;
+  border-inline-end: none;
 }
 
 .service-item:nth-last-child(-n + 3) {
@@ -24,12 +24,12 @@
 }
 
 .service-item:hover {
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .service-item:hover .icon-badge {
   transform: translateZ(24px) rotateY(-14deg) rotate(-6deg);
-  box-shadow: 0 10px 20px -10px rgba(81, 70, 217, 0.45);
+  box-shadow: 0 0 28px -4px rgba(146, 133, 255, 0.75);
 }
 
 .service-item .icon-badge {
@@ -75,12 +75,12 @@
   }
 
   .service-item:nth-child(n) {
-    border-right: 1px solid var(--border-subtle);
+    border-inline-end: 1px solid var(--border-subtle);
     border-bottom: 1px solid var(--border-subtle);
   }
 
   .service-item:nth-child(2n) {
-    border-right: none;
+    border-inline-end: none;
   }
 
   .service-item:nth-last-child(-n + 2) {
@@ -94,7 +94,7 @@
   }
 
   .service-item:nth-child(n) {
-    border-right: none;
+    border-inline-end: none;
     border-bottom: 1px solid var(--border-subtle);
     padding: 24px 20px;
   }

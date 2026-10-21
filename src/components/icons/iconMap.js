@@ -4,6 +4,7 @@ export const iconMap = {
   envelope: 'fa-solid fa-envelope',
   robot: 'fa-solid fa-robot',
   bars: 'fa-solid fa-bars',
+  globe: 'fa-solid fa-globe',
   xmark: 'fa-solid fa-xmark',
   briefcase: 'fa-solid fa-briefcase',
   folderOpen: 'fa-solid fa-folder-open',

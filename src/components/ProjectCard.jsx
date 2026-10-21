@@ -14,7 +14,7 @@ export default function ProjectCard({ project, featured, index = 0, onOpenGithub
   const tech = project.tech.slice(0, MAX_TECH);
 
   return (
-    <article ref={ref} className={`project-card tilt-3d ${featured ? 'featured' : ''} ${revealClass}`} {...tilt}>
+    <article ref={ref} className={`project-card tilt-3d glow-card ${featured ? 'featured' : ''} ${revealClass}`} {...tilt}>
       <Link to={`/project/${project.id}`} className="project-card-preview" tabIndex={-1} aria-hidden="true">
         <img src={project.cardImage} alt="" loading="lazy" />
       </Link>
@@ -38,7 +38,7 @@ export default function ProjectCard({ project, featured, index = 0, onOpenGithub
 
         <div className="project-card-footer">
           <Link to={`/project/${project.id}`} className="project-card-view">
-            {UiStrings.viewProject} <span aria-hidden="true">→</span>
+            {UiStrings.viewProject} <span className="flip-rtl" aria-hidden="true">→</span>
           </Link>
           {project.githubUrl && (
             <button

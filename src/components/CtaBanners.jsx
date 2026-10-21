@@ -25,7 +25,7 @@ export function ResumeButton({ onLaunch }) {
 function AIChatLink() {
   return (
     <Link to="/ai" className="ai-chat-link">
-      {UiStrings.chatWithAI} <span aria-hidden="true">→</span>
+      {UiStrings.chatWithAI} <span className="flip-rtl" aria-hidden="true">→</span>
     </Link>
   );
 }

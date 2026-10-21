@@ -1,6 +1,7 @@
 .home-page {
   position: relative;
   min-height: 100vh;
+  overflow-x: clip;
 }
 
 .home-nav-sticky {
@@ -8,7 +9,7 @@
   top: 0;
   z-index: 20;
   padding-top: env(safe-area-inset-top);
-  border-bottom: 1px solid rgba(233, 228, 220, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 /* Blur lives on a pseudo-element: backdrop-filter on the header itself would
@@ -18,7 +19,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgba(250, 248, 245, 0.78);
+  background: rgba(7, 8, 15, 0.72);
   -webkit-backdrop-filter: saturate(160%) blur(14px);
   backdrop-filter: saturate(160%) blur(14px);
 }

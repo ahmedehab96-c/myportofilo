@@ -6,8 +6,8 @@
   min-width: 0;
   border: 1px solid var(--border-subtle);
   border-radius: 20px;
-  background: var(--surface);
-  box-shadow: 0 1px 2px var(--card-shadow);
+  background: var(--glass);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
   overflow: hidden;
   transition: translate 350ms var(--ease-out), transform 450ms var(--ease-out), box-shadow 350ms var(--ease-out), border-color 250ms ease;
 }
@@ -15,7 +15,7 @@
 .project-card:hover {
   translate: 0 -4px;
   border-color: var(--border-accent);
-  box-shadow: 0 24px 48px -24px rgba(40, 32, 20, 0.28);
+  box-shadow: 0 40px 80px -40px rgba(110, 95, 255, 0.55);
 }
 
 .project-card-preview {
@@ -24,7 +24,7 @@
   margin: 10px 10px 0;
   border-radius: 12px;
   overflow: hidden;
-  background: linear-gradient(160deg, #eceafc, #f4eff8 60%, #f8f1ea);
+  background: linear-gradient(160deg, #161936, #10122a 60%, #1a1530);
 }
 
 .project-card-preview img {
@@ -36,26 +36,6 @@
 
 .project-card:hover .project-card-preview img {
   transform: scale(1.05) translate(calc(var(--px, 0) * -10px), calc(var(--py, 0) * -10px));
-}
-
-/* Soft glare that follows the pointer. */
-.project-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: radial-gradient(
-    circle at calc((var(--px, 0) + 0.5) * 100%) calc((var(--py, 0) + 0.5) * 100%),
-    rgba(255, 255, 255, 0.28),
-    rgba(255, 255, 255, 0) 55%
-  );
-  opacity: 0;
-  transition: opacity 350ms ease;
-}
-
-.project-card:hover::after {
-  opacity: 1;
 }
 
 .project-card-body {
@@ -109,8 +89,9 @@
 
 .project-card-tech li {
   padding: 3px 10px;
+  border: 1px solid var(--border-subtle);
   border-radius: 999px;
-  background: var(--bg-mid);
+  background: rgba(255, 255, 255, 0.03);
   color: var(--text-secondary);
   font-size: 12px;
   font-weight: 500;
@@ -172,7 +153,8 @@
   }
 
   .project-card.featured .project-card-preview {
-    margin: 12px 0 12px 12px;
+    margin: 12px 0;
+    margin-inline-start: 12px;
     aspect-ratio: auto;
     min-height: 340px;
   }
@@ -184,8 +166,9 @@
 
   .project-card.featured .project-card-title {
     font-family: var(--font-display);
-    font-size: 30px;
-    font-weight: 500;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
   }
 
   .project-card.featured .project-card-footer {

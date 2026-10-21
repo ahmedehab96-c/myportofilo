@@ -2,7 +2,6 @@ import FaIcon from './icons/FaIcon';
 import HeroStatsStrip from './HeroStatsStrip';
 import { UiStrings } from '../data/uiStrings';
 import { PortfolioKnowledge } from '../data/portfolioKnowledge';
-import { role } from '../data/portfolioProfileContent';
 import { useTypewriter } from '../hooks/useTypewriter';
 import { useTilt } from '../hooks/useTilt';
 import './Hero.css';
@@ -32,7 +31,7 @@ export default function Hero({ onScrollToSection, onLaunch }) {
       <div className="hero-text-col">
         <p className="hero-role">
           <span className="hero-role-dot" aria-hidden="true" />
-          {role}
+          {PortfolioKnowledge.role}
         </p>
 
         <TypedName name={PortfolioKnowledge.fullName} />
@@ -48,7 +47,7 @@ export default function Hero({ onScrollToSection, onLaunch }) {
         <div className="hero-actions">
           <button type="button" className="hero-btn primary" onClick={() => onScrollToSection(4)}>
             {UiStrings.viewProjects}
-            <span className="hero-btn-arrow" aria-hidden="true">→</span>
+            <span className="hero-btn-arrow flip-rtl" aria-hidden="true">→</span>
           </button>
           <button
             type="button"
@@ -68,9 +67,9 @@ export default function Hero({ onScrollToSection, onLaunch }) {
 
         <HeroStatsStrip
           items={[
-            { value: PortfolioKnowledge.yearsOfExperience, label: 'years building software' },
-            { value: '20+', label: 'projects shipped' },
-            { value: '6+', label: 'core technologies' },
+            { value: PortfolioKnowledge.yearsOfExperience, label: UiStrings.statYears },
+            { value: '20+', label: UiStrings.statShipped },
+            { value: '6+', label: UiStrings.statCore },
           ]}
         />
       </div>

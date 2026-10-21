@@ -9,9 +9,10 @@
 
 .hero-stat dt {
   font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: 500;
+  font-size: 34px;
+  font-weight: 600;
   color: var(--text-primary);
+  text-shadow: 0 0 24px rgba(146, 133, 255, 0.45);
   line-height: 1.1;
 }
 

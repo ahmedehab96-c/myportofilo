@@ -5,9 +5,9 @@
 .section-header-title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(30px, 4vw, 42px);
-  font-weight: 500;
-  letter-spacing: -0.02em;
+  font-size: clamp(32px, 4.4vw, 48px);
+  font-weight: 600;
+  letter-spacing: -0.035em;
   line-height: 1.12;
   color: var(--text-primary);
 }
@@ -31,6 +31,32 @@
 /* Title and subtitle enter in sequence once the section reveals. */
 .section-header-title {
   transform-origin: 50% 100%;
+}
+
+/* Short glowing rule under each heading; it draws in after the title lands. */
+.section-header-title::after {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 3px;
+  margin-top: 18px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--warm));
+  box-shadow: 0 0 14px rgba(146, 133, 255, 0.7);
+  transform-origin: left;
+}
+
+[dir='rtl'] .section-header-title::after {
+  background: linear-gradient(270deg, var(--accent), var(--warm));
+  transform-origin: right;
+}
+
+.reveal.in-view .section-header-title::after {
+  animation: rule-draw 900ms var(--ease-out) 650ms backwards;
+}
+
+@keyframes rule-draw {
+  from { transform: scaleX(0); }
 }
 
 .reveal.in-view .section-header-title {

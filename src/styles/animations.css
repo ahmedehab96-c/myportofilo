@@ -59,6 +59,56 @@
 .reveal.in-view .stagger > *:nth-child(5) { animation-delay: 280ms; }
 .reveal.in-view .stagger > *:nth-child(n + 6) { animation-delay: 340ms; }
 
+/* Pointer-following light for dark cards; reads useTilt's --px / --py.
+   ::before is a soft inner light, ::after lights up the border near the pointer. */
+.glow-card {
+  position: relative;
+  isolation: isolate;
+}
+
+.glow-card::before,
+.glow-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.glow-card::before {
+  z-index: -1;
+  background: radial-gradient(
+    360px circle at calc((var(--px, 0) + 0.5) * 100%) calc((var(--py, 0) + 0.5) * 100%),
+    rgba(146, 133, 255, 0.13),
+    transparent 65%
+  );
+}
+
+.glow-card::after {
+  padding: 1px;
+  background: radial-gradient(
+    260px circle at calc((var(--px, 0) + 0.5) * 100%) calc((var(--py, 0) + 0.5) * 100%),
+    rgba(176, 167, 255, 0.85),
+    rgba(245, 185, 122, 0.25) 45%,
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.glow-card:hover::before,
+.glow-card:hover::after {
+  opacity: 1;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.55; scale: 1; }
+  50% { opacity: 1; scale: 1.06; }
+}
+
 /* Shared pointer tilt (see useTilt); each component sets its own --tilt. */
 .tilt-3d {
   transform: perspective(1000px)

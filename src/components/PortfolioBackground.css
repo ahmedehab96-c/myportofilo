@@ -25,7 +25,7 @@
   left: -12vmax;
   width: 62vmax;
   height: 62vmax;
-  background: radial-gradient(circle, rgba(124, 116, 240, 0.16), rgba(124, 116, 240, 0) 65%);
+  background: radial-gradient(circle, rgba(110, 95, 255, 0.22), rgba(110, 95, 255, 0) 65%);
   animation: pb-drift-a 38s ease-in-out infinite alternate;
 }
 
@@ -34,7 +34,7 @@
   right: -24vmax;
   width: 58vmax;
   height: 58vmax;
-  background: radial-gradient(circle, rgba(167, 139, 250, 0.1), rgba(167, 139, 250, 0) 65%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.14), rgba(139, 92, 246, 0) 65%);
   animation: pb-drift-b 46s ease-in-out infinite alternate;
 }
 
@@ -43,17 +43,45 @@
   left: 20vw;
   width: 60vmax;
   height: 60vmax;
-  background: radial-gradient(circle, rgba(244, 196, 160, 0.18), rgba(244, 196, 160, 0) 65%);
+  background: radial-gradient(circle, rgba(245, 185, 122, 0.09), rgba(245, 185, 122, 0) 65%);
   animation: pb-drift-c 52s ease-in-out infinite alternate;
 }
 
 .pb-dots {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(27, 26, 36, 0.07) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
   -webkit-mask-image: linear-gradient(to bottom, #000, transparent 70%);
   mask-image: linear-gradient(to bottom, #000, transparent 70%);
+}
+
+/* Light beam falling behind the hero. */
+.pb-beam {
+  position: absolute;
+  top: -20vh;
+  left: 50%;
+  width: 120vw;
+  height: 90vh;
+  translate: -50% calc(var(--scroll, 0) * -0.2px);
+  background: radial-gradient(50% 60% at 50% 0%, rgba(146, 133, 255, 0.18), transparent 70%);
+}
+
+/* Soft light that trails the pointer across the page. */
+.pb-spot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 640px;
+  height: 640px;
+  margin: -320px 0 0 -320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(146, 133, 255, 0.09), transparent 60%);
+  transform: translate3d(var(--mx, -999px), var(--my, -999px), 0);
+  transition: transform 600ms var(--ease-out), opacity 400ms ease;
+  will-change: transform;
 }
 
 @keyframes pb-drift-a {

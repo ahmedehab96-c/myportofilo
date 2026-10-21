@@ -1,5 +1,16 @@
 // English UI copy for the portfolio.
 export const UiStrings = {
+  pageTitle: 'Ahmed Ehab — Full-Stack Web & Mobile Developer',
+  brandName: 'Ahmed Ehab',
+  switchLanguage: 'التبديل إلى العربية',
+  languageToggle: 'عربي',
+  openMenu: 'Open menu',
+  closeMenu: 'Close menu',
+  statYears: 'years building software',
+  statShipped: 'projects shipped',
+  statCore: 'core technologies',
+  projectNotFound: 'Project not found.',
+  backToPortfolio: 'Back to portfolio',
   appTitle: "Ahmed's Portfolio",
   navNavigation: 'Navigation',
   navAbout: 'About',
