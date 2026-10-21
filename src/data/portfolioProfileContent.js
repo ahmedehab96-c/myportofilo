@@ -137,6 +137,16 @@ export const skillCategories = [
     ],
   },
   {
+    category: 'AI Tools',
+    icon: 'robot',
+    color: '#00A3FF',
+    skills: [
+      'ChatGPT, Claude & Cursor for AI-assisted coding',
+      'Debugging, refactoring & code review with AI',
+      'Task planning, organization & documentation with AI',
+    ],
+  },
+  {
     category: 'Soft Skills',
     icon: 'lightbulb',
     color: '#0288D1',
