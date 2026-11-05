@@ -1,7 +1,5 @@
 import Section from './Section';
 import SectionHeader from './SectionHeader';
-import FaIcon from './icons/FaIcon';
-import { useTilt } from '../hooks/useTilt';
 import { UiStrings } from '../data/uiStrings';
 import './Contact.css';
 
@@ -13,20 +11,14 @@ const contacts = () => [
 ];
 
 function ContactRow({ contact }) {
-  const tilt = useTilt();
-
   return (
     <li>
       <a
         href={contact.url}
         target={contact.url.startsWith('http') ? '_blank' : undefined}
         rel="noreferrer"
-        className="contact-row tilt-3d glow-card"
-        {...tilt}
+        className="contact-row"
       >
-        <span className="contact-icon">
-          <FaIcon icon={contact.icon} size={16} />
-        </span>
         <span className="contact-text">
           <span className="contact-label">{contact.label}</span>
           <span className="contact-value">{contact.value}</span>
@@ -39,9 +31,9 @@ function ContactRow({ contact }) {
 
 export default function Contact({ sectionRef }) {
   return (
-    <Section id="contact" sectionRef={sectionRef} className="split">
+    <Section id="contact" sectionRef={sectionRef} className="split tinted">
       <SectionHeader title={UiStrings.getInTouch} subtitle={UiStrings.getInTouchSubtitle} />
-      <ul className="contact-list stagger">
+      <ul className="contact-list">
         {contacts().map((contact) => (
           <ContactRow key={contact.label} contact={contact} />
         ))}

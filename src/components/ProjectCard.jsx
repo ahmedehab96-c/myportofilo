@@ -1,20 +1,18 @@
 import { Link } from 'react-router-dom';
 import FaIcon from './icons/FaIcon';
 import { useReveal } from '../hooks/useReveal';
-import { useTilt } from '../hooks/useTilt';
 import { UiStrings } from '../data/uiStrings';
 import { showToast } from '../utils/toast';
 import './ProjectCard.css';
 
 const MAX_TECH = 5;
 
-export default function ProjectCard({ project, featured, index = 0, onOpenGithub }) {
-  const { ref, className: revealClass } = useReveal(featured ? 0 : (index % 2) * 120);
-  const tilt = useTilt();
+export default function ProjectCard({ project, featured, onOpenGithub }) {
+  const { ref, className: revealClass } = useReveal(0);
   const tech = project.tech.slice(0, MAX_TECH);
 
   return (
-    <article ref={ref} className={`project-card tilt-3d glow-card ${featured ? 'featured' : ''} ${revealClass}`} {...tilt}>
+    <article ref={ref} className={`project-card ${featured ? 'featured' : ''} ${revealClass}`}>
       <Link to={`/project/${project.id}`} className="project-card-preview" tabIndex={-1} aria-hidden="true">
         <img src={project.cardImage} alt="" loading="lazy" />
       </Link>

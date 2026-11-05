@@ -1,45 +1,45 @@
 :root {
-  --bg-deep: #07080f;
-  --bg-mid: #0d0f1a;
-  --bg-elevated: #141727;
-  --surface: #10121e;
-  --surface-raised: #171a2b;
-  --card-surface: #0f111c;
-  --image-placeholder: #151832;
-  --glass: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
-  --text-primary: #eef0fb;
-  --text-secondary: #a6aac4;
-  --text-muted: #6f7493;
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-accent: rgba(255, 255, 255, 0.14);
-  --border-hover: rgba(169, 159, 255, 0.45);
-  --panel-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 24px 48px -24px rgba(0, 0, 0, 0.7);
-  --card-shadow: rgba(0, 0, 0, 0.4);
-  --card-shadow-hover: rgba(110, 95, 255, 0.35);
-  --glow: 0 0 0 1px rgba(143, 130, 255, 0.35), 0 24px 60px -24px rgba(110, 95, 255, 0.55);
+  --bg-deep: #11100e;
+  --bg-mid: #161512;
+  --bg-elevated: #1f1d19;
+  --surface: #1c1a16;
+  --surface-raised: #1f1d19;
+  --card-surface: #181613;
+  --image-placeholder: #1f1d19;
+  --glass: var(--surface);
+  --text-primary: #f1ece2;
+  --text-secondary: #b4ad9f;
+  --text-muted: #8a8375;
+  --border-subtle: rgba(241, 236, 226, 0.12);
+  --border-accent: rgba(241, 236, 226, 0.22);
+  --border-hover: rgba(241, 236, 226, 0.45);
+  --panel-shadow: none;
+  --card-shadow: transparent;
+  --card-shadow-hover: transparent;
+  --glow: none;
 
-  --accent: #9285ff;
-  --accent-bright: #b0a7ff;
-  --accent-deep: #5b4be0;
-  --accent-soft: rgba(146, 133, 255, 0.14);
-  --warm: #f5b97a;
-  --violet: #8b5cf6;
-  --violet-deep: #6d42d9;
+  --accent: #e8663c;
+  --accent-bright: #f08059;
+  --accent-deep: #c44f29;
+  --accent-soft: rgba(232, 102, 60, 0.14);
+  --warm: var(--accent);
+  --violet: var(--accent);
+  --violet-deep: var(--accent-deep);
   --sky: var(--accent);
   --teal: var(--accent);
   --gold: var(--accent);
-  --on-accent: #ffffff;
+  --on-accent: #14100c;
 
   --bg-gradient: var(--bg-deep);
-  --accent-gradient: linear-gradient(120deg, var(--accent), var(--violet));
-  --btn-gradient: linear-gradient(135deg, #7d6dff, #5b4be0 55%, #4a3bd0);
+  --accent-gradient: var(--accent);
+  --btn-gradient: var(--accent);
   --cta-gradient: var(--accent);
   --ai-gradient: var(--accent-soft);
 
-  --font-sans: 'Manrope', 'IBM Plex Sans Arabic', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Bricolage Grotesque', 'Readex Pro', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --content-width: 1120px;
+  --font-sans: 'Hanken Grotesk', 'IBM Plex Sans Arabic', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Newsreader', 'Noto Naskh Arabic', Georgia, serif;
+  --font-mono: var(--font-sans);
+  --content-width: 1160px;
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
 
   color-scheme: dark;
@@ -47,8 +47,8 @@
 
 /* Arabic gets its own faces; negative tracking would break letter joins. */
 :root[lang='ar'] {
-  --font-sans: 'IBM Plex Sans Arabic', 'Manrope', system-ui, sans-serif;
-  --font-display: 'Readex Pro', 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-sans: 'IBM Plex Sans Arabic', 'Hanken Grotesk', system-ui, sans-serif;
+  --font-display: 'Noto Naskh Arabic', 'Newsreader', Georgia, serif;
 }
 
 :root[lang='ar'] body * {
@@ -103,8 +103,8 @@ img {
 }
 
 ::selection {
-  background: rgba(146, 133, 255, 0.35);
-  color: #fff;
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 ::-webkit-scrollbar {
@@ -116,8 +116,7 @@ img {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2a2e47;
-  border-radius: 6px;
+  background: #38342d;
 }
 
 :focus-visible {

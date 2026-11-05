@@ -78,7 +78,7 @@
   border: 1px solid var(--border-subtle);
   border-radius: 20px;
   overflow: hidden;
-  background: linear-gradient(160deg, #161936, #10122a 60%, #1a1530);
+  background: var(--surface-raised);
   box-shadow: var(--panel-shadow);
   cursor: zoom-in;
 }

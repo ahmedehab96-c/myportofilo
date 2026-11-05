@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-/// Scroll-triggered entrance (fade + 3D tilt + slide), mirrors PremiumEntrance.
+/// Scroll-triggered entrance (fade + short rise).
 export function useReveal(delayMs = 0) {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);

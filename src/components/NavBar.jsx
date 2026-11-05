@@ -36,7 +36,6 @@ function LanguageToggle() {
 function Brand() {
   return (
     <button type="button" className="nav-brand" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-      <span className="nav-brand-mark" aria-hidden="true">A</span>
       {UiStrings.brandName}
     </button>
   );

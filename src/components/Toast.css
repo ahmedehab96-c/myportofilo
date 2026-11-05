@@ -11,7 +11,7 @@
   border: 1px solid var(--border-accent);
   color: var(--text-primary);
   font-size: 14px;
-  box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.8), 0 0 30px -12px rgba(110, 95, 255, 0.6);
+  box-shadow: none;
   animation: toast-in 200ms ease-out;
 }
 

@@ -1,133 +1,25 @@
+/* One quiet entrance for sections; everything else stays still. */
 @keyframes reveal-in {
   from {
     opacity: 0;
-    transform: perspective(1200px) translate3d(0, 28px, -30px) rotateX(7deg);
-  }
-  to {
-    opacity: 1;
-    transform: none;
+    transform: translateY(12px);
   }
 }
 
-/* Swings in from the side, used for timelines and panels. */
-@keyframes reveal-side {
-  from {
-    opacity: 0;
-    transform: perspective(1200px) translate3d(-24px, 0, -30px) rotateY(10deg);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* Headings stand up from their baseline. */
-@keyframes heading-in {
-  from {
-    opacity: 0;
-    transform: perspective(700px) translateY(14px) rotateX(32deg);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes float-y {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -8px; }
-}
-
-/* `backwards` (not `both`) so hover/tilt transforms take over once revealed. */
 .reveal {
   opacity: 0;
 }
 
 .reveal.in-view {
   opacity: 1;
-  animation: reveal-in 800ms var(--ease-out) backwards;
-}
-
-/* Children of a revealed section follow in a short cascade. */
-.reveal.in-view .stagger > * {
-  animation: reveal-in 700ms var(--ease-out) backwards;
-}
-
-.reveal.in-view .stagger > *:nth-child(2) { animation-delay: 70ms; }
-.reveal.in-view .stagger > *:nth-child(3) { animation-delay: 140ms; }
-.reveal.in-view .stagger > *:nth-child(4) { animation-delay: 210ms; }
-.reveal.in-view .stagger > *:nth-child(5) { animation-delay: 280ms; }
-.reveal.in-view .stagger > *:nth-child(n + 6) { animation-delay: 340ms; }
-
-/* Pointer-following light for dark cards; reads useTilt's --px / --py.
-   ::before is a soft inner light, ::after lights up the border near the pointer. */
-.glow-card {
-  position: relative;
-  isolation: isolate;
-}
-
-.glow-card::before,
-.glow-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 400ms ease;
-}
-
-.glow-card::before {
-  z-index: -1;
-  background: radial-gradient(
-    360px circle at calc((var(--px, 0) + 0.5) * 100%) calc((var(--py, 0) + 0.5) * 100%),
-    rgba(146, 133, 255, 0.13),
-    transparent 65%
-  );
-}
-
-.glow-card::after {
-  padding: 1px;
-  background: radial-gradient(
-    260px circle at calc((var(--px, 0) + 0.5) * 100%) calc((var(--py, 0) + 0.5) * 100%),
-    rgba(176, 167, 255, 0.85),
-    rgba(245, 185, 122, 0.25) 45%,
-    transparent 70%
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-}
-
-.glow-card:hover::before,
-.glow-card:hover::after {
-  opacity: 1;
-}
-
-@keyframes glow-pulse {
-  0%, 100% { opacity: 0.55; scale: 1; }
-  50% { opacity: 1; scale: 1.06; }
-}
-
-/* Shared pointer tilt (see useTilt); each component sets its own --tilt. */
-.tilt-3d {
-  transform: perspective(1000px)
-    rotateX(calc(var(--py, 0) * var(--tilt, 6deg) * -1))
-    rotateY(calc(var(--px, 0) * var(--tilt, 6deg)));
+  animation: reveal-in 520ms var(--ease-out) backwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal,
-  .reveal.in-view,
-  .reveal.in-view .stagger > *,
-  .reveal.in-view .section-header-title,
-  .reveal.in-view .section-header-subtitle {
+  .reveal.in-view {
     opacity: 1;
     animation: none !important;
-  }
-
-  .tilt-3d {
-    transform: none !important;
   }
 
   *,

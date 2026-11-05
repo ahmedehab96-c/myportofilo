@@ -1,63 +1,25 @@
+.about-body {
+  max-width: 720px;
+}
+
 .about-paragraph {
-  margin: 0 0 18px;
-  font-size: 17px;
-  line-height: 1.8;
+  margin: 0 0 20px;
   color: var(--text-secondary);
+  font-size: 17px;
+  line-height: 1.75;
 }
 
 .about-paragraph.lead {
-  font-size: 21px;
-  line-height: 1.6;
   color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 27px);
+  line-height: 1.45;
 }
 
 .about-highlights {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 28px;
-}
-
-.about-chip {
-  padding: 6px 14px;
-  border-radius: 999px;
-  border: 1px solid var(--border-subtle);
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 500;
-  transition: border-color 200ms ease, color 200ms ease, background 200ms ease;
-}
-
-.about-chip:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
-@media (max-width: 599px) {
-  .about-paragraph {
-    font-size: 16px;
-  }
-  .about-paragraph.lead {
-    font-size: 18px;
-  }
-}
-
-.reveal.in-view .glass-panel {
-  animation: reveal-side 900ms var(--ease-out) 120ms backwards;
-}
-
-.about-chip {
-  transition: border-color 200ms ease, color 200ms ease, background 200ms ease, translate 250ms var(--ease-out);
-}
-
-.about-chip:hover {
-  translate: 0 -2px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal.in-view .glass-panel {
-    animation: none;
-  }
+  margin: 28px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 14px;
 }

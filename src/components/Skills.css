@@ -1,84 +1,34 @@
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-}
-
 .skill-group {
-  --tilt: 7deg;
-  padding: 24px 22px;
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px;
-  background: var(--glass);
-  transition: border-color 250ms ease, box-shadow 250ms var(--ease-out), translate 250ms var(--ease-out), transform 400ms var(--ease-out);
-}
-
-.skill-group:hover {
-  border-color: var(--border-accent);
-  box-shadow: 0 30px 60px -30px rgba(110, 95, 255, 0.45);
-  translate: 0 -3px;
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 12px 40px;
+  padding: 22px 0;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .skill-group-title {
-  margin: 0 0 14px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-primary);
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.35;
 }
 
 .skill-group-list {
-  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 32px;
   margin: 0;
   padding: 0;
-}
-
-.skill-group-list li {
-  position: relative;
-  padding-inline-start: 16px;
-  margin-bottom: 8px;
-  font-size: 14px;
-  line-height: 1.55;
+  list-style: none;
   color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.55;
 }
 
-.skill-group-list li {
-  transition: translate 250ms var(--ease-out), color 200ms ease;
-}
-
-.skill-group:hover .skill-group-list li {
-  translate: 3px 0;
-}
-
-.skill-group-list li::before {
-  content: '';
-  position: absolute;
-  inset-inline-start: 0;
-  top: 0.62em;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 8px var(--accent);
-  opacity: 0.8;
-}
-
-@media (max-width: 1023px) {
-  .skills-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (max-width: 767px) {
+  .skill-group,
+  .skill-group-list {
+    grid-template-columns: minmax(0, 1fr);
   }
-}
-
-@media (max-width: 599px) {
-  .skills-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .skill-group {
-    padding: 20px;
-  }
-}
-
-[dir='rtl'] .skill-group:hover .skill-group-list li {
-  translate: -3px 0;
 }

@@ -34,7 +34,7 @@ export const UiStrings = {
   aboutMe: 'About Me',
   educationTitle: 'Education & Certifications',
   skillsTitle: 'Skills & Expertise',
-  skillsSubtitle: 'Technologies and tools I specialize in:',
+  skillsSubtitle: 'Technologies and tools I specialize in.',
   servicesTitle: 'Services',
   servicesSubtitle: 'What I can build for you, end to end.',
   featuredProjects: 'Projects',

@@ -1,68 +1,19 @@
 .section-header {
-  margin-bottom: 44px;
+  margin-bottom: 48px;
+  max-width: 640px;
 }
 
 .section-header-title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(32px, 4.4vw, 48px);
-  font-weight: 600;
-  letter-spacing: -0.035em;
+  font-size: clamp(30px, 3.6vw, 44px);
+  font-weight: 500;
   line-height: 1.12;
-  color: var(--text-primary);
+  letter-spacing: -0.015em;
 }
 
 .section-header-subtitle {
   margin: 12px 0 0;
-  max-width: 600px;
-  font-size: 17px;
   color: var(--text-secondary);
-}
-
-@media (max-width: 599px) {
-  .section-header {
-    margin-bottom: 32px;
-  }
-  .section-header-subtitle {
-    font-size: 16px;
-  }
-}
-
-/* Title and subtitle enter in sequence once the section reveals. */
-.section-header-title {
-  transform-origin: 50% 100%;
-}
-
-/* Short glowing rule under each heading; it draws in after the title lands. */
-.section-header-title::after {
-  content: '';
-  display: block;
-  width: 44px;
-  height: 3px;
-  margin-top: 18px;
-  border-radius: 3px;
-  background: linear-gradient(90deg, var(--accent), var(--warm));
-  box-shadow: 0 0 14px rgba(146, 133, 255, 0.7);
-  transform-origin: left;
-}
-
-[dir='rtl'] .section-header-title::after {
-  background: linear-gradient(270deg, var(--accent), var(--warm));
-  transform-origin: right;
-}
-
-.reveal.in-view .section-header-title::after {
-  animation: rule-draw 900ms var(--ease-out) 650ms backwards;
-}
-
-@keyframes rule-draw {
-  from { transform: scaleX(0); }
-}
-
-.reveal.in-view .section-header-title {
-  animation: heading-in 900ms var(--ease-out) 120ms backwards;
-}
-
-.reveal.in-view .section-header-subtitle {
-  animation: reveal-in 800ms var(--ease-out) 260ms backwards;
+  font-size: 16px;
 }

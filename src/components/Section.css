@@ -1,37 +1,40 @@
 .section-block {
-  padding: 88px 24px;
+  position: relative;
+  padding: 96px 32px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* Full-bleed band behind a section, past the content column. */
+.section-block.tinted {
+  border-top-color: transparent;
+}
+
+.section-block.tinted::before {
+  content: '';
+  position: absolute;
+  inset: 0 calc(50% - 50vw);
+  z-index: -1;
+  background: var(--surface);
 }
 
 @media (max-width: 599px) {
   .section-block {
-    padding: 64px 16px;
+    padding: 64px 20px;
   }
 }
 
-/* Editorial split: sticky heading on the left, content on the right. */
+/* Heading sits in its own column; the content reads on the right. */
 @media (min-width: 900px) {
   .section-block.split {
     display: grid;
-    grid-template-columns: 300px minmax(0, 1fr);
-    gap: 56px;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 64px;
     align-items: start;
   }
 
   .section-block.split .section-header {
     position: sticky;
-    top: 104px;
+    top: 96px;
     margin-bottom: 0;
-  }
-}
-
-/* Whole sections only fade and rise; headings and cards inside carry the 3D. */
-.section-block.reveal.in-view {
-  animation-name: section-in;
-}
-
-@keyframes section-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
   }
 }

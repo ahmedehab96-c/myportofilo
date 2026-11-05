@@ -186,3 +186,8 @@
 .ai-chat-input-row button:disabled {
   opacity: 0.5;
 }
+
+.ai-bubble.user,
+.ai-bubble.user p {
+  color: var(--on-accent);
+}

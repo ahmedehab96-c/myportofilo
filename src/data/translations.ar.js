@@ -34,7 +34,7 @@ const ui = {
   aboutMe: 'نبذة عني',
   educationTitle: 'التعليم والشهادات',
   skillsTitle: 'المهارات والخبرات',
-  skillsSubtitle: 'التقنيات والأدوات التي أتخصص فيها:',
+  skillsSubtitle: 'التقنيات والأدوات التي أتخصص فيها.',
   servicesTitle: 'الخدمات',
   servicesSubtitle: 'ما يمكنني بناؤه لك، من الفكرة حتى الإطلاق.',
   featuredProjects: 'المشاريع',
