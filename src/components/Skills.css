@@ -3,14 +3,15 @@
   grid-template-columns: 260px minmax(0, 1fr);
   gap: 12px 40px;
   padding: 22px 0;
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid var(--border-accent);
 }
 
 .skill-group-title {
   margin: 0;
+  transition: color 160ms;
   font-family: var(--font-display);
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.35;
 }
 
@@ -24,6 +25,10 @@
   color: var(--text-secondary);
   font-size: 15px;
   line-height: 1.55;
+}
+
+.skill-group:hover .skill-group-title {
+  color: var(--accent);
 }
 
 @media (max-width: 767px) {

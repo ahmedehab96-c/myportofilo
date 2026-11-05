@@ -41,7 +41,7 @@ export default function Education({ sectionRef, onOpenCertificate }) {
   return (
     <Section id="education" sectionRef={sectionRef} className="split">
       <SectionHeader title={UiStrings.educationTitle} />
-      <ul className="education-list">
+      <ul className="education-list stagger">
         {educationEntries.map((entry) => (
           <EducationItem key={entry.title} entry={entry} onOpenCertificate={onOpenCertificate} />
         ))}

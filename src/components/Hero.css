@@ -9,17 +9,18 @@
 .hero-role {
   margin: 0 0 20px;
   color: var(--accent);
-  font-size: 15px;
+  font-family: var(--font-mono);
+  font-size: 14px;
   font-weight: 500;
 }
 
 .hero-name {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(52px, 8.2vw, 104px);
-  font-weight: 500;
+  font-size: clamp(46px, 7vw, 88px);
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
 }
 
 .hero-tagline {
@@ -33,7 +34,8 @@
 .hero-tech {
   margin: 20px 0 0;
   color: var(--text-muted);
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-size: 13px;
 }
 
 .hero-actions {
@@ -96,7 +98,7 @@
 .hero-photo-frame {
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  background: #2b2720;
+  background: #dde4de;
 }
 
 .hero-photo {
@@ -104,6 +106,54 @@
   height: 100%;
   object-fit: cover;
   object-position: top;
+}
+
+.hero-photo-col {
+  position: relative;
+  padding-bottom: 44px;
+}
+
+.hero-btn-arrow {
+  transition: translate 180ms var(--ease-out);
+}
+
+.hero-btn:hover .hero-btn-arrow {
+  translate: 4px 0;
+}
+
+[dir='rtl'] .hero-btn:hover .hero-btn-arrow {
+  translate: -4px 0;
+}
+
+/* Load sequence: copy rises in order, the portrait wipes open. */
+.hero-text-col > * {
+  animation: hero-rise 620ms var(--ease-out) backwards;
+}
+
+.hero-text-col > :nth-child(2) { animation-delay: 70ms; }
+.hero-text-col > :nth-child(3) { animation-delay: 150ms; }
+.hero-text-col > :nth-child(4) { animation-delay: 210ms; }
+.hero-text-col > :nth-child(5) { animation-delay: 270ms; }
+.hero-text-col > :nth-child(6) { animation-delay: 330ms; }
+
+.hero-photo-frame {
+  animation: hero-wipe 900ms var(--ease-out) 120ms backwards;
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+@keyframes hero-wipe {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
 }
 
 @media (max-width: 899px) {

@@ -34,8 +34,8 @@
 
 .contact-value {
   overflow-wrap: anywhere;
-  font-family: var(--font-display);
-  font-size: clamp(19px, 2.2vw, 25px);
+  font-family: var(--font-mono);
+  font-size: clamp(15px, 1.7vw, 19px);
 }
 
 [dir='rtl'] .contact-value {
@@ -45,7 +45,15 @@
 
 .contact-arrow {
   color: var(--text-muted);
-  transition: color 160ms;
+  transition: color 160ms, translate 180ms var(--ease-out);
+}
+
+.contact-row:hover .contact-arrow {
+  translate: 3px -3px;
+}
+
+[dir='rtl'] .contact-row:hover .contact-arrow {
+  translate: -3px -3px;
 }
 
 .contact-row:hover .contact-value,

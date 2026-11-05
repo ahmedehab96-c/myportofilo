@@ -33,7 +33,7 @@ export default function Contact({ sectionRef }) {
   return (
     <Section id="contact" sectionRef={sectionRef} className="split tinted">
       <SectionHeader title={UiStrings.getInTouch} subtitle={UiStrings.getInTouchSubtitle} />
-      <ul className="contact-list">
+      <ul className="contact-list stagger">
         {contacts().map((contact) => (
           <ContactRow key={contact.label} contact={contact} />
         ))}

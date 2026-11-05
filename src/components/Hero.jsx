@@ -1,5 +1,6 @@
 import FaIcon from './icons/FaIcon';
 import HeroStatsStrip from './HeroStatsStrip';
+import HeroTerminal from './HeroTerminal';
 import { UiStrings } from '../data/uiStrings';
 import { PortfolioKnowledge } from '../data/portfolioKnowledge';
 import './Hero.css';
@@ -51,6 +52,7 @@ export default function Hero({ onScrollToSection, onLaunch }) {
         <div className="hero-photo-frame">
           <img className="hero-photo" src="/assets/images/ahmed_profile_cutout.webp" alt={PortfolioKnowledge.fullName} />
         </div>
+        <HeroTerminal />
       </div>
     </section>
   );

@@ -1,8 +1,59 @@
+/* Engineering paper: a faint grid with a few signals running along its lines. */
 .portfolio-background {
   position: fixed;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
   pointer-events: none;
   background-color: var(--bg-deep);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .96 0 0 0 0 .88 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image:
+    linear-gradient(rgba(21, 32, 28, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(21, 32, 28, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.pb-trace {
+  position: absolute;
+  display: block;
+  background: linear-gradient(90deg, rgba(11, 122, 107, 0), rgba(11, 122, 107, 0.55));
+  will-change: transform;
+}
+
+.pb-trace.h {
+  left: -160px;
+  width: 160px;
+  height: 1px;
+  animation: pb-run-x 16s linear infinite;
+}
+
+.pb-trace.v {
+  top: -160px;
+  width: 1px;
+  height: 160px;
+  background: linear-gradient(180deg, rgba(11, 122, 107, 0), rgba(11, 122, 107, 0.55));
+  animation: pb-run-y 19s linear infinite;
+}
+
+/* Offsets are multiples of the 64px grid so traces sit exactly on its lines. */
+.pb-trace-1 { top: 192px; }
+.pb-trace-2 { top: 576px; animation-delay: -9s !important; animation-duration: 22s !important; }
+.pb-trace-3 { left: 256px; animation-delay: -4s !important; }
+.pb-trace-4 { left: 1088px; animation-delay: -13s !important; animation-duration: 25s !important; }
+
+@keyframes pb-run-x {
+  to {
+    transform: translateX(calc(100vw + 320px));
+  }
+}
+
+@keyframes pb-run-y {
+  to {
+    transform: translateY(calc(100vh + 320px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pb-trace {
+    display: none;
+  }
 }

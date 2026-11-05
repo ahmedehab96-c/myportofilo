@@ -1,8 +1,14 @@
-/* One quiet entrance for sections; everything else stays still. */
+/* Sections fade in once; their lists follow in a short cascade. */
 @keyframes reveal-in {
   from {
     opacity: 0;
-    transform: translateY(12px);
+  }
+}
+
+@keyframes item-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
   }
 }
 
@@ -12,19 +18,28 @@
 
 .reveal.in-view {
   opacity: 1;
-  animation: reveal-in 520ms var(--ease-out) backwards;
+  animation: reveal-in 420ms ease-out backwards;
 }
 
+.reveal.in-view .stagger > * {
+  animation: item-in 560ms var(--ease-out) backwards;
+}
+
+.reveal.in-view .stagger > *:nth-child(2) { animation-delay: 60ms; }
+.reveal.in-view .stagger > *:nth-child(3) { animation-delay: 120ms; }
+.reveal.in-view .stagger > *:nth-child(4) { animation-delay: 180ms; }
+.reveal.in-view .stagger > *:nth-child(5) { animation-delay: 240ms; }
+.reveal.in-view .stagger > *:nth-child(n + 6) { animation-delay: 300ms; }
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal,
-  .reveal.in-view {
+  .reveal {
     opacity: 1;
-    animation: none !important;
   }
 
   *,
   *::before,
   *::after {
+    animation: none !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }

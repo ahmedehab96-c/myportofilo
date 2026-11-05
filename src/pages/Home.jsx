@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import PortfolioBackground from '../components/PortfolioBackground';
 import NavBar from '../components/NavBar';
+import ScrollProgress from '../components/ScrollProgress';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import Education from '../components/Education';
@@ -66,6 +67,7 @@ export default function Home() {
       <PortfolioBackground />
       <div className="home-nav-sticky">
         <NavBar activeIndex={activeIndex} onSelect={scrollToSection} onOpenAi={openAssistant} />
+        <ScrollProgress />
       </div>
       <main className="home-content">
         <Hero onScrollToSection={scrollToSection} onLaunch={launchUrl} />

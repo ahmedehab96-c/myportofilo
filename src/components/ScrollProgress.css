@@ -1,0 +1,12 @@
+.scroll-progress {
+  position: absolute;
+  inset: auto 0 -1px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+[dir='rtl'] .scroll-progress {
+  transform-origin: right;
+}

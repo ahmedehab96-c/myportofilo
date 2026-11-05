@@ -7,7 +7,7 @@
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(30px, 3.6vw, 44px);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.12;
   letter-spacing: -0.015em;
 }
@@ -16,4 +16,28 @@
   margin: 12px 0 0;
   color: var(--text-secondary);
   font-size: 16px;
+}
+
+.section-header-title::after {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 3px;
+  margin-top: 16px;
+  background: var(--accent);
+  transform-origin: left;
+}
+
+[dir='rtl'] .section-header-title::after {
+  transform-origin: right;
+}
+
+.reveal.in-view .section-header-title::after {
+  animation: rule-draw 620ms var(--ease-out) 160ms backwards;
+}
+
+@keyframes rule-draw {
+  from {
+    transform: scaleX(0);
+  }
 }
