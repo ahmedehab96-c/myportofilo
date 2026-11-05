@@ -29,7 +29,6 @@ const ui = {
   statProjects: 'مشاريع',
   statTechnologies: 'تقنيات',
   viewProjects: 'استعرض المشاريع',
-  hireMe: 'وظّفني',
   contactMe: 'تواصل معي',
   aboutMe: 'نبذة عني',
   educationTitle: 'التعليم والشهادات',

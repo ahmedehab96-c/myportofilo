@@ -1,4 +1,3 @@
-/* Engineering paper: a faint grid with a few signals running along its lines. */
 .portfolio-background {
   position: fixed;
   inset: 0;
@@ -6,54 +5,69 @@
   overflow: hidden;
   pointer-events: none;
   background-color: var(--bg-deep);
-  background-image:
-    linear-gradient(rgba(21, 32, 28, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(21, 32, 28, 0.05) 1px, transparent 1px);
-  background-size: 64px 64px;
+  background-image: radial-gradient(rgba(36, 87, 214, 0.16) 1px, transparent 1.2px);
+  background-size: 24px 24px;
 }
 
-.pb-trace {
+/* Code stays in the margins and fades before it reaches the content. */
+.pb-col {
   position: absolute;
-  display: block;
-  background: linear-gradient(90deg, rgba(11, 122, 107, 0), rgba(11, 122, 107, 0.55));
+  top: 0;
+  bottom: 0;
+  width: 19vw;
+  overflow: hidden;
+  opacity: 0.5;
+}
+
+.pb-col-left {
+  left: 0;
+  -webkit-mask-image: linear-gradient(90deg, #000, transparent);
+  mask-image: linear-gradient(90deg, #000, transparent);
+}
+
+.pb-col-right {
+  right: 0;
+  -webkit-mask-image: linear-gradient(270deg, #000, transparent);
+  mask-image: linear-gradient(270deg, #000, transparent);
+}
+
+.pb-col-right pre {
+  direction: rtl;
+  unicode-bidi: plaintext;
+  text-align: right;
+}
+
+.pb-track {
+  animation: pb-drift 90s linear infinite;
   will-change: transform;
 }
 
-.pb-trace.h {
-  left: -160px;
-  width: 160px;
-  height: 1px;
-  animation: pb-run-x 16s linear infinite;
+.pb-col-right .pb-track {
+  animation-duration: 120s;
 }
 
-.pb-trace.v {
-  top: -160px;
-  width: 1px;
-  height: 160px;
-  background: linear-gradient(180deg, rgba(11, 122, 107, 0), rgba(11, 122, 107, 0.55));
-  animation: pb-run-y 19s linear infinite;
+.pb-track pre {
+  margin: 0;
+  padding: 24px;
+  color: var(--accent);
+  font-family: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  font-size: 13px;
+  line-height: 2;
+  white-space: pre;
 }
 
-/* Offsets are multiples of the 64px grid so traces sit exactly on its lines. */
-.pb-trace-1 { top: 192px; }
-.pb-trace-2 { top: 576px; animation-delay: -9s !important; animation-duration: 22s !important; }
-.pb-trace-3 { left: 256px; animation-delay: -4s !important; }
-.pb-trace-4 { left: 1088px; animation-delay: -13s !important; animation-duration: 25s !important; }
+.pb-k { color: var(--syntax-keyword); }
+.pb-s { color: var(--syntax-string); }
+.pb-c { color: var(--text-muted); }
 
-@keyframes pb-run-x {
+@keyframes pb-drift {
   to {
-    transform: translateX(calc(100vw + 320px));
+    transform: translateY(-50%);
   }
 }
 
-@keyframes pb-run-y {
-  to {
-    transform: translateY(calc(100vh + 320px));
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pb-trace {
+@media (max-width: 1279px) {
+  .pb-col {
     display: none;
   }
 }

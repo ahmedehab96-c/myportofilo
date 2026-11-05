@@ -21,7 +21,7 @@
   display: block;
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: #141a17;
+  background: var(--editor-bg);
   border-radius: 4px;
 }
 
@@ -51,7 +51,7 @@
 
 .project-card-categories {
   margin: 0 0 12px;
-  color: var(--accent);
+  color: var(--syntax-keyword);
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 500;

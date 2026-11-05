@@ -14,7 +14,7 @@
   position: absolute;
   inset: 0 calc(50% - 50vw);
   z-index: -1;
-  background: var(--accent);
+  background: var(--editor-bg);
 }
 
 .cta-row-text h2 {

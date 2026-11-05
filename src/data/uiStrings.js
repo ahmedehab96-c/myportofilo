@@ -29,7 +29,6 @@ export const UiStrings = {
   statProjects: 'Projects',
   statTechnologies: 'Technologies',
   viewProjects: 'View Projects',
-  hireMe: 'Hire Me',
   contactMe: 'Contact Me',
   aboutMe: 'About Me',
   educationTitle: 'Education & Certifications',

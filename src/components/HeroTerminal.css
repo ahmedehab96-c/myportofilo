@@ -4,8 +4,8 @@
   bottom: 0;
   padding: 14px 16px;
   border-radius: 4px;
-  background: #15201c;
-  color: #e6ece8;
+  background: var(--editor-bg);
+  color: #e6ebf5;
   font-family: var(--font-mono);
   font-size: 13px;
   line-height: 1.6;
@@ -19,7 +19,7 @@
 }
 
 .hero-terminal-prompt {
-  color: #5fd3bf;
+  color: #7ee2a8;
 }
 
 .hero-terminal-cursor {
@@ -28,12 +28,12 @@
   height: 14px;
   margin-inline-start: 2px;
   vertical-align: -2px;
-  background: #5fd3bf;
+  background: #7ee2a8;
 }
 
 .hero-terminal-out {
   min-height: 21px;
-  color: #5fd3bf;
+  color: #7ee2a8;
   opacity: 0;
   transition: opacity 180ms;
 }

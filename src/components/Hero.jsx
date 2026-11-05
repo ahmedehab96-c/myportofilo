@@ -26,13 +26,6 @@ export default function Hero({ onScrollToSection, onLaunch }) {
             {UiStrings.viewProjects}
             <span className="hero-btn-arrow flip-rtl" aria-hidden="true">→</span>
           </button>
-          <button
-            type="button"
-            className="hero-btn"
-            onClick={() => onLaunch(`mailto:${PortfolioKnowledge.email}?subject=Project%20Inquiry`)}
-          >
-            {UiStrings.hireMe}
-          </button>
           <button type="button" className="hero-link" onClick={() => onLaunch(PortfolioKnowledge.cvUrl)}>
             <FaIcon icon="filePdf" size={14} />
             <span>{UiStrings.downloadCv}</span>

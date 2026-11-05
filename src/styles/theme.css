@@ -1,27 +1,27 @@
 :root {
-  --bg-deep: #f3f5f2;
-  --bg-mid: #eef1ed;
+  --bg-deep: #f2f5fb;
+  --bg-mid: #ebf0f8;
   --bg-elevated: #ffffff;
-  --surface: #e8ede8;
+  --surface: #e6ecf6;
   --surface-raised: #ffffff;
   --card-surface: #ffffff;
-  --image-placeholder: #dfe5df;
+  --image-placeholder: #dbe4f3;
   --glass: var(--surface);
-  --text-primary: #15201c;
-  --text-secondary: #47544e;
-  --text-muted: #64716a;
-  --border-subtle: rgba(21, 32, 28, 0.13);
-  --border-accent: rgba(21, 32, 28, 0.24);
-  --border-hover: rgba(21, 32, 28, 0.5);
+  --text-primary: #1a2233;
+  --text-secondary: #46526a;
+  --text-muted: #64708a;
+  --border-subtle: rgba(26, 34, 51, 0.13);
+  --border-accent: rgba(26, 34, 51, 0.24);
+  --border-hover: rgba(26, 34, 51, 0.5);
   --panel-shadow: none;
   --card-shadow: transparent;
   --card-shadow-hover: transparent;
   --glow: none;
 
-  --accent: #0b7a6b;
-  --accent-bright: #086054;
-  --accent-deep: #086054;
-  --accent-soft: rgba(11, 122, 107, 0.1);
+  --accent: #2457d6;
+  --accent-bright: #1a44ad;
+  --accent-deep: #1a44ad;
+  --accent-soft: rgba(36, 87, 214, 0.1);
   --warm: var(--accent);
   --violet: var(--accent);
   --violet-deep: var(--accent-deep);
@@ -29,6 +29,11 @@
   --teal: var(--accent);
   --gold: var(--accent);
   --on-accent: #ffffff;
+
+  /* Syntax colors, as in an editor's light theme. */
+  --syntax-keyword: #a626a4;
+  --syntax-string: #2f8f4e;
+  --editor-bg: #1c2433;
 
   --bg-gradient: var(--bg-deep);
   --accent-gradient: var(--accent);
@@ -117,7 +122,7 @@ img {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c3ccc6;
+  background: #c2cbdb;
 }
 
 :focus-visible {
