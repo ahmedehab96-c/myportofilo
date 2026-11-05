@@ -4,70 +4,24 @@
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background-color: var(--bg-deep);
-  background-image: radial-gradient(rgba(36, 87, 214, 0.16) 1px, transparent 1.2px);
-  background-size: 24px 24px;
+  background: linear-gradient(135deg, #e9f0ff 0%, #f3efff 48%, #e8f7f5 100%);
 }
 
-/* Code stays in the margins and fades before it reaches the content. */
-.pb-col {
+/* Colour fields drift very slowly; moved with transform to stay cheap. */
+.portfolio-background::before {
+  content: '';
   position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 19vw;
-  overflow: hidden;
-  opacity: 0.5;
-}
-
-.pb-col-left {
-  left: 0;
-  -webkit-mask-image: linear-gradient(90deg, #000, transparent);
-  mask-image: linear-gradient(90deg, #000, transparent);
-}
-
-.pb-col-right {
-  right: 0;
-  -webkit-mask-image: linear-gradient(270deg, #000, transparent);
-  mask-image: linear-gradient(270deg, #000, transparent);
-}
-
-.pb-col-right pre {
-  direction: rtl;
-  unicode-bidi: plaintext;
-  text-align: right;
-}
-
-.pb-track {
-  animation: pb-drift 90s linear infinite;
+  inset: -20%;
+  background:
+    radial-gradient(38% 42% at 18% 22%, rgba(120, 160, 255, 0.34), transparent 70%),
+    radial-gradient(34% 40% at 82% 30%, rgba(176, 140, 255, 0.26), transparent 70%),
+    radial-gradient(40% 40% at 62% 84%, rgba(96, 214, 196, 0.26), transparent 70%);
+  animation: pb-drift 48s ease-in-out infinite alternate;
   will-change: transform;
 }
 
-.pb-col-right .pb-track {
-  animation-duration: 120s;
-}
-
-.pb-track pre {
-  margin: 0;
-  padding: 24px;
-  color: var(--accent);
-  font-family: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
-  font-size: 13px;
-  line-height: 2;
-  white-space: pre;
-}
-
-.pb-k { color: var(--syntax-keyword); }
-.pb-s { color: var(--syntax-string); }
-.pb-c { color: var(--text-muted); }
-
 @keyframes pb-drift {
   to {
-    transform: translateY(-50%);
-  }
-}
-
-@media (max-width: 1279px) {
-  .pb-col {
-    display: none;
+    transform: translate3d(5%, -4%, 0) scale(1.06);
   }
 }

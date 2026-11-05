@@ -98,7 +98,7 @@
 .hero-photo-frame {
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  background: #dbe4f3;
+  background: linear-gradient(160deg, #dbe6fb, #e8e2fa);
 }
 
 .hero-photo {
@@ -106,11 +106,6 @@
   height: 100%;
   object-fit: cover;
   object-position: top;
-}
-
-.hero-photo-col {
-  position: relative;
-  padding-bottom: 44px;
 }
 
 .hero-btn-arrow {

@@ -14,7 +14,7 @@
   position: absolute;
   inset: 0 calc(50% - 50vw);
   z-index: -1;
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.55);
 }
 
 @media (max-width: 599px) {
