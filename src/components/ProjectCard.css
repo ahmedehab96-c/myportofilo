@@ -51,7 +51,7 @@
 
 .project-card-categories {
   margin: 0 0 12px;
-  color: var(--syntax-keyword);
+  color: var(--accent);
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 500;

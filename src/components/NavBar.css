@@ -68,14 +68,7 @@
 }
 
 .nav-link-ai {
-  margin-inline-start: 10px;
-  padding: 8px 14px;
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
-.nav-link-ai::after {
-  display: none;
+  margin-inline-start: 4px;
 }
 
 

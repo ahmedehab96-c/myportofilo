@@ -616,6 +616,48 @@ Frontend source is public. Backend API source is public — separate repo.`,
 **Source:** public — frontend https://github.com/ahmedehab96-c/dental-clinic, API https://github.com/ahmedehab96-c/dental-clinic-api`,
   },
   {
+    id: 'novaproperties',
+    title: 'NOVA Properties',
+    cardDescription:
+      'Bilingual UAE real estate website — property search and filters, agent profiles, and a landmark photo hero with 3D interactions.',
+    readme: `NOVA Properties is a bilingual (Arabic/English, RTL/LTR) real estate website for the UAE market. Visitors can search and filter listings, open property details, browse agent profiles, and contact a specific agent. The home page features real UAE landmark photos with 3D pointer depth and a card stack.
+
+This is a frontend demo using sample data. There is no backend yet: the contact form opens the visitor's email app, and sign-in is simulated.`,
+    cardImage: '/assets/images/novaproperties_home.png',
+    screenshots: [
+      '/assets/images/novaproperties_home.png',
+      '/assets/images/novaproperties_listings.png',
+      '/assets/images/novaproperties_agents.png',
+      '/assets/images/novaproperties_about.png',
+    ],
+    summary: 'Bilingual UAE real estate website — React and TypeScript, with search, agent profiles, and 3D interactions.',
+    features: [
+      'Arabic/English, RTL/LTR throughout',
+      'Property search, filters, sorting, and grid and list views',
+      'Property details with gallery and viewing request form',
+      'Agent profiles with a contact form addressed to each agent',
+      'Landmark photo hero with 3D pointer depth and a card stack',
+      '3D card tilt, scroll reveals, and page transitions, with reduced-motion support',
+    ],
+    tech: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Framer Motion', 'React Router', 'i18next'],
+    keywords: [
+      'nova properties', 'real estate', 'property listings', 'uae', 'dubai', 'abu dhabi',
+      'bilingual', 'arabic', 'rtl', 'react', 'typescript', 'tailwind', 'framer motion', '3d',
+    ],
+    categories: ['Web'],
+    githubUrl: 'https://github.com/ahmedehab96-c/nova-properties',
+    isGithubPrivate: true,
+    liveDemoUrl: 'https://ahmedmyportofilo.netlify.app/demos/nova-properties/',
+    webSetupGuide: `**Live demo (no login required)**
+1. Tap **Open live demo** to open the home page
+2. Choose an emirate or a landmark card to change the photo, or move the mouse to see the 3D depth
+3. Open **Properties** to try the search and filters
+4. Open **Agents**, then **Contact**, to see the form addressed to that agent
+5. Use the language button to switch between English and Arabic
+
+**Note:** this is a frontend demo with sample data, so sign-in is simulated and the contact form opens your email app.`,
+  },
+  {
     id: 'hireflow',
     title: 'HireFlow',
     cardDescription:

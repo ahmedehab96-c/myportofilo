@@ -4,24 +4,23 @@
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background: linear-gradient(135deg, #e9f0ff 0%, #f3efff 48%, #e8f7f5 100%);
+  background: linear-gradient(170deg, #edf2ff 0%, #f3f1fe 55%, #eef3fc 100%);
 }
 
-/* Colour fields drift very slowly; moved with transform to stay cheap. */
+/* One soft glow behind the hero, drifting slowly; moved with transform to stay cheap. */
 .portfolio-background::before {
   content: '';
   position: absolute;
   inset: -20%;
   background:
-    radial-gradient(38% 42% at 18% 22%, rgba(120, 160, 255, 0.34), transparent 70%),
-    radial-gradient(34% 40% at 82% 30%, rgba(176, 140, 255, 0.26), transparent 70%),
-    radial-gradient(40% 40% at 62% 84%, rgba(96, 214, 196, 0.26), transparent 70%);
+    radial-gradient(36% 40% at 74% 26%, rgba(120, 150, 255, 0.26), transparent 70%),
+    radial-gradient(40% 44% at 20% 78%, rgba(160, 145, 255, 0.16), transparent 70%);
   animation: pb-drift 48s ease-in-out infinite alternate;
   will-change: transform;
 }
 
 @keyframes pb-drift {
   to {
-    transform: translate3d(5%, -4%, 0) scale(1.06);
+    transform: translate3d(-4%, 3%, 0) scale(1.05);
   }
 }

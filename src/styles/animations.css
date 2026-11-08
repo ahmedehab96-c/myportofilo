@@ -32,7 +32,8 @@
 .reveal.in-view .stagger > *:nth-child(n + 6) { animation-delay: 300ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .reveal,
+  .hero-name-word {
     opacity: 1;
   }
 

@@ -1,0 +1,1 @@
+var e=`/demos/nova-properties/assets/agent-01-DXzI0Zp3.jpg`,t=`/demos/nova-properties/assets/agent-02-BkOrYTdO.jpg`;export{e as n,t};

@@ -23,6 +23,58 @@
   letter-spacing: -0.03em;
 }
 
+.hero-name-word {
+  display: inline-block;
+  margin-inline-end: 0.22em;
+  padding-bottom: 0.08em;
+  animation: name-cycle 8s var(--ease-out) calc(var(--i) * 160ms) infinite;
+}
+
+/* In, hold, out, short pause, again. */
+@keyframes name-cycle {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transform: translateY(10px);
+  }
+  12%,
+  78% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+  90%,
+  100% {
+    opacity: 0;
+    clip-path: inset(0 0 0 100%);
+    transform: translateY(-6px);
+  }
+}
+
+[dir='rtl'] .hero-name-word {
+  animation-name: name-cycle-rtl;
+}
+
+@keyframes name-cycle-rtl {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 0 0 100%);
+    transform: translateY(10px);
+  }
+  12%,
+  78% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+  90%,
+  100% {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transform: translateY(-6px);
+  }
+}
+
 .hero-tagline {
   max-width: 560px;
   margin: 28px 0 0;
@@ -96,9 +148,12 @@
 }
 
 .hero-photo-frame {
+  position: relative;
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  background: linear-gradient(160deg, #dbe6fb, #e8e2fa);
+  background: radial-gradient(60% 55% at 50% 42%, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0) 70%);
+  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent);
+  mask-image: linear-gradient(180deg, #000 78%, transparent);
 }
 
 .hero-photo {
@@ -120,8 +175,35 @@
   translate: -4px 0;
 }
 
+.hero-name-word {
+  display: inline-block;
+  animation: name-cycle 9s var(--ease-out) infinite backwards;
+  animation-delay: calc(var(--i) * 160ms);
+}
+
+/* In, hold while the visitor reads, out, then back again. */
+@keyframes name-cycle {
+  0% {
+    opacity: 0;
+    transform: translateY(0.18em);
+    filter: blur(6px);
+  }
+  10%,
+  78% {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+  88%,
+  100% {
+    opacity: 0;
+    transform: translateY(-0.12em);
+    filter: blur(6px);
+  }
+}
+
 /* Load sequence: copy rises in order, the portrait wipes open. */
-.hero-text-col > * {
+.hero-text-col > :not(.hero-name) {
   animation: hero-rise 620ms var(--ease-out) backwards;
 }
 
