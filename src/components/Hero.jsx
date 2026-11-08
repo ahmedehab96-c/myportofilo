@@ -19,19 +19,6 @@ function AnimatedName({ name }) {
   );
 }
 
-// Each word fades in, holds, fades out and comes back, on a loop.
-function AnimatedName({ name }) {
-  return (
-    <h1 className="hero-name">
-      {name.split(' ').map((word, i) => (
-        <span className="hero-name-word" style={{ '--i': i }} key={word}>
-          {word}{' '}
-        </span>
-      ))}
-    </h1>
-  );
-}
-
 export default function Hero({ onScrollToSection, onLaunch }) {
   return (
     <section className="hero">

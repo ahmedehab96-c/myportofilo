@@ -175,33 +175,6 @@
   translate: -4px 0;
 }
 
-.hero-name-word {
-  display: inline-block;
-  animation: name-cycle 9s var(--ease-out) infinite backwards;
-  animation-delay: calc(var(--i) * 160ms);
-}
-
-/* In, hold while the visitor reads, out, then back again. */
-@keyframes name-cycle {
-  0% {
-    opacity: 0;
-    transform: translateY(0.18em);
-    filter: blur(6px);
-  }
-  10%,
-  78% {
-    opacity: 1;
-    transform: none;
-    filter: blur(0);
-  }
-  88%,
-  100% {
-    opacity: 0;
-    transform: translateY(-0.12em);
-    filter: blur(6px);
-  }
-}
-
 /* Load sequence: copy rises in order, the portrait wipes open. */
 .hero-text-col > :not(.hero-name) {
   animation: hero-rise 620ms var(--ease-out) backwards;
