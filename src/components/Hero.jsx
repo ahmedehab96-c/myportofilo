@@ -1,10 +1,9 @@
 import FaIcon from './icons/FaIcon';
-import HeroStatsStrip from './HeroStatsStrip';
 import { UiStrings } from '../data/uiStrings';
 import { PortfolioKnowledge } from '../data/portfolioKnowledge';
 import './Hero.css';
 
-const HERO_TECH_HIGHLIGHTS = ['React.js', 'Flutter', 'Laravel', 'Firebase', 'Supabase', 'AI', 'REST APIs'];
+const HERO_TECH_HIGHLIGHTS = ['React.js', 'Flutter', 'Laravel', 'Firebase', 'Supabase', 'REST APIs'];
 
 /// Words wipe in, hold, then wipe out on a loop. Whole words keep Arabic letters joined.
 function AnimatedName({ name }) {
@@ -23,40 +22,31 @@ export default function Hero({ onScrollToSection, onLaunch }) {
   return (
     <section className="hero">
       <div className="hero-text-col">
-        <p className="hero-role">
-          {PortfolioKnowledge.role}
-        </p>
-
+        <p className="hero-hello">{UiStrings.helloIm}</p>
         <AnimatedName name={PortfolioKnowledge.fullName} />
-
+        <p className="hero-role">{PortfolioKnowledge.role}</p>
         <p className="hero-tagline">{UiStrings.heroTagline}</p>
-
-        <p className="hero-tech">{HERO_TECH_HIGHLIGHTS.join(' / ')}</p>
 
         <div className="hero-actions">
           <button type="button" className="hero-btn primary" onClick={() => onScrollToSection(4)}>
             {UiStrings.viewProjects}
             <span className="hero-btn-arrow flip-rtl" aria-hidden="true">→</span>
           </button>
-          <button type="button" className="hero-link" onClick={() => onLaunch(PortfolioKnowledge.cvUrl)}>
+          <button type="button" className="hero-btn" onClick={() => onLaunch(PortfolioKnowledge.cvUrl)}>
             <FaIcon icon="filePdf" size={14} />
-            <span>{UiStrings.downloadCv}</span>
+            {UiStrings.downloadCv}
           </button>
         </div>
 
-        <HeroStatsStrip
-          items={[
-            { value: PortfolioKnowledge.yearsOfExperience, label: UiStrings.statYears },
-            { value: '20+', label: UiStrings.statShipped },
-            { value: '6+', label: UiStrings.statCore },
-          ]}
-        />
+        <ul className="hero-tech">
+          {HERO_TECH_HIGHLIGHTS.map((t) => (
+            <li key={t}>{t}</li>
+          ))}
+        </ul>
       </div>
 
       <div className="hero-photo-col">
-        <div className="hero-photo-frame">
-          <img className="hero-photo" src="/assets/images/ahmed_profile_cutout.webp" alt={PortfolioKnowledge.fullName} />
-        </div>
+        <img className="hero-photo" src="/assets/images/ahmed_profile_cutout.webp" alt={PortfolioKnowledge.fullName} />
       </div>
     </section>
   );

@@ -5,7 +5,7 @@ import { UiStrings } from '../data/uiStrings';
 import { showToast } from '../utils/toast';
 import './ProjectCard.css';
 
-const MAX_TECH = 5;
+const MAX_TECH = 4;
 
 export default function ProjectCard({ project, featured, onOpenGithub }) {
   const { ref, className: revealClass } = useReveal(0);
@@ -27,12 +27,7 @@ export default function ProjectCard({ project, featured, onOpenGithub }) {
         </h3>
         <p className="project-card-summary">{project.summary}</p>
 
-        <ul className="project-card-tech">
-          {tech.map((t) => (
-            <li key={t}>{t}</li>
-          ))}
-          {project.tech.length > MAX_TECH && <li>+{project.tech.length - MAX_TECH}</li>}
-        </ul>
+        <p className="project-card-tech">{tech.join(' / ')}</p>
 
         <div className="project-card-footer">
           <Link to={`/project/${project.id}`} className="project-card-view">

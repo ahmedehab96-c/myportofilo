@@ -1,4 +1,7 @@
 .contact-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -6,69 +9,64 @@
 
 .contact-row {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 16px;
-  padding: 20px 0;
-  border-top: 1px solid var(--border-subtle);
-  transition: color 160ms;
+  padding: 18px 20px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  background: var(--card-surface);
+  transition: border-color 200ms;
 }
 
-.contact-list li:first-child .contact-row {
-  padding-top: 0;
-  border-top: 0;
+.contact-row:hover {
+  border-color: var(--border-hover);
+}
+
+.contact-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent-bright);
 }
 
 .contact-text {
   display: grid;
-  grid-template-columns: 120px minmax(0, 1fr);
   flex: 1;
-  align-items: baseline;
-  gap: 4px 16px;
+  gap: 2px;
   min-width: 0;
 }
 
 .contact-label {
   color: var(--text-muted);
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .contact-value {
   overflow-wrap: anywhere;
-  font-family: var(--font-mono);
-  font-size: clamp(15px, 1.7vw, 19px);
+  font-size: 15px;
+  font-weight: 500;
 }
 
 [dir='rtl'] .contact-value {
   direction: ltr;
-  text-align: end;
+  text-align: right;
 }
 
 .contact-arrow {
   color: var(--text-muted);
-  transition: color 160ms, translate 180ms var(--ease-out);
 }
 
-.contact-row:hover .contact-arrow {
-  translate: 3px -3px;
-}
-
-[dir='rtl'] .contact-row:hover .contact-arrow {
-  translate: -3px -3px;
-}
-
-.contact-row:hover .contact-value,
 .contact-row:hover .contact-arrow {
   color: var(--accent-bright);
 }
 
-@media (max-width: 599px) {
-  .contact-text {
+@media (max-width: 699px) {
+  .contact-list {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  [dir='rtl'] .contact-value {
-    text-align: start;
-    direction: ltr;
-    unicode-bidi: plaintext;
   }
 }

@@ -30,11 +30,28 @@ function AIChatLink() {
   );
 }
 
+const socials = [
+  { icon: 'linkedin', label: 'LinkedIn', url: 'https://www.linkedin.com/in/ahmed-ehab-ba8a63285' },
+  { icon: 'github', label: 'GitHub', url: 'https://github.com/ahmedehab96-c' },
+  { icon: 'envelope', label: 'Email', url: `mailto:${PortfolioKnowledge.email}` },
+];
+
 export function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="portfolio-footer">
+      <div className="footer-brand">
+        <strong>{PortfolioKnowledge.fullName}</strong>
+        <span>{PortfolioKnowledge.role}</span>
+      </div>
       <p>© {year} {PortfolioKnowledge.fullName}</p>
+      <div className="footer-socials">
+        {socials.map((s) => (
+          <a key={s.label} href={s.url} target="_blank" rel="noreferrer" aria-label={s.label}>
+            <FaIcon icon={s.icon} size={15} />
+          </a>
+        ))}
+      </div>
     </footer>
   );
 }

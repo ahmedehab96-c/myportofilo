@@ -1,25 +1,99 @@
-.about-body {
-  max-width: 720px;
+.section-block.about {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 56px;
+  align-items: center;
+}
+
+.about .section-header {
+  margin-bottom: 20px;
 }
 
 .about-paragraph {
-  margin: 0 0 20px;
+  margin: 0 0 14px;
   color: var(--text-secondary);
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.75;
 }
 
-.about-paragraph.lead {
-  color: var(--text-primary);
-  font-family: var(--font-display);
-  font-size: clamp(22px, 2.4vw, 27px);
-  line-height: 1.45;
+.about-highlights {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 24px;
+  margin: 24px 0 28px;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
 }
 
-.about-highlights {
-  margin: 28px 0 0;
-  padding-top: 20px;
+.about-highlights li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.about-cv {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 15px;
+  font-weight: 600;
+  transition: background-color 160ms;
+}
+
+.about-cv:hover {
+  background: var(--accent-deep);
+}
+
+.about-card {
+  margin: 0;
+  padding: 8px 28px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  background: var(--card-surface);
+}
+
+.about-card-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 20px 0;
   border-top: 1px solid var(--border-subtle);
-  color: var(--text-muted);
+}
+
+.about-card-row:first-child {
+  border-top: 0;
+}
+
+.about-card dt {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.about-card dd {
+  margin: 3px 0 0;
+  overflow-wrap: anywhere;
+  color: var(--text-secondary);
   font-size: 14px;
+}
+
+[dir='rtl'] .about-card dd[dir='ltr'] {
+  text-align: right;
+}
+
+@media (max-width: 899px) {
+  .section-block.about {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 499px) {
+  .about-highlights {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

@@ -71,7 +71,7 @@ export default function Home() {
       </div>
       <main className="home-content">
         <Hero onScrollToSection={scrollToSection} onLaunch={launchUrl} />
-        <About sectionRef={sectionRefs.current[0]} />
+        <About sectionRef={sectionRefs.current[0]} onLaunch={launchUrl} />
         <Education sectionRef={sectionRefs.current[1]} onOpenCertificate={launchUrl} />
         <Skills sectionRef={sectionRefs.current[2]} />
         <Services sectionRef={sectionRefs.current[3]} />

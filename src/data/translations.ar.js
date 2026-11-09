@@ -5,6 +5,12 @@
 const ui = {
   pageTitle: 'أحمد إيهاب — مطوّر ويب وتطبيقات',
   brandName: 'أحمد إيهاب',
+  helloIm: 'مرحبًا، أنا',
+  location: 'الموقع',
+  locationValue: 'الإمارات العربية المتحدة',
+  languages: 'اللغات',
+  languagesValue: 'العربية، الإنجليزية',
+  openToWork: 'متاح للعمل',
   switchLanguage: 'Switch to English',
   languageToggle: 'EN',
   appTitle: 'معرض أعمال أحمد',

@@ -1,5 +1,10 @@
 // Semantic icon keys -> Font Awesome 6 Free classes (icons loaded via CDN).
 export const iconMap = {
+  location: 'fa-solid fa-location-dot',
+  language: 'fa-solid fa-language',
+  check: 'fa-regular fa-circle-check',
+  download: 'fa-solid fa-download',
+  mobile: 'fa-solid fa-mobile-screen',
   phone: 'fa-solid fa-phone',
   envelope: 'fa-solid fa-envelope',
   robot: 'fa-solid fa-robot',

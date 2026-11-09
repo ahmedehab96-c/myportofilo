@@ -1,40 +1,19 @@
 .section-block {
   position: relative;
-  padding: 96px 32px;
-  border-top: 1px solid var(--border-subtle);
+  padding: 80px 24px;
 }
 
 /* Full-bleed band behind a section, past the content column. */
-.section-block.tinted {
-  border-top-color: transparent;
-}
-
 .section-block.tinted::before {
   content: '';
   position: absolute;
   inset: 0 calc(50% - 50vw);
   z-index: -1;
-  background: rgba(255, 255, 255, 0.55);
+  background: var(--bg-mid);
 }
 
 @media (max-width: 599px) {
   .section-block {
-    padding: 64px 20px;
-  }
-}
-
-/* Heading sits in its own column; the content reads on the right. */
-@media (min-width: 900px) {
-  .section-block.split {
-    display: grid;
-    grid-template-columns: 280px minmax(0, 1fr);
-    gap: 64px;
-    align-items: start;
-  }
-
-  .section-block.split .section-header {
-    position: sticky;
-    top: 96px;
-    margin-bottom: 0;
+    padding: 60px 18px;
   }
 }

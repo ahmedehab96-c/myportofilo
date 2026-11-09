@@ -1,6 +1,6 @@
 import './PortfolioBackground.css';
 
-/// Clean, empty gradient backdrop in soft blue and lavender.
+/// Solid deep-navy page backdrop.
 export default function PortfolioBackground() {
   return <div className="portfolio-background" aria-hidden="true" />;
 }

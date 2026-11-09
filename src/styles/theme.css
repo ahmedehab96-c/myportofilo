@@ -1,27 +1,27 @@
 :root {
-  --bg-deep: #f2f5fb;
-  --bg-mid: #ebf0f8;
-  --bg-elevated: #ffffff;
-  --surface: #e6ecf6;
-  --surface-raised: #ffffff;
-  --card-surface: #ffffff;
-  --image-placeholder: #dbe4f3;
+  --bg-deep: #0a1220;
+  --bg-mid: #0d1729;
+  --bg-elevated: #13203a;
+  --surface: #0f1a2e;
+  --surface-raised: #13203a;
+  --card-surface: #111c32;
+  --image-placeholder: #16233d;
   --glass: var(--surface);
-  --text-primary: #1a2233;
-  --text-secondary: #46526a;
-  --text-muted: #64708a;
-  --border-subtle: rgba(26, 34, 51, 0.13);
-  --border-accent: rgba(26, 34, 51, 0.24);
-  --border-hover: rgba(26, 34, 51, 0.5);
+  --text-primary: #f2f5fb;
+  --text-secondary: #a9b4c8;
+  --text-muted: #7d899f;
+  --border-subtle: rgba(148, 170, 210, 0.14);
+  --border-accent: rgba(148, 170, 210, 0.26);
+  --border-hover: rgba(47, 128, 237, 0.65);
   --panel-shadow: none;
   --card-shadow: transparent;
   --card-shadow-hover: transparent;
   --glow: none;
 
-  --accent: #2457d6;
-  --accent-bright: #1a44ad;
-  --accent-deep: #1a44ad;
-  --accent-soft: rgba(36, 87, 214, 0.1);
+  --accent: #2f80ed;
+  --accent-bright: #5b9cf5;
+  --accent-deep: #1d64c9;
+  --accent-soft: rgba(47, 128, 237, 0.14);
   --warm: var(--accent);
   --violet: var(--accent);
   --violet-deep: var(--accent-deep);
@@ -33,7 +33,7 @@
   /* Syntax colors, as in an editor's light theme. */
   --syntax-keyword: #a626a4;
   --syntax-string: #2f8f4e;
-  --editor-bg: #1c2433;
+  --editor-bg: #0d1729;
 
   --bg-gradient: var(--bg-deep);
   --accent-gradient: var(--accent);
@@ -41,19 +41,19 @@
   --cta-gradient: var(--accent);
   --ai-gradient: var(--accent-soft);
 
-  --font-sans: 'IBM Plex Sans', 'IBM Plex Sans Arabic', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'IBM Plex Sans', 'IBM Plex Sans Arabic', system-ui, sans-serif;
-  --font-mono: 'IBM Plex Mono', 'IBM Plex Sans Arabic', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: 'Inter', 'IBM Plex Sans Arabic', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  --font-mono: var(--font-sans);
   --content-width: 1160px;
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
 
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 /* Arabic gets its own faces; negative tracking would break letter joins. */
 :root[lang='ar'] {
-  --font-sans: 'IBM Plex Sans Arabic', 'IBM Plex Sans', system-ui, sans-serif;
-  --font-display: 'IBM Plex Sans Arabic', 'IBM Plex Sans', system-ui, sans-serif;
+  --font-sans: 'IBM Plex Sans Arabic', 'Inter', system-ui, sans-serif;
+  --font-display: 'IBM Plex Sans Arabic', 'Inter', system-ui, sans-serif;
 }
 
 :root[lang='ar'] body * {
@@ -122,7 +122,7 @@ img {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c2cbdb;
+  background: #26344f;
 }
 
 :focus-visible {

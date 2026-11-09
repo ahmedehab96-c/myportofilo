@@ -10,7 +10,7 @@ export const services = [
   {
     title: 'Mobile App Development',
     description: 'Flutter applications for Android and iOS, from UI to state management and release.',
-    icon: 'flutter',
+    icon: 'mobile',
     color: '#54C5F8',
   },
   {

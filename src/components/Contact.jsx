@@ -1,4 +1,5 @@
 import Section from './Section';
+import FaIcon from './icons/FaIcon';
 import SectionHeader from './SectionHeader';
 import { UiStrings } from '../data/uiStrings';
 import './Contact.css';
@@ -19,6 +20,9 @@ function ContactRow({ contact }) {
         rel="noreferrer"
         className="contact-row"
       >
+        <span className="contact-icon">
+          <FaIcon icon={contact.icon} size={16} />
+        </span>
         <span className="contact-text">
           <span className="contact-label">{contact.label}</span>
           <span className="contact-value">{contact.value}</span>
@@ -31,8 +35,8 @@ function ContactRow({ contact }) {
 
 export default function Contact({ sectionRef }) {
   return (
-    <Section id="contact" sectionRef={sectionRef} className="split tinted">
-      <SectionHeader title={UiStrings.getInTouch} subtitle={UiStrings.getInTouchSubtitle} />
+    <Section id="contact" sectionRef={sectionRef} className="tinted">
+      <SectionHeader eyebrow={UiStrings.navContact} title={UiStrings.getInTouch} subtitle={UiStrings.getInTouchSubtitle} />
       <ul className="contact-list stagger">
         {contacts().map((contact) => (
           <ContactRow key={contact.label} contact={contact} />

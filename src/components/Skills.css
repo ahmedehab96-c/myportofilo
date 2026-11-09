@@ -1,39 +1,41 @@
-.skill-group {
+.skills-grid {
   display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
-  gap: 12px 40px;
-  padding: 22px 0;
-  border-top: 1px solid var(--border-accent);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.skill-group {
+  padding: 22px 24px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  background: var(--card-surface);
+  transition: border-color 200ms;
+}
+
+.skill-group:hover {
+  border-color: var(--border-hover);
 }
 
 .skill-group-title {
-  margin: 0;
-  transition: color 160ms;
-  font-family: var(--font-display);
-  font-size: 20px;
+  margin: 0 0 12px;
+  color: var(--accent-bright);
+  font-size: 16px;
   font-weight: 600;
-  line-height: 1.35;
 }
 
 .skill-group-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 6px 32px;
+  gap: 6px;
   margin: 0;
   padding: 0;
   list-style: none;
   color: var(--text-secondary);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.55;
 }
 
-.skill-group:hover .skill-group-title {
-  color: var(--accent);
-}
-
 @media (max-width: 767px) {
-  .skill-group,
-  .skill-group-list {
+  .skills-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 }

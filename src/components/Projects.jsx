@@ -8,7 +8,7 @@ import './Projects.css';
 export default function Projects({ sectionRef, onOpenGithub }) {
   return (
     <Section id="projects" sectionRef={sectionRef}>
-      <SectionHeader title={UiStrings.featuredProjects} subtitle={UiStrings.featuredProjectsSubtitle} />
+      <SectionHeader eyebrow={UiStrings.navProjects} title={UiStrings.featuredProjects} subtitle={UiStrings.featuredProjectsSubtitle} />
       <div className="projects-grid">
         {featuredProjects.map((project) => (
           <ProjectCard

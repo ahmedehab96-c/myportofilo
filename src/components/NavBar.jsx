@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import FaIcon from './icons/FaIcon';
 import { UiStrings } from '../data/uiStrings';
+import { PortfolioKnowledge } from '../data/portfolioKnowledge';
 import { useWindowWidth } from '../hooks/useWindowWidth';
 import { useLanguage } from '../i18n/language';
 import './NavBar.css';
@@ -34,9 +35,13 @@ function LanguageToggle() {
 }
 
 function Brand() {
+  const [first, ...rest] = UiStrings.brandName.split(' ');
   return (
     <button type="button" className="nav-brand" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-      {UiStrings.brandName}
+      <span className="nav-brand-name">
+        {first} <span className="nav-brand-accent">{rest.join(' ')}</span>
+      </span>
+      <span className="nav-brand-role">{PortfolioKnowledge.role}</span>
     </button>
   );
 }

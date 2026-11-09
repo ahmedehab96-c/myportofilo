@@ -1,43 +1,42 @@
 .section-header {
-  margin-bottom: 48px;
   max-width: 640px;
+  margin-bottom: 40px;
+}
+
+.section-header.center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section-header-eyebrow {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .section-header-title {
   margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(30px, 3.6vw, 44px);
-  font-weight: 600;
-  line-height: 1.12;
-  letter-spacing: -0.015em;
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.section-header.center .section-header-title::after {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 3px;
+  margin: 14px auto 0;
+  border-radius: 2px;
+  background: var(--accent);
 }
 
 .section-header-subtitle {
   margin: 12px 0 0;
   color: var(--text-secondary);
   font-size: 16px;
-}
-
-.section-header-title::after {
-  content: '';
-  display: block;
-  width: 40px;
-  height: 3px;
-  margin-top: 16px;
-  background: var(--accent);
-  transform-origin: left;
-}
-
-[dir='rtl'] .section-header-title::after {
-  transform-origin: right;
-}
-
-.reveal.in-view .section-header-title::after {
-  animation: rule-draw 620ms var(--ease-out) 160ms backwards;
-}
-
-@keyframes rule-draw {
-  from {
-    transform: scaleX(0);
-  }
 }

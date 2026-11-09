@@ -2,6 +2,12 @@
 export const UiStrings = {
   pageTitle: 'Ahmed Ehab — Full-Stack Web & Mobile Developer',
   brandName: 'Ahmed Ehab',
+  helloIm: "Hello, I'm",
+  location: 'Location',
+  locationValue: 'United Arab Emirates',
+  languages: 'Languages',
+  languagesValue: 'Arabic, English',
+  openToWork: 'Open to work',
   switchLanguage: 'التبديل إلى العربية',
   languageToggle: 'عربي',
   openMenu: 'Open menu',
